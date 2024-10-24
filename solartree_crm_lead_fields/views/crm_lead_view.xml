@@ -2,66 +2,80 @@
     <record id="crm_lead_view_form_inherit" model="ir.ui.view">
         <field name="name">crm.lead.form</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_lead_view_form" />
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="solartree_code" />
-                <field name="solartree_lead_type_id" />
-            </field>
+            <xpath expr="//label[@for='email_from']" position="before">
+                <field name="solartree_code"/>
+                <field name="solartree_lead_type_id" widget="selection"/>
+                <field name="solartree_lead_modality_id" widget="selection"/>
+                <field name="solartree_lead_collective"/>
+                <field name="solartree_lead_storage"/>
+            </xpath>
+            <xpath expr="//div[@class='o_lead_opportunity_form_inline_fields']" position="after">
+                <field name="solartree_lead_scope" widget="selection"/>
+                <field name="solartree_lead_channel" widget="selection"/>
+                <field name="solartree_lead_technical" widget="selection"/>
+                <field name="solartree_lead_structure_type" widget="selection"/>
+                <field name="solartree_lead_structure_model" widget="selection"/>
+            </xpath>
         </field>
     </record>
-    <record id="crm_case_tree_view_leads_inherit" model="ir.ui.view">
-        <field name="name">crm.lead.tree.lead</field>
-        <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_case_tree_view_leads" />
-        <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="solartree_code" />
-                <field name="solartree_lead_type_id" />
-            </field>
-        </field>
-    </record>
+    <!--    <record id="crm_case_tree_view_leads_inherit" model="ir.ui.view">-->
+    <!--        <field name="name">crm.lead.tree.lead</field>-->
+    <!--        <field name="model">crm.lead</field>-->
+    <!--        <field name="inherit_id" ref="crm.crm_case_tree_view_leads" />-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
+    <!--                <field name="solartree_code" />-->
+    <!--                <field name="solartree_lead_type_id" />-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
     <record id="view_crm_case_leads_filter_inherit" model="ir.ui.view">
         <field name="name">crm.lead.search.lead</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
                     name="filter_domain"
-                >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]</attribute>
+                >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
+                </attribute>
             </field>
         </field>
     </record>
-    <record id="crm_case_tree_view_oppor_inherit" model="ir.ui.view">
-        <field name="name">crm.lead.tree.opportunity</field>
-        <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor" />
-        <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="solartree_code" />
-            </field>
-        </field>
-    </record>
-    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
-        <field name="name">crm.lead.kanban.lead</field>
-        <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
-        <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="solartree_code" />
-            </field>
-        </field>
-    </record>
+    <!--    <record id="crm_case_tree_view_oppor_inherit" model="ir.ui.view">-->
+    <!--        <field name="name">crm.lead.tree.opportunity</field>-->
+    <!--        <field name="model">crm.lead</field>-->
+    <!--        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor" />-->
+    <!--        <field name="arch" type="xml">-->
+    <!--             <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
+    <!--                <field name="solartree_code" />-->
+    <!--                <field name="solartree_lead_type_id" />-->
+    <!--             </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">-->
+    <!--        <field name="name">crm.lead.kanban.lead</field>-->
+    <!--        <field name="model">crm.lead</field>-->
+    <!--        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
+    <!--                <field name="solartree_code" />-->
+    <!--                <field name="solartree_lead_type_id" />-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
     <record id="view_crm_case_opportunities_filter_inherit" model="ir.ui.view">
         <field name="name">crm.lead.search.opportunity</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
                     name="filter_domain"
-                >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]</attribute>
+                >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
+                </attribute>
             </field>
         </field>
     </record>

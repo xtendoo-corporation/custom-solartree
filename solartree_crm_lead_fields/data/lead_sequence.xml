@@ -1,11 +1,5 @@
 <odoo noupdate="1">
-    <record id="sequence_lead" model="ir.sequence">
-        <field name="name">Lead Code</field>
-        <field name="code">crm.lead</field>
-        <field eval="4" name="padding" />
-        <field name="prefix">LD</field>
-    </record>
-
+    <!-- Data type -->
     <record id="crm_lead_type_1" model="crm.lead.type">
         <field name="name">Tipo 1</field>
     </record>
@@ -19,4 +13,291 @@
         <field name="name">Tipo 4</field>
     </record>
 
+    <!-- Data modality -->
+    <record id="crm_lead_modality_1" model="crm.lead.modality">
+        <field name="name">AUTOCONSUMO CON VERTIDO</field>
+    </record>
+    <record id="crm_lead_modality_2" model="crm.lead.modality">
+        <field name="name">AUTOCONSUMO SIN VERTIDO</field>
+    </record>
+    <record id="crm_lead_modality_3" model="crm.lead.modality">
+        <field name="name">AISLADA</field>
+    </record>
+    <record id="crm_lead_modality_4" model="crm.lead.modality">
+        <field name="name">GENERACIÓN</field>
+    </record>
+    <record id="crm_lead_modality_5" model="crm.lead.modality">
+        <field name="name">ALMACENAMIENTO</field>
+    </record>
+    <record id="crm_lead_modality_6" model="crm.lead.modality">
+        <field name="name">CARGADOR VE</field>
+    </record>
+    <record id="crm_lead_modality_7" model="crm.lead.modality">
+        <field name="name">BOMBEO</field>
+    </record>
+
+    <!-- Data scope -->
+    <record id="crm_lead_scope_1" model="crm.lead.scope">
+        <field name="name">EPC</field>
+    </record>
+    <record id="crm_lead_scope_2" model="crm.lead.scope">
+        <field name="name">BoS</field>
+    </record>
+    <record id="crm_lead_scope_3" model="crm.lead.scope">
+        <field name="name">EPC limitado</field>
+    </record>
+    <record id="crm_lead_scope_4" model="crm.lead.scope">
+        <field name="name">Alcance limitado</field>
+    </record>
+
+    <!-- Data Channel -->
+    <record id="crm_lead_channel_1" model="crm.lead.channel">
+        <field name="name">ACTIVIDAD CONSULTORIA - DRB</field>
+    </record>
+    <record id="crm_lead_channel_2" model="crm.lead.channel">
+        <field name="name">ACCIONA - TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_3" model="crm.lead.channel">
+        <field name="name">AGORA - AMA</field>
+    </record>
+    <record id="crm_lead_channel_4" model="crm.lead.channel">
+        <field name="name">AMA</field>
+    </record>
+    <record id="crm_lead_channel_5" model="crm.lead.channel">
+        <field name="name">AMALIA TERRON</field>
+    </record>
+    <record id="crm_lead_channel_6" model="crm.lead.channel">
+        <field name="name">ASOCIAFRUIT</field>
+    </record>
+    <record id="crm_lead_channel_7" model="crm.lead.channel">
+        <field name="name">BOSCOHEN - FMC</field>
+    </record>
+    <record id="crm_lead_channel_8" model="crm.lead.channel">
+        <field name="name">CONCEPLUZ</field>
+    </record>
+    <record id="crm_lead_channel_9" model="crm.lead.channel">
+        <field name="name">CONTABILIDAD</field>
+    </record>
+    <record id="crm_lead_channel_10" model="crm.lead.channel">
+        <field name="name">DRB</field>
+    </record>
+    <record id="crm_lead_channel_11" model="crm.lead.channel">
+        <field name="name">EPROVOX - MSG</field>
+    </record>
+     <record id="crm_lead_channel_12" model="crm.lead.channel">
+        <field name="name">ESPARCOR - TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_13" model="crm.lead.channel">
+        <field name="name">FMC</field>
+    </record>
+    <record id="crm_lead_channel_14" model="crm.lead.channel">
+        <field name="name">FROZEN</field>
+    </record>
+    <record id="crm_lead_channel_15" model="crm.lead.channel">
+        <field name="name">JMR</field>
+    </record>
+    <record id="crm_lead_channel_16" model="crm.lead.channel">
+        <field name="name">JPB</field>
+    </record>
+    <record id="crm_lead_channel_17" model="crm.lead.channel">
+        <field name="name">INCENTIVA - DRB</field>
+    </record>
+    <record id="crm_lead_channel_18" model="crm.lead.channel">
+        <field name="name">MANUEL DOMINGUEZ</field>
+    </record>
+    <record id="crm_lead_channel_19" model="crm.lead.channel">
+        <field name="name">MANUEL J MARIN</field>
+    </record>
+    <record id="crm_lead_channel_20" model="crm.lead.channel">
+        <field name="name">MTECH - TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_21" model="crm.lead.channel">
+        <field name="name">NUMERA - TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_22" model="crm.lead.channel">
+        <field name="name">REFERIDO</field>
+    </record>
+    <record id="crm_lead_channel_23" model="crm.lead.channel">
+        <field name="name">TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_24" model="crm.lead.channel">
+        <field name="name">AMA - TEMPOS</field>
+    </record>
+     <record id="crm_lead_channel_25" model="crm.lead.channel">
+        <field name="name">FMC - TEPRO</field>
+    </record>
+    <record id="crm_lead_channel_26" model="crm.lead.channel">
+        <field name="name">TGR</field>
+    </record>
+    <record id="crm_lead_channel_27" model="crm.lead.channel">
+        <field name="name">SERVIEL</field>
+    </record>
+    <record id="crm_lead_channel_28" model="crm.lead.channel">
+        <field name="name">REFERIDO - AMA</field>
+    </record>
+    <record id="crm_lead_channel_29" model="crm.lead.channel">
+        <field name="name">MAREA - TAIYO</field>
+    </record>
+    <record id="crm_lead_channel_30" model="crm.lead.channel">
+        <field name="name">E3INGENIA</field>
+    </record>
+    <record id="crm_lead_channel_31" model="crm.lead.channel">
+        <field name="name">N/A</field>
+    </record>
+    <record id="crm_lead_channel_32" model="crm.lead.channel">
+        <field name="name">ELECTED ENERGY - TGR</field>
+    </record>
+    <record id="crm_lead_channel_33" model="crm.lead.channel">
+        <field name="name">DAVID HERNANDEZ - TGR</field>
+    </record>
+    <record id="crm_lead_channel_34" model="crm.lead.channel">
+        <field name="name">QUINTO ARMÓNICO</field>
+    </record>
+    <record id="crm_lead_channel_35" model="crm.lead.channel">
+        <field name="name">DSG</field>
+    </record>
+     <record id="crm_lead_channel_36" model="crm.lead.channel">
+        <field name="name">SERVIEL - MANUEL DOMINGUEZ</field>
+    </record>
+    <record id="crm_lead_channel_37" model="crm.lead.channel">
+        <field name="name">JBC</field>
+    </record>
+    <record id="crm_lead_channel_38" model="crm.lead.channel">
+        <field name="name">RAS</field>
+    </record>
+    <record id="crm_lead_channel_39" model="crm.lead.channel">
+        <field name="name">CSS</field>
+    </record>
+     <record id="crm_lead_channel_40" model="crm.lead.channel">
+        <field name="name">CSS - NOEMI</field>
+    </record>
+    <record id="crm_lead_channel_41" model="crm.lead.channel">
+        <field name="name">TGR - JL GÁLVEZ</field>
+    </record>
+    <record id="crm_lead_channel_42" model="crm.lead.channel">
+        <field name="name">RAS - ARRAM</field>
+    </record>
+    <record id="crm_lead_channel_43" model="crm.lead.channel">
+        <field name="name">ARRAM</field>
+    </record>
+    <record id="crm_lead_channel_44" model="crm.lead.channel">
+        <field name="name">ROMBOC</field>
+    </record>
+    <record id="crm_lead_channel_45" model="crm.lead.channel">
+        <field name="name">RECURRENTE</field>
+    </record>
+    <record id="crm_lead_channel_46" model="crm.lead.channel">
+        <field name="name">CSS - ENERGÍA LIBRE</field>
+    </record>
+    <record id="crm_lead_channel_47" model="crm.lead.channel">
+        <field name="name">TGR - CO2 CONSULTING</field>
+    </record>
+    <record id="crm_lead_channel_48" model="crm.lead.channel">
+        <field name="name">INGEFOOD</field>
+    </record>
+    <record id="crm_lead_channel_49" model="crm.lead.channel">
+        <field name="name">CSS - SOLUCIONES GLOBALES</field>
+    </record>
+    <record id="crm_lead_channel_50" model="crm.lead.channel">
+        <field name="name">ACC</field>
+    </record>
+     <record id="crm_lead_channel_51" model="crm.lead.channel">
+        <field name="name">TGR - MA GALIANA</field>
+    </record>
+     <record id="crm_lead_channel_52" model="crm.lead.channel">
+        <field name="name">TGR - ALEJANDRO INFANTES</field>
+    </record>
+    <record id="crm_lead_channel_53" model="crm.lead.channel">
+        <field name="name">TGR - DSG</field>
+    </record>
+    <record id="crm_lead_channel_54" model="crm.lead.channel">
+        <field name="name">AAC-INGEMED</field>
+    </record>
+
+    <!-- Data Technical -->
+    <record id="crm_lead_technical_1" model="crm.lead.technical">
+        <field name="name">JPB</field>
+    </record>
+    <record id="crm_lead_technical_2" model="crm.lead.technical">
+        <field name="name">JMR</field>
+    </record>
+    <record id="crm_lead_technical_3" model="crm.lead.technical">
+        <field name="name">MPP</field>
+    </record>
+    <record id="crm_lead_technical_4" model="crm.lead.technical">
+        <field name="name">AMA</field>
+    </record>
+    <record id="crm_lead_technical_5" model="crm.lead.technical">
+        <field name="name">BMG</field>
+    </record>
+    <record id="crm_lead_technical_6" model="crm.lead.technical">
+        <field name="name">CFT</field>
+    </record>
+
+    <!-- Data Structure Type -->
+     <record id="crm_lead_structure_type_1" model="crm.lead.structure.type">
+        <field name="name">CUBIERTA</field>
+    </record>
+    <record id="crm_lead_structure_type_2" model="crm.lead.structure.type">
+        <field name="name">SUELO</field>
+    </record>
+    <record id="crm_lead_structure_type_3" model="crm.lead.structure.type">
+        <field name="name">MIXTA</field>
+    </record>
+    <record id="crm_lead_structure_type_4" model="crm.lead.structure.type">
+        <field name="name">MARQUESINA</field>
+    </record>
+    <record id="crm_lead_structure_type_5" model="crm.lead.structure.type">
+        <field name="name">FLOTANTE</field>
+    </record>
+
+    <!-- Data Structure Model -->
+     <record id="crm_lead_structure_model_1" model="crm.lead.structure.model">
+        <field name="name">Suelo Hormigon 1H</field>
+    </record>
+    <record id="crm_lead_structure_model_2" model="crm.lead.structure.model">
+        <field name="name">Suelo Hormigon 2H</field>
+    </record>
+    <record id="crm_lead_structure_model_3" model="crm.lead.structure.model">
+        <field name="name">Suelo Hormigon 1V</field>
+    </record>
+    <record id="crm_lead_structure_model_4" model="crm.lead.structure.model">
+        <field name="name">Suelo Fija Hincado</field>
+    </record>
+    <record id="crm_lead_structure_model_5" model="crm.lead.structure.model">
+        <field name="name">Suelo Fija zapata corrida</field>
+    </record>
+    <record id="crm_lead_structure_model_6" model="crm.lead.structure.model">
+        <field name="name">Suelo Fija Lastrada</field>
+    </record>
+    <record id="crm_lead_structure_model_7" model="crm.lead.structure.model">
+        <field name="name">Suelo Tracker</field>
+    </record>
+    <record id="crm_lead_structure_model_8" model="crm.lead.structure.model">
+        <field name="name">Cubierta Hormigon 1H</field>
+    </record>
+    <record id="crm_lead_structure_model_9" model="crm.lead.structure.model">
+        <field name="name">Cubierta Hormigon 2H</field>
+    </record>
+    <record id="crm_lead_structure_model_10" model="crm.lead.structure.model">
+        <field name="name">Cubierta microrail</field>
+    </record>
+    <record id="crm_lead_structure_model_11" model="crm.lead.structure.model">
+        <field name="name">Cubierta perfilería</field>
+    </record>
+    <record id="crm_lead_structure_model_12" model="crm.lead.structure.model">
+        <field name="name">Cubierta teja</field>
+    </record>
+    <record id="crm_lead_structure_model_13" model="crm.lead.structure.model">
+        <field name="name">Marquesina</field>
+    </record>
+    <record id="crm_lead_structure_model_14" model="crm.lead.structure.model">
+        <field name="name">Mixta</field>
+    </record>
+    <record id="crm_lead_structure_model_15" model="crm.lead.structure.model">
+        <field name="name">Flotante</field>
+    </record>
+    <record id="crm_lead_structure_model_16" model="crm.lead.structure.model">
+        <field name="name">Cubierta triangular</field>
+    </record>
 </odoo>

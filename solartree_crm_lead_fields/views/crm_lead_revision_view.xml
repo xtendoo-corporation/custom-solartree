@@ -1,0 +1,93 @@
+<odoo>
+    <record id="view_crm_lead_revision_tree" model="ir.ui.view">
+        <field name="name">crm.lead.revision.tree</field>
+        <field name="model">crm.lead.revision</field>
+        <field name="arch" type="xml">
+            <tree string="Revisions">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_form" model="ir.ui.view">
+        <field name="name">crm.lead.revision.form</field>
+        <field name="model">crm.lead.revision</field>
+        <field name="arch" type="xml">
+            <form string="Revision">
+                <sheet>
+                    <group>
+                    <field name="name"/>
+                    <field name="lead_id" invisible="1"/>
+                </group>
+                <group colspan="4">
+                    <group>
+                        <field name="offer_kwp"/>
+                        <field name="offer_kwn"/>
+                        <field name="offer_storage_kwh"/>
+                        <field name="offer_storage_kwn"/>
+                        <field name="offer_ve_kwn"/>
+                    </group>
+                    <group>
+                        <field name="offer_tot"/>
+                        <field name="offer_HT"/>
+                        <field name="offer_date_deliver"/>
+                    </group>
+                </group>
+                <group colspan="4">
+                    <group>
+                        <field name="offer_fee_external" widget="percentage"/>
+                        <field name="offer_fee_internal" widget="percentage"/>
+                        <field name="offer_gg" widget="percentage"/>
+                        <field name="offer_bi" widget="percentage"/>
+                        <field name="offer_mbsv"/>
+                    </group>
+                    <group>
+                        <field name="offer_fv_price"/>
+                        <field name="offer_wp"/>
+                        <field name="offer_storage_price"/>
+                        <field name="offer_ve_price"/>
+                    </group>
+                </group>
+                <group colspan="4">
+                    <group>
+                        <field name="offer_pb_actual"/>
+                        <field name="offer_tir_actual" widget="percentage"/>
+                        <field name="offer_pb_omip"/>
+                        <field name="offer_tir_omip" widget="percentage"/>
+                    </group>
+                    <group>
+                        <field name="offer_pb_proyection"/>
+                        <field name="offer_tir_proyection" widget="percentage"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<!--    <record id="action_view_revisions" model="ir.actions.act_window">-->
+<!--        <field name="name">Revisions</field>-->
+<!--        <field name="res_model">crm.lead.revision</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--        <field name="view_id" ref="view_crm_lead_revision_tree"/>-->
+<!--        <field name="domain">[('lead_id', '=', active_id)]</field>-->
+<!--        <field name="context">{'default_lead_id': active_id}</field>-->
+<!--    </record>-->
+     <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherited.crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//button[@name='action_schedule_meeting']" position="after">
+                    <button class="oe_stat_button" type="object" name="action_view_revisions" icon="fa-eye" string="Revisiones"
+                        invisible="type == 'lead'">
+                        <div class="o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="revision_count" widget="statinfo"/>
+                            </span>
+                        </div>
+                    </button>
+                    </xpath>
+            </field>
+        </record>
+</odoo>

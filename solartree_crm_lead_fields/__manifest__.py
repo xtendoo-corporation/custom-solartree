@@ -8,8 +8,18 @@
         "crm",
     ],
     "data": [
+        "data/lead_sequence.xml",
         "views/crm_lead_view.xml",
         "views/crm_lead_type_view.xml",
+        "views/crm_lead_modality_view.xml",
+        "views/crm_lead_scope_view.xml",
+        "views/crm_lead_channel_view.xml",
+        "views/crm_lead_technical_view.xml",
+        "views/crm_lead_structure_type_view.xml",
+        "views/crm_lead_structure_model_view.xml",
+        "views/crm_lead_revision_view.xml",
+        "views/crm_lead_tot_view.xml",
+        'security/ir.model.access.csv',
     ],
     "installable": True,
 }

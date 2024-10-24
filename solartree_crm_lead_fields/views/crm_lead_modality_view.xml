@@ -1,0 +1,36 @@
+<odoo>
+    <record id="view_crm_lead_modality_tree" model="ir.ui.view">
+        <field name="name">crm.lead.modality.tree</field>
+        <field name="model">crm.lead.modality</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_modality_form" model="ir.ui.view">
+        <field name="name">crm.lead.modality.form</field>
+        <field name="model">crm.lead.modality</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_modality" model="ir.actions.act_window">
+        <field name="name">Lead Modalitys</field>
+        <field name="res_model">crm.lead.modality</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="submenu_crm_lead_modality"
+              name="Lead Modalitys"
+              parent="menu_crm_solartree_group"
+              action="action_crm_lead_modality"
+              sequence="23"/>
+
+</odoo>

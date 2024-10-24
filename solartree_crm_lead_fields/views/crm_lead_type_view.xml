@@ -5,7 +5,6 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="description"/>
             </tree>
         </field>
     </record>
@@ -17,19 +16,26 @@
             <form>
                 <group>
                     <field name="name"/>
-                    <field name="description"/>
                 </group>
             </form>
         </field>
     </record>
-
-    <menuitem id="menu_crm_lead_type" name="Lead Types" parent="crm.crm_menu_root" sequence="10"/>
-
-    <menuitem id="submenu_crm_lead_type" name="Lead Types" parent="menu_crm_lead_type" action="action_crm_lead_type"/>
 
     <record id="action_crm_lead_type" model="ir.actions.act_window">
         <field name="name">Lead Types</field>
         <field name="res_model">crm.lead.type</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <menuitem id="menu_crm_solartree_group"
+              name="Solartree"
+              parent="crm.crm_menu_config"
+              sequence="21"/>
+
+    <menuitem id="submenu_crm_lead_type"
+              name="Lead Types"
+              parent="menu_crm_solartree_group"
+              action="action_crm_lead_type"
+              sequence="22"/>
+
 </odoo>
