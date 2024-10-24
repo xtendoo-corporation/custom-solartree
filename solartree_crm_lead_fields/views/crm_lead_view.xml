@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="solartree_code" />
+                <field name="solartree_lead_type_id" />
             </field>
         </field>
     </record>
@@ -16,6 +17,7 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="solartree_code" />
+                <field name="solartree_lead_type_id" />
             </field>
         </field>
     </record>

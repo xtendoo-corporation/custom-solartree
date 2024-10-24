@@ -13,6 +13,11 @@ class CrmLead(models.Model):
         required=True,
         copy=False
     )
+    solartree_lead_type_id = fields.Many2one(
+        comodel_name="crm.lead.type",
+        string="Lead Type",
+        help="Type of the lead"
+    )
 
     _sql_constraints = [
         ("crm_lead_unique_solartree_code", "UNIQUE (solartree_code)", _("The lead code must be unique!")),

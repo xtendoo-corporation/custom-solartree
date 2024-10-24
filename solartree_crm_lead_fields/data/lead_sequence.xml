@@ -5,4 +5,18 @@
         <field eval="4" name="padding" />
         <field name="prefix">LD</field>
     </record>
+
+    <record id="crm_lead_type_1" model="crm.lead.type">
+        <field name="name">Tipo 1</field>
+    </record>
+    <record id="crm_lead_type_2" model="crm.lead.type">
+        <field name="name">Tipo 2</field>
+    </record>
+    <record id="crm_lead_type_3" model="crm.lead.type">
+        <field name="name">Tipo 3</field>
+    </record>
+    <record id="crm_lead_type_4" model="crm.lead.type">
+        <field name="name">Tipo 4</field>
+    </record>
+
 </odoo>
