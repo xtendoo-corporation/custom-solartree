@@ -5,6 +5,11 @@
         <field name="arch" type="xml">
             <tree string="Revisions">
                 <field name="name"/>
+                <field name="offer_kwp"/>
+                <field name="offer_kwn"/>
+                <field name="offer_storage_kwh"/>
+                <field name="offer_storage_kwn"/>
+                <field name="offer_mbsv" widget="percentage"/>
             </tree>
         </field>
     </record>
@@ -16,7 +21,8 @@
             <form string="Revision">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" readonly="1"/>
+                        <field name="lead_id" readonly="1"/>
                     </group>
                     <group colspan="4">
                         <group>

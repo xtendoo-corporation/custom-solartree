@@ -1,13 +1,14 @@
 from odoo import models, fields, api
 
 
+
 class CrmLeadRevision(models.Model):
     _name = 'crm.lead.revision'
     _description = 'Lead Revision'
 
     name = fields.Char(
         string="Revision Name",
-        required=True
+        readonly=True,
     )
     lead_id = fields.Many2one(
         'crm.lead',
@@ -124,3 +125,19 @@ class CrmLeadRevision(models.Model):
 
                 print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
+    @api.model
+    def create(self, vals):
+        print("Valores recibidos: ", vals)
+        lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
+
+        if lead_id:
+            existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+            vals[
+                'name'] = f'R{existing_revisions_count}'
+            print("LEAD ID encontrado: " + str(lead_id))
+            print("Nombre de la revisión asignado: " + vals['name'])
+
+        else:
+            print("LEAD ID no encontrado en los valores o contexto")
+
+        return super(CrmLeadRevision, self).create(vals)
