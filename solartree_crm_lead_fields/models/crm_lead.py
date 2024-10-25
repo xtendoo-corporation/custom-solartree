@@ -1,7 +1,3 @@
-##############################################################################
-# For copyright and license notices, see __manifest__.py file in root directory
-##############################################################################
-
 from odoo import _, api, fields, models
 
 
@@ -67,7 +63,6 @@ class CrmLead(models.Model):
             lead.revision_count = len(lead.revision_ids)
 
     def action_view_revisions(self):
-        """This method opens the view showing the revisions linked to the current lead."""
         self.ensure_one()
         return {
             'name': 'Revisions',

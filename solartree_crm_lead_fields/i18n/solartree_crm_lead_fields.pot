@@ -18,12 +18,12 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__name
 msgid "Channel Name"
-msgstr "Nombre Canal"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_channel
 msgid "Channel of the lead"
-msgstr "Canal de la oportunidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__create_uid
@@ -36,7 +36,7 @@ msgstr "Canal de la oportunidad"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__create_uid
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__create_date
@@ -49,12 +49,12 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__create_date
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__company_currency
 msgid "Currency"
-msgstr "Moneda"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__display_name
@@ -67,7 +67,7 @@ msgstr "Moneda"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__display_name
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__id
@@ -93,7 +93,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__write_uid
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__write_uid
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__write_date
@@ -106,7 +106,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__write_date
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_channel
@@ -114,34 +114,34 @@ msgstr "Última actualización en"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_channel
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_channel
 msgid "Lead Channel"
-msgstr "Oferta Canal"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_code
 msgid "Lead Code"
-msgstr "Código Oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_collective
 msgid "Lead Collective"
-msgstr "Oferta Colectivo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_modality
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_modality_id
 msgid "Lead Modality"
-msgstr "Oferta Modalidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_modality
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_modality
 msgid "Lead Modalitys"
-msgstr "Oferta Modalidades"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_revision
 msgid "Lead Revision"
-msgstr "Revisiones"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_scope
@@ -149,171 +149,171 @@ msgstr "Revisiones"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_scope
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_scope
 msgid "Lead Scope"
-msgstr "Oferta Alcance"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_storage
 msgid "Lead Storage"
-msgstr "Oferta Almacenamiento"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_structure_model
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_model
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_structure_model
 msgid "Lead Structure Model"
-msgstr "Oferta Estructura Modelo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_structure_type
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_type
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_structure_type
 msgid "Lead Structure Type"
-msgstr "Oferta Estructura Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_structure_model
 msgid "Lead Structure model"
-msgstr "Oferta Estructura Modelo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_structure_type
 msgid "Lead Structure type"
-msgstr "Oferta Estructura Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_tot
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_tot
 msgid "Lead TOT"
-msgstr "TOT"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_technical
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_technical
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_technical
 msgid "Lead Technical"
-msgstr "Técnico"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_tot
 msgid "Lead Tot"
-msgstr "TOT"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_type
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_type_id
 msgid "Lead Type"
-msgstr "Oferta Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_type
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_type
 msgid "Lead Types"
-msgstr "Oferta Tipos"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead
 msgid "Lead/Opportunity"
-msgstr "Lead/Oportunidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_modality__name
 msgid "Modality Name"
-msgstr "Nombre modalidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_modality_id
 msgid "Modality of the lead"
-msgstr "Modalidad de la Oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_bi
 msgid "Offer BI"
-msgstr "Oferta BI"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fv_price
 msgid "Offer FV price"
-msgstr "Oferta FV Precio"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_gg
 msgid "Offer GG"
-msgstr "Oferta GG"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_HT
 msgid "Offer HT"
-msgstr "HT Oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_mbsv
 msgid "Offer MBSV"
-msgstr "Oferta MBSV"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_ve_price
 msgid "Offer VE Price"
-msgstr "Oferta VE Precio"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_ve_kwn
 msgid "Offer VE kWh"
-msgstr "Oferta VE kWn"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_date_deliver
 msgid "Offer deliver date"
-msgstr "Fecha Entrega Oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fee_external
 msgid "Offer fee external"
-msgstr "Oferta Fee externo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fee_internal
 msgid "Offer fee internal"
-msgstr "Oferta Fee interno"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_kwh_year
 msgid "Offer kWh/year"
-msgstr "Oferta kWh/año"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_kwn
 msgid "Offer kWn"
-msgstr "Oferta kWn"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_kwp
 msgid "Offer kWp"
-msgstr "Oferta kWp"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_storage_kwh
 msgid "Offer storage kWh"
-msgstr "Oferta Almacenamiento kWh"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_storage_kwn
 msgid "Offer storage kWn"
-msgstr "Oferta Almacenamiento kWn"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_storage_price
 msgid "Offer storage price"
-msgstr "Oferta Almacenamiento Precio"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_wp
 msgid "Offer €/Wp"
-msgstr "Oferta €/Wp"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__lead_id
 msgid "Opportunity"
-msgstr "Oportunidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_pb_omip
@@ -323,28 +323,28 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_pb_actual
 msgid "PB actuals"
-msgstr "PB actuales"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_pb_proyection
 msgid "PB proyection"
-msgstr "PB proyección"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__revision_ids
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
 msgid "Revision"
-msgstr "Revisión"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__revision_count
 msgid "Revision Count"
-msgstr "Número Revisiones"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__name
 msgid "Revision Name"
-msgstr "Nombre Revisión"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_case_form_view_oppor_inherit
@@ -354,17 +354,17 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_tree
 msgid "Revisions"
-msgstr "Revisiones"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_scope__name
 msgid "Scope Name"
-msgstr "Nombre Alcance"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_scope
 msgid "Scope of the lead"
-msgstr "Alcance de la oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.menu_crm_solartree_group
@@ -374,22 +374,22 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_structure_model__name
 msgid "Structure Model Name"
-msgstr "Nombre Estructura Modelo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_model
 msgid "Structure Model of the lead"
-msgstr "Estructura Modelo de la oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_structure_type__name
 msgid "Structure Type Name"
-msgstr "Nombre Estructura Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_type
 msgid "Structure Type of the lead"
-msgstr "Estructura Tipo de la oferta"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_omip
@@ -399,32 +399,32 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_actual
 msgid "TIR actuals"
-msgstr "TIR actuales"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_proyection
 msgid "TIR proyection"
-msgstr "TIR proyección"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tot
 msgid "TOT revisions field"
-msgstr "TOT campo revisión"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
 msgid "Technical"
-msgstr "Técnico"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_technical__name
 msgid "Technical Name"
-msgstr "Nombre Técnico"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
 msgid "Technical of the lead"
-msgstr "Técnico de la oportunidad"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #. odoo-python
@@ -432,19 +432,19 @@ msgstr "Técnico de la oportunidad"
 #: model:ir.model.constraint,message:solartree_crm_lead_fields.constraint_crm_lead_crm_lead_unique_solartree_code
 #, python-format
 msgid "The lead code must be unique!"
-msgstr "El código de la oferta debe ser único"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__name
 msgid "Tot Name"
-msgstr "Nombre TOT"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__name
 msgid "Type Name"
-msgstr "Nombre Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_type_id
 msgid "Type of the lead"
-msgstr "Tipo de la oferta"
+msgstr ""
