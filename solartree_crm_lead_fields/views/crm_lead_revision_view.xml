@@ -9,6 +9,7 @@
                 <field name="offer_kwn"/>
                 <field name="offer_storage_kwh"/>
                 <field name="offer_storage_kwn"/>
+                <field name="offer_wp"/>
                 <field name="offer_mbsv" widget="percentage"/>
             </tree>
         </field>

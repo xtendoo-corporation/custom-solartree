@@ -68,6 +68,8 @@ class CrmLeadRevision(models.Model):
     offer_wp = fields.Float(
         'Offer €/Wp',
         readonly=True,
+        compute="_compute_wp",
+        digits=(12, 4),
     )
     offer_pb_actual = fields.Float(
         'PB actuals'
@@ -104,6 +106,15 @@ class CrmLeadRevision(models.Model):
         compute="_compute_company_currency",
         compute_sudo=True
     )
+
+    @api.depends('offer_fv_price', 'offer_kwp',)
+    def _compute_wp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_wp = round(record.offer_fv_price / (record.offer_kwp * 1000), 4)
+            else:
+                record.offer_wp = 0.0
+
 
     @api.depends('offer_fee_external','offer_fee_internal','offer_gg','offer_bi')
     def _compute_mbsv(self):
