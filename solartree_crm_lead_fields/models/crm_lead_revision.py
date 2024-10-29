@@ -1,7 +1,6 @@
 from odoo import models, fields, api
 
 
-
 class CrmLeadRevision(models.Model):
     _name = 'crm.lead.revision'
     _description = 'Lead Revision'
@@ -20,16 +19,20 @@ class CrmLeadRevision(models.Model):
         'Offer kWp'
     )
     offer_kwn = fields.Float(
-        'Offer kWn'
+        'Offer kWn',
+        digits=(16, 1)
     )
     offer_storage_kwh = fields.Float(
-        'Offer storage kWh'
+        'Offer storage kWh',
+        digits=(16, 1)
     )
     offer_storage_kwn = fields.Float(
-        'Offer storage kWn'
+        'Offer storage kWn',
+        digits=(16, 1)
     )
     offer_ve_kwn = fields.Float(
-        'Offer VE kWh'
+        'Offer VE kWh',
+        digits=(16, 1)
     )
     offer_tot = fields.Many2one(
         comodel_name="crm.lead.tot",
@@ -40,9 +43,6 @@ class CrmLeadRevision(models.Model):
     )
     offer_date_deliver = fields.Date(
         'Offer deliver date'
-    )
-    offer_HT = fields.Float(
-        'Offer HT'
     )
     offer_fee_external = fields.Float(
         'Offer fee external'
@@ -72,19 +72,22 @@ class CrmLeadRevision(models.Model):
         digits=(12, 4),
     )
     offer_pb_actual = fields.Float(
-        'PB actuals'
+        'PB actuals',
+        digits=(16, 1)
     )
     offer_tir_actual = fields.Integer(
         'TIR actuals'
     )
     offer_pb_omip = fields.Float(
-        'PB OMIP'
+        'PB OMIP',
+        digits=(16, 1)
     )
     offer_tir_omip = fields.Integer(
         'TIR OMIP'
     )
     offer_pb_proyection = fields.Float(
-        'PB proyection'
+        'PB proyection',
+        digits=(16, 1)
     )
     offer_tir_proyection = fields.Integer(
         'TIR proyection'
@@ -106,8 +109,37 @@ class CrmLeadRevision(models.Model):
         compute="_compute_company_currency",
         compute_sudo=True
     )
+    offer_price_rx = fields.Monetary(
+        string='Offer Total Price',
+        currency_field='company_currency',
+        compute='_compute_offer_price_rx',
+        store=True
+    )
+    offer_class = fields.Char(
+        string='Offer Class',
+        readonly=True,
+        compute='_compute_offer_class',
+    )
 
-    @api.depends('offer_fv_price', 'offer_kwp',)
+    @api.depends('offer_kwn')
+    def _compute_offer_class(self):
+        if self.offer_kwn > 1000:
+            self.offer_class = "Mayor 1 MW"
+        if 1000 >= self.offer_kwn > 100:
+            self.offer_class = "INDUSTRIAL"
+        if  100 >= self.offer_kwn > 10:
+            self.offer_class = "COMERCIAL"
+        if  self.offer_kwn <= 10:
+            self.offer_class = "PEQUEÑA INSTALACIÓN"
+
+    @api.depends('offer_fv_price', 'offer_storage_price', 'offer_ve_price')
+    def _compute_offer_price_rx(self):
+        for record in self:
+            record.offer_price_rx = (record.offer_fv_price or 0.0) + \
+                                    (record.offer_storage_price or 0.0) + \
+                                    (record.offer_ve_price or 0.0)
+
+    @api.depends('offer_fv_price', 'offer_kwp', )
     def _compute_wp(self):
         for record in self:
             if record.offer_kwp:
@@ -115,8 +147,7 @@ class CrmLeadRevision(models.Model):
             else:
                 record.offer_wp = 0.0
 
-
-    @api.depends('offer_fee_external','offer_fee_internal','offer_gg','offer_bi')
+    @api.depends('offer_fee_external', 'offer_fee_internal', 'offer_gg', 'offer_bi')
     def _compute_mbsv(self):
         for record in self:
             external = record.offer_fee_external or 0.0
@@ -129,12 +160,12 @@ class CrmLeadRevision(models.Model):
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):
         for record in self:
-                if record.lead_id and record.lead_id.company_id:
-                    record.company_currency = record.lead_id.company_id.currency_id or self.env.company.currency_id
-                else:
-                    record.company_currency = self.env.company.currency_id
+            if record.lead_id and record.lead_id.company_id:
+                record.company_currency = record.lead_id.company_id.currency_id or self.env.company.currency_id
+            else:
+                record.company_currency = self.env.company.currency_id
 
-                print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
+            print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
     @api.model
     def create(self, vals):
@@ -152,3 +183,14 @@ class CrmLeadRevision(models.Model):
             print("LEAD ID no encontrado en los valores o contexto")
 
         return super(CrmLeadRevision, self).create(vals)
+
+    def action_open_revision_form(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Revision',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'crm.lead.revision',
+            'res_id': self.id,
+            'target': 'current',
+        }

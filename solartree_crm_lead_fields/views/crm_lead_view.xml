@@ -6,10 +6,13 @@
         <field name="arch" type="xml">
             <xpath expr="//label[@for='email_from']" position="before">
                 <field name="solartree_code"/>
+                <field name="solartree_lead_identification"/>
                 <field name="solartree_lead_type_id" widget="selection"/>
                 <field name="solartree_lead_modality_id" widget="selection"/>
                 <field name="solartree_lead_collective"/>
                 <field name="solartree_lead_storage"/>
+                <field name="solartree_cups"/>
+                <field name="solartree_num_proyect"/>
             </xpath>
             <xpath expr="//div[@class='o_lead_opportunity_form_inline_fields']" position="after">
                 <field name="solartree_lead_scope" widget="selection"/>
@@ -17,6 +20,71 @@
                 <field name="solartree_lead_technical" widget="selection"/>
                 <field name="solartree_lead_structure_type" widget="selection"/>
                 <field name="solartree_lead_structure_model" widget="selection"/>
+                <field name="solartree_date_request"/>
+                <field name="solartree_date_required_delivery"/>
+                <field name="solartree_offer_ht"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="ofice_tecnic" string="OT">
+                    <span>
+                        <b>Additional Deliverables:</b>
+                    </span>
+                    <field name="solartree_additional_deliverables" widget="text"/>
+                    <br/>
+                    <span>
+                        <b>Connection Point Location:</b>
+                    </span>
+                    <field name="solartree_connection_point_location" widget="text"/>
+                    <br/>
+                    <span>
+                        <b>Specific Comments:</b>
+                    </span>
+                    <field name="solartree_specific_comments" widget="text"/>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="dates" string="Dates">
+                    <span>
+                        <b>Date Proposed Signature:</b>
+                    </span>
+                    <field name="solartree_date_proposed_signature"/>
+                    <br/>
+                    <span>
+                        <b>Date KOM:</b>
+                    </span>
+                    <field name="solartree_date_kom"/>
+                    <br/>
+                    <span>
+                        <b>Date Visit:</b>
+                    </span>
+                    <field name="solartree_date_visit"/>
+                    <br/>
+                    <span>
+                        <b>Date Deliverables:</b>
+                    </span>
+                    <field name="solartree_date_deliverables"/>
+                    <br/>
+                    <span>
+                        <b>Date Sign Contract:</b>
+                    </span>
+                    <field name="solartree_date_sign_contract"/>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="revisions" string="Revisions">
+                    <field name="revision_ids" context="{'default_lead_id': id}">
+                        <tree editable="bottom" string="Revisions">
+                            <button name="action_open_revision_form" type="object" string="Open" class="oe_highlight"/>
+                            <field name="name"/>
+                            <field name="offer_kwp"/>
+                            <field name="offer_kwn"/>
+                            <field name="offer_storage_kwh"/>
+                            <field name="offer_storage_kwn"/>
+                            <field name="offer_wp"/>
+                            <field name="offer_mbsv" widget="percentage"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

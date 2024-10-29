@@ -32,6 +32,7 @@
                             <field name="offer_storage_kwh"/>
                             <field name="offer_storage_kwn"/>
                             <field name="offer_ve_kwn"/>
+                            <field name="offer_class"/>
                         </group>
                         <group>
                             <field name="offer_kwh_year"/>
@@ -45,6 +46,7 @@
                             <field name="offer_tir_proyection" widget="percentage"/>
                             <field name="offer_storage_price" widget="monetary"/>
                             <field name="offer_ve_price" widget="monetary"/>
+                            <field name="offer_price_rx" widget="monetary"/>
                         </group>
                         <group>
                             <field name="offer_tot" widget="selection"/>
@@ -62,30 +64,22 @@
         </field>
     </record>
 
-    <!--    <record id="action_view_revisions" model="ir.actions.act_window">-->
-    <!--        <field name="name">Revisions</field>-->
-    <!--        <field name="res_model">crm.lead.revision</field>-->
-    <!--        <field name="view_mode">tree,form</field>-->
-    <!--        <field name="view_id" ref="view_crm_lead_revision_tree"/>-->
-    <!--        <field name="domain">[('lead_id', '=', active_id)]</field>-->
-    <!--        <field name="context">{'default_lead_id': active_id}</field>-->
-    <!--    </record>-->
-    <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
-        <field name="name">crm.lead.form.inherited.crm</field>
-        <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_schedule_meeting']" position="after">
-                <button class="oe_stat_button" type="object" name="action_view_revisions" icon="fa-eye"
-                        string="Revisiones"
-                        invisible="type == 'lead'">
-                    <div class="o_stat_info">
-                        <span class="o_stat_value">
-                            <field name="revision_count" widget="statinfo"/>
-                        </span>
-                    </div>
-                </button>
-            </xpath>
-        </field>
-    </record>
+<!--    <record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">-->
+<!--        <field name="name">crm.lead.form.inherited.crm</field>-->
+<!--        <field name="model">crm.lead</field>-->
+<!--        <field name="inherit_id" ref="crm.crm_lead_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//button[@name='action_schedule_meeting']" position="after">-->
+<!--                <button class="oe_stat_button" type="object" name="action_view_revisions" icon="fa-eye"-->
+<!--                        string="Revisiones"-->
+<!--                        invisible="type == 'lead'">-->
+<!--                    <div class="o_stat_info">-->
+<!--                        <span class="o_stat_value">-->
+<!--                            <field name="revision_count" widget="statinfo"/>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </button>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
 </odoo>
