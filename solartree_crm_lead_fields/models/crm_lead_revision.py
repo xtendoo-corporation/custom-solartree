@@ -7,7 +7,7 @@ class CrmLeadRevision(models.Model):
 
     name = fields.Char(
         string="Revision Name",
-        readonly=True,
+        readonly=False,
     )
     lead_id = fields.Many2one(
         'crm.lead',
@@ -120,6 +120,25 @@ class CrmLeadRevision(models.Model):
         readonly=True,
         compute='_compute_offer_class',
     )
+    offer_selected = fields.Boolean(
+        string='Selected',
+        default=False,
+    )
+
+    @api.onchange('offer_selected')
+    def _onchange_offer_selected(self):
+        for revision in self.lead_id.revision_ids:
+            revision.offer_selected = False
+
+        self.offer_selected = True
+
+    @api.model
+    def write(self, values):
+        if 'offer_selected' in values and values['offer_selected']:
+            for revision in self.lead_id.revision_ids:
+                revision.offer_selected = False
+            self.offer_selected = True
+        return super(CrmLeadRevision, self).write(values)
 
     @api.depends('offer_kwn')
     def _compute_offer_class(self):
