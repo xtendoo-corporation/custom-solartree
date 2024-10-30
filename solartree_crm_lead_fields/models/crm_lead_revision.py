@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.custom.src.odoo.odoo.addons.test_convert.tests.test_env import record
 
 
 class CrmLeadRevision(models.Model):
@@ -122,34 +123,50 @@ class CrmLeadRevision(models.Model):
     )
     offer_selected = fields.Boolean(
         string='Selected',
-        default=False,
+        compute='_compute_offer_selected',
     )
 
-    @api.onchange('offer_selected')
+    @api.depends('offer_selected')
     def _onchange_offer_selected(self):
-        for revision in self.lead_id.revision_ids:
-            revision.offer_selected = False
+        for record in self:
+            print("*"*80)
+            print("Onchange Offer Selected", record.id)
+            record.lead_id.selected_revision_id.id = record.id
 
-        self.offer_selected = True
+    def _compute_offer_selected(self):
+        print("/"*80)
+        print("_compute_offer_selected")
+
+        # self.lead_id.selected_revision_id.id = self.id
+
+        for record in self:
+
+            print("Compute offer selected", record.id)
+            print("Lead ID", record.lead_id)
+            print("Selected Revision ID", record.lead_id.selected_revision_id)
+            print("record.id == record.lead_id.selected_revision_id.id", record.id == record.lead_id.selected_revision_id.id)
+
+            record.offer_selected = (record.id == record.lead_id.selected_revision_id.id)
 
     @api.model
     def write(self, values):
-        if 'offer_selected' in values and values['offer_selected']:
-            for revision in self.lead_id.revision_ids:
-                revision.offer_selected = False
-            self.offer_selected = True
+        # if 'offer_selected' in values and values['offer_selected']:
+        #     for revision in self.lead_id.revision_ids:
+        #         revision.offer_selected = False
+        #     self.offer_selected = True
         return super(CrmLeadRevision, self).write(values)
 
     @api.depends('offer_kwn')
     def _compute_offer_class(self):
-        if self.offer_kwn > 1000:
-            self.offer_class = "Mayor 1 MW"
-        if 1000 >= self.offer_kwn > 100:
-            self.offer_class = "INDUSTRIAL"
-        if  100 >= self.offer_kwn > 10:
-            self.offer_class = "COMERCIAL"
-        if  self.offer_kwn <= 10:
-            self.offer_class = "PEQUEÑA INSTALACIÓN"
+        for record in self:
+            if record.offer_kwn > 1000:
+                record.offer_class = "Mayor 1 MW"
+            if 1000 >= record.offer_kwn > 100:
+                record.offer_class = "INDUSTRIAL"
+            if 100 >= record.offer_kwn > 10:
+                record.offer_class = "COMERCIAL"
+            if record.offer_kwn <= 10:
+                record.offer_class = "PEQUEÑA INSTALACIÓN"
 
     @api.depends('offer_fv_price', 'offer_storage_price', 'offer_ve_price')
     def _compute_offer_price_rx(self):
