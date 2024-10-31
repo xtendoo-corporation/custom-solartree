@@ -117,7 +117,7 @@ class CrmLead(models.Model):
         string="Selected Revision",
     )
 
-    @api.depends('revision_ids.offer_selected')
+    @api.depends('revision_ids, revision_ids.offer_selected')
     def _compute_selected_revision_id(self):
         print("?" * 80)
         print("_compute_selected_revision_id")

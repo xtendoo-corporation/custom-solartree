@@ -1,5 +1,4 @@
 from odoo import models, fields, api
-from odoo.custom.src.odoo.odoo.addons.test_convert.tests.test_env import record
 
 
 class CrmLeadRevision(models.Model):
@@ -126,7 +125,7 @@ class CrmLeadRevision(models.Model):
         compute='_compute_offer_selected',
     )
 
-    @api.depends('offer_selected')
+    @api.onchange('offer_selected')
     def _onchange_offer_selected(self):
         for record in self:
             print("*"*80)
@@ -147,14 +146,6 @@ class CrmLeadRevision(models.Model):
             print("record.id == record.lead_id.selected_revision_id.id", record.id == record.lead_id.selected_revision_id.id)
 
             record.offer_selected = (record.id == record.lead_id.selected_revision_id.id)
-
-    @api.model
-    def write(self, values):
-        # if 'offer_selected' in values and values['offer_selected']:
-        #     for revision in self.lead_id.revision_ids:
-        #         revision.offer_selected = False
-        #     self.offer_selected = True
-        return super(CrmLeadRevision, self).write(values)
 
     @api.depends('offer_kwn')
     def _compute_offer_class(self):
@@ -203,15 +194,14 @@ class CrmLeadRevision(models.Model):
 
             print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         print("Valores recibidos: ", vals)
         lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
 
         if lead_id:
             existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-            vals[
-                'name'] = f'R{existing_revisions_count}'
+            vals['name'] = f'R{existing_revisions_count}'
             print("LEAD ID encontrado: " + str(lead_id))
             print("Nombre de la revisión asignado: " + vals['name'])
 
