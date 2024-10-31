@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Partner -->
+                <xpath expr="//form/sheet/group/group[2]" position="inside">
+                    <field name="registration_date"/>
+                    <field name="contact_profile" widget="selection"/>
+                    <field name="show_industrial_contact" invisible="1"/>
+                    <field name="industrial_contact" widget="selection" invisible="not show_industrial_contact"/>
+                    <field name="colaborator"/>
+                    <field name="colaborator_type" widget="selection" invisible="colaborator == False"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]" position="inside">
+                    <field name="geographical_scope" widget="selection"/>
+                    <field name="commercial_team" widget="selection"/>
+                    <field name="associated_commercial_channel" widget="selection"/>
+                </xpath>
+                <xpath expr="//group/group/div[1]" position="after">
+                    <label for="date_localization" string="Geo Location"/>
+                    <div>
+                        <span>Lat :
+                            <field name="partner_latitude" nolabel="1" class="oe_inline"/>
+                        </span>
+                        <br/>
+                        <span>Long:
+                            <field name="partner_longitude" nolabel="1" class="oe_inline"/>
+                        </span>
+                        <br/>
+                        <span invisible="not date_localization">Updated on:
+                            <field name="date_localization" nolabel="1" readonly="1" class="oe_inline"/>
+                            <br/>
+                        </span>
+                        <div name="geo_localize_button">
+                            <button invisible="partner_latitude != 0 or partner_longitude != 0"
+                                    icon="fa-gear" string="Compute based on address" title="Compute Localization"
+                                    name="geo_localize" type="object" class="btn btn-link p-0"/>
+                            <button invisible="partner_latitude == 0 and partner_longitude == 0"
+                                    icon="fa-refresh" string="Refresh" title="Refresh Localization"
+                                    name="geo_localize" type="object" class="btn btn-link p-0"/>
+                        </div>
+                    </div>
+                </xpath>
+                <!--Partner child-->
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group[2]" position="inside">
+                    <button
+                            class="oe_highlight"
+                            name="open_map"
+                            type="object"
+                            string="Map"
+                            invisible="not city"
+                            icon="fa-map-marker"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group[1]/div" position="after">
+                    <label for="date_localization" string="Geo Location"/>
+                    <div>
+                        <span>Lat :
+                            <field name="partner_latitude" nolabel="1" class="oe_inline"/>
+                        </span>
+                        <br/>
+                        <span>Long:
+                            <field name="partner_longitude" nolabel="1" class="oe_inline"/>
+                        </span>
+                        <br/>
+                        <span invisible="not date_localization">Updated on:
+                            <field name="date_localization" nolabel="1" readonly="1" class="oe_inline"/>
+                            <br/>
+                        </span>
+                        <div name="geo_localize_button">
+                            <button invisible="partner_latitude != 0 or partner_longitude != 0"
+                                    icon="fa-gear" string="Compute based on address" title="Compute Localization"
+                                    name="geo_localize" type="object" class="btn btn-link p-0"/>
+                            <button invisible="partner_latitude == 0 and partner_longitude == 0"
+                                    icon="fa-refresh" string="Refresh" title="Refresh Localization"
+                                    name="geo_localize" type="object" class="btn btn-link p-0"/>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

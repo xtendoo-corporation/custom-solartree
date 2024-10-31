@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="view_geographical_scope_tree" model="ir.ui.view">
+        <field name="name">geographical.scope.tree</field>
+        <field name="model">geographical.scope</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_geographical_scope_form" model="ir.ui.view">
+        <field name="name">geographical.scope.form</field>
+        <field name="model">geographical.scope</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_geographical_scope" model="ir.actions.act_window">
+        <field name="name">Geographical Scope</field>
+        <field name="res_model">geographical.scope</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

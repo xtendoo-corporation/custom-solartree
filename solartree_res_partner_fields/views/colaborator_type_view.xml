@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="view_colaborator_type_tree" model="ir.ui.view">
+        <field name="name">colaborator.type.tree</field>
+        <field name="model">colaborator.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_colaborator_type_form" model="ir.ui.view">
+        <field name="name">colaborator.type.form</field>
+        <field name="model">colaborator.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_colaborator_type" model="ir.actions.act_window">
+        <field name="name">Colaborator Type</field>
+        <field name="res_model">colaborator.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+{
+    "name": "Solartree Res Partner Fields",
+    "version": "17.0.1.0.1",
+    "category": "Res Partner",
+    "author": "Xtendoo",
+    "license": "AGPL-3",
+    "depends": [
+        "base",
+        "partner_external_map",
+        "base_geolocalize",
+    ],
+    "data": [
+        "data/res_partner_data.xml",
+        "views/res_partner_view.xml",
+        "views/associated_commercial_channel_view.xml",
+        "views/colaborator_type_view.xml",
+        "views/commercial_team_view.xml",
+        "views/contact_profile_view.xml",
+        "views/geographical_scope_view.xml",
+        "views/industrial_contact_view.xml",
+        "views/res_partner_menu_view.xml",
+        'security/ir.model.access.csv',
+    ],
+    "installable": True,
+}

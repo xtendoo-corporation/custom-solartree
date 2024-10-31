@@ -1,0 +1,120 @@
+<odoo noupdate="1">
+    <!-- Geographical Scope -->
+    <record id="geographical_scope_1" model="geographical.scope">
+        <field name="name">Nacional</field>
+    </record>
+    <record id="geographical_scope_2" model="geographical.scope">
+        <field name="name">Regional</field>
+    </record>
+
+    <!-- Contact Profile -->
+    <record id="contact_profile_1" model="contact.profile">
+        <field name="name">IPP</field>
+    </record>
+    <record id="contact_profile_2" model="contact.profile">
+        <field name="name">Constructora</field>
+    </record>
+    <record id="contact_profile_3" model="contact.profile">
+        <field name="name">Industrial</field>
+    </record>
+    <record id="contact_profile_4" model="contact.profile">
+        <field name="name">Comercial</field>
+    </record>
+    <record id="contact_profile_5" model="contact.profile">
+        <field name="name">Autónomo</field>
+    </record>
+    <record id="contact_profile_6" model="contact.profile">
+        <field name="name">Particular</field>
+    </record>
+
+    <!-- Industrial Contact -->
+    <record id="industrial_contact_1" model="industrial.contact">
+        <field name="name">Industria automotriz</field>
+    </record>
+    <record id="industrial_contact_2" model="industrial.contact">
+        <field name="name">Industria alimentaria</field>
+    </record>
+    <record id="industrial_contact_3" model="industrial.contact">
+        <field name="name">Industria farmacéutica</field>
+    </record>
+    <record id="industrial_contact_4" model="industrial.contact">
+        <field name="name">Industria textil</field>
+    </record>
+    <record id="industrial_contact_5" model="industrial.contact">
+        <field name="name">Industria tecnológica</field>
+    </record>
+    <record id="industrial_contact_6" model="industrial.contact">
+        <field name="name">Industria energética</field>
+    </record>
+    <record id="industrial_contact_7" model="industrial.contact">
+        <field name="name">Industria aeroespacial</field>
+    </record>
+    <record id="industrial_contact_8" model="industrial.contact">
+        <field name="name">Industria química</field>
+    </record>
+    <record id="industrial_contact_9" model="industrial.contact">
+        <field name="name">Industria petrolera</field>
+    </record>
+    <record id="industrial_contact_10" model="industrial.contact">
+        <field name="name">Industria del entretenimiento</field>
+    </record>
+    <record id="industrial_contact_11" model="industrial.contact">
+        <field name="name">Industria de la construcción</field>
+    </record>
+    <record id="industrial_contact_12" model="industrial.contact">
+        <field name="name">Industria metalúrgica</field>
+    </record>
+    <record id="industrial_contact_13" model="industrial.contact">
+        <field name="name">Industria de la moda</field>
+    </record>
+    <record id="industrial_contact_14" model="industrial.contact">
+        <field name="name">Industria de la salud</field>
+    </record>
+    <record id="industrial_contact_15" model="industrial.contact">
+        <field name="name">Industria turística</field>
+    </record>
+    <record id="industrial_contact_16" model="industrial.contact">
+        <field name="name">Industria editorial</field>
+    </record>
+    <record id="industrial_contact_17" model="industrial.contact">
+        <field name="name">Industria agrícola</field>
+    </record>
+    <record id="industrial_contact_18" model="industrial.contact">
+        <field name="name">Industria de la educación</field>
+    </record>
+    <record id="industrial_contact_19" model="industrial.contact">
+        <field name="name">Industria de la música</field>
+    </record>
+    <record id="industrial_contact_20" model="industrial.contact">
+        <field name="name">Industria de la informática</field>
+    </record>
+
+    <!-- Commercial Team -->
+    <record id="commercial_team_1" model="commercial.team">
+        <field name="name">AMA</field>
+    </record>
+    <record id="commercial_team_2" model="commercial.team">
+        <field name="name">TGR</field>
+    </record>
+    <record id="commercial_team_3" model="commercial.team">
+        <field name="name">CSS</field>
+    </record>
+
+    <!-- Colaborator type -->
+    <record id="colaborator_type_1" model="colaborator.type">
+        <field name="name">Ingeniería</field>
+    </record>
+    <record id="colaborator_type_2" model="colaborator.type">
+        <field name="name">Asesor energético</field>
+    </record>
+    <record id="colaborator_type_2" model="colaborator.type">
+        <field name="name">Asesor agrícola</field>
+    </record>
+    <record id="colaborator_type_3" model="colaborator.type">
+        <field name="name">Autónomo</field>
+    </record>
+    <record id="colaborator_type_4" model="colaborator.type">
+        <field name="name">Corredor de seguros</field>
+    </record>
+
+</odoo>

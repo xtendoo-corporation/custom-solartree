@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="view_commercial_team_tree" model="ir.ui.view">
+        <field name="name">commercial.team.tree</field>
+        <field name="model">commercial.team</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_commercial_team_form" model="ir.ui.view">
+        <field name="name">commercial.team.form</field>
+        <field name="model">commercial.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_commercial_team" model="ir.actions.act_window">
+        <field name="name">Commercial Team</field>
+        <field name="res_model">commercial.team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
