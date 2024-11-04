@@ -18,6 +18,7 @@
         "views/crm_lead_structure_type_view.xml",
         "views/crm_lead_structure_model_view.xml",
         "views/crm_lead_revision_view.xml",
+        "views/crm_lead_revision_prices.xml",
         "views/crm_lead_tot_view.xml",
         'security/ir.model.access.csv',
     ],

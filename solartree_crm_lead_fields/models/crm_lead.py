@@ -117,6 +117,31 @@ class CrmLead(models.Model):
         string="Selected Revision",
         domain="[('lead_id', '=', id)]",
     )
+    #Campos nuevos a partir de 04/11/24
+    design_notes = fields.Text(
+        string="Observaciones Diseño",
+        help="Notas relacionadas con el diseño."
+    )
+    customer_consumption_mwh = fields.Float(
+        string="Customer Consumption (MWh/year)",
+        digits=(16, 0),
+        help="Annual customer energy consumption in MWh."
+    )
+    max_power_bie = fields.Float(
+        string="Max Power BIE (kW)",
+        digits=(16, 2),
+        help="Maximum BIE power in kW."
+    )
+    lead_fee = fields.Many2one(
+        comodel_name="crm.lead.fee",
+        string="Lead Fee Model",
+        help="Fee Model of the lead"
+    )
+    lead_tension_level = fields.Many2one(
+        comodel_name="crm.lead.tension.level",
+        string="Lead Tension Level Model",
+        help="Tension Level Model of the lead"
+    )
 
     @api.depends('revision_ids.offer_selected')
     def _compute_selected_revision_id(self):

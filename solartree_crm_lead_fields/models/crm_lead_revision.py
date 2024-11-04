@@ -15,6 +15,53 @@ class CrmLeadRevision(models.Model):
         required=True,
         ondelete='cascade'
     )
+    solartree_lead_type_id = fields.Many2one(
+        comodel_name="crm.lead.type",
+        string="Lead Type",
+        related="lead_id.solartree_lead_type_id",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_scope = fields.Many2one(
+        comodel_name="crm.lead.scope",
+        string="Lead Scope",
+        related="lead_id.solartree_lead_scope",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_modality_id = fields.Many2one(
+        comodel_name="crm.lead.modality",
+        string="Lead Modality",
+        related="lead_id.solartree_lead_modality_id",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_collective = fields.Boolean(
+        string="Lead Collective",
+        related="lead_id.solartree_lead_collective",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_storage = fields.Boolean(
+        string="Lead Storage",
+        related="lead_id.solartree_lead_storage",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_structure_type = fields.Many2one(
+        comodel_name="crm.lead.structure.type",
+        string="Lead Structure Type",
+        related="lead_id.solartree_lead_structure_type",
+        readonly=True,
+        store=True
+    )
+    solartree_lead_structure_model = fields.Many2one(
+        comodel_name="crm.lead.structure.model",
+        string="Lead Structure Model",
+        related="lead_id.solartree_lead_structure_model",
+        readonly=True,
+        store=True
+    )
     offer_kwp = fields.Float(
         'Offer kWp'
     )
@@ -124,6 +171,148 @@ class CrmLeadRevision(models.Model):
         string='Selected',
         compute='_compute_offer_selected',
     )
+    offer_evacuation = fields.Many2one(
+        comodel_name="crm.lead.evacuation",
+        string="Evacuation revisions field",
+    )
+
+    revision_price_ids = fields.One2many(
+        "crm.lead.revision.prices",
+        "revision_id",
+        string="Revision Prices"
+    )
+
+    offer_autoconsumo_directo_kwh = fields.Float(
+        string='Oferta Autoconsumo Directo (kWh/año)',
+        digits=(16, 0)
+    )
+    offer_avg_price_per_kwh = fields.Float(
+        string='Precio medio (€/kWh)',
+        digits=(12, 4)
+    )
+    offer_excess_price_per_kwh = fields.Float(
+        string='Precio excedentes (€/kWh)',
+        digits=(12, 4)
+    )
+    offer_autarky_fee_percentage = fields.Float(
+        string='Cuota autárquica (%)',
+        compute='_compute_autarky_fee_percentage',
+        digits=(12, 1)
+    )
+    offer_pb_exced_min = fields.Float(
+        string='PB Exced. Min',
+        digits=(16, 1)
+    )
+    offer_tir_exced_min = fields.Float(
+        string='TIR Exced. Min',
+        digits=(16, 1)
+    )
+    offer_modules_manufacturer = fields.Text(
+        string='Oferta Módulos Fabricante'
+    )
+    offer_modules_model = fields.Text(
+        string='Oferta Módulos Modelo'
+    )
+    offer_modules_power_unit = fields.Integer(
+        string='Oferta Módulos Potencia Unitaria (Wp)'
+    )
+    offer_modules_quantity = fields.Integer(
+        string='Oferta Módulos Cantidad'
+    )
+
+    @api.depends('offer_fee_external', 'offer_price_rx')
+    def _compute_offer_fee_external_euro(self):
+        for record in self:
+            record.offer_fee_external_euro = record.offer_fee_external * record.offer_price_rx if record.offer_price_rx else 0.0
+
+    @api.depends('offer_fee_external_euro', 'offer_kwp')
+    def _compute_offer_fee_external_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_fee_external_per_kWp = record.offer_fee_external_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_fee_external_per_kWp = 0.0
+
+    @api.depends('offer_fee_internal', 'offer_price_rx')
+    def _compute_offer_fee_internal_euro(self):
+        for record in self:
+            record.offer_fee_internal_euro = record.offer_fee_internal * record.offer_price_rx if record.offer_price_rx else 0.0
+
+    @api.depends('offer_fee_internal_euro', 'offer_kwp')
+    def _compute_offer_fee_internal_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_fee_internal_per_kWp = record.offer_fee_internal_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_fee_internal_per_kWp = 0.0
+
+    @api.depends('offer_gg', 'offer_price_rx')
+    def _compute_offer_fee_gg_euro(self):
+        for record in self:
+            record.offer_fee_gg_euro = record.offer_gg * record.offer_price_rx if record.offer_price_rx else 0.0
+
+    @api.depends('offer_fee_gg_euro', 'offer_kwp')
+    def _compute_offer_fee_gg_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_fee_gg_per_kWp = record.offer_fee_gg_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_fee_gg_per_kWp = 0.0
+
+    @api.depends('offer_bi', 'offer_price_rx')
+    def _compute_offer_fee_bi_euro(self):
+        for record in self:
+            record.offer_fee_bi_euro = record.offer_bi * record.offer_price_rx if record.offer_price_rx else 0.0
+
+    @api.depends('offer_fee_bi_euro', 'offer_kwp')
+    def _compute_offer_fee_bi_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_fee_bi_per_kWp = record.offer_fee_bi_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_fee_bi_per_kWp = 0.0
+
+    @api.depends('offer_mbsv', 'offer_price_rx')
+    def _compute_offer_fee_mbsv_euro(self):
+        for record in self:
+            record.offer_fee_mbsv_euro = record.offer_mbsv * record.offer_price_rx if record.offer_price_rx else 0.0
+
+    @api.depends('offer_fee_mbsv_euro', 'offer_kwp')
+    def _compute_offer_fee_mbsv_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_fee_mbsv_per_kWp = record.offer_fee_mbsv_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_fee_mbsv_per_kWp = 0.0
+
+    @api.depends('offer_price_rx', 'offer_fee_mbsv_euro')
+    def _compute_offer_cost_euro(self):
+        for record in self:
+            record.offer_cost_euro = record.offer_price_rx - record.offer_fee_mbsv_euro if record.offer_price_rx else 0.0
+
+    @api.depends('offer_cost_euro', 'offer_kwp')
+    def _compute_offer_cost_per_kwp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.offer_cost_per_kWp = record.offer_cost_euro / (record.offer_kwp * 1000)
+            else:
+                record.offer_cost_per_kWp = 0.0
+
+
+
+
+
+
+
+
+    @api.depends('offer_kwh_year', 'lead_id.customer_consumption_mwh')
+    def _compute_autarky_fee_percentage(self):
+        for record in self:
+            if record.lead_id.customer_consumption_mwh:
+                record.offer_autarky_fee_percentage = (record.offer_kwh_year / (
+                        1000 * record.lead_id.customer_consumption_mwh)) * 100
+            else:
+                record.offer_autarky_fee_percentage = 0.0
 
     @api.onchange('offer_selected')
     def _onchange_offer_selected(self):

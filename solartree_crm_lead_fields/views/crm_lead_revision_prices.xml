@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_crm_lead_revision_prices_tree" model="ir.ui.view">
+        <field name="name">crm.lead.revision.prices.tree</field>
+        <field name="model">crm.lead.revision.prices</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="revision_id"/>
+                <field name="type_price_id"/>
+                <field name="amount_euro"/>
+                <field name="print_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_prices_form" model="ir.ui.view">
+        <field name="name">crm.lead.revision.prices.form</field>
+        <field name="model">crm.lead.revision.prices</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="revision_id" invisible="1"/>
+                        <field name="type_price_id"/>
+                        <field name="amount_euro"/>
+                        <field name="print_amount"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

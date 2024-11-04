@@ -8,3 +8,8 @@ from . import crm_lead_structure_type
 from . import crm_lead_structure_model
 from . import crm_lead_revision
 from . import crm_tot
+from . import crm_lead_fee
+from . import crm_tension_level
+from . import crm_lead_evacuation
+from . import crm_lead_revision_prices
+from . import crm_lead_revision_price_type

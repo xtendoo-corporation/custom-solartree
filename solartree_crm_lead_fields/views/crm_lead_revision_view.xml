@@ -4,7 +4,6 @@
         <field name="model">crm.lead.revision</field>
         <field name="arch" type="xml">
             <tree string="Revisions">
-<!--                <field name="offer_selected" widget="boolean_toggle"/>-->
                 <field name="name"/>
                 <field name="offer_kwp"/>
                 <field name="offer_kwn"/>
@@ -34,7 +33,13 @@
                             <field name="offer_storage_kwn"/>
                             <field name="offer_ve_kwn"/>
                             <field name="offer_class"/>
-<!--                            <field name="offer_selected" widget="boolean_toggle"/>-->
+                            <field name="solartree_lead_type_id"/>
+                            <field name="solartree_lead_scope"/>
+                            <field name="solartree_lead_modality_id"/>
+                            <field name="solartree_lead_collective"/>
+                            <field name="solartree_lead_storage"/>
+                            <field name="solartree_lead_structure_type"/>
+                            <field name="solartree_lead_structure_model"/>
                         </group>
                         <group>
                             <field name="offer_kwh_year"/>
@@ -59,6 +64,28 @@
                             <field name="offer_gg" widget="percentage"/>
                             <field name="offer_bi" widget="percentage"/>
                             <field name="offer_mbsv" widget="percentage"/>
+                        </group>
+                        <group>
+                            <field name="offer_evacuation" widget="selection"/>
+
+                            <field name="revision_price_ids">
+                                <tree string="Revision Prices">
+                                    <field name="revision_id"/>
+                                    <field name="type_price_id"/>
+                                    <field name="amount_euro"/>
+                                    <field name="print_amount"/>
+                                </tree>
+                            </field>
+                            <field name="offer_autoconsumo_directo_kwh"/>
+                            <field name="offer_avg_price_per_kwh" widget="monetary"/>
+                            <field name="offer_excess_price_per_kwh" widget="monetary"/>
+                            <field name="offer_autarky_fee_percentage" widget="percentage"/>
+                            <field name="offer_pb_exced_min"/>
+                            <field name="offer_tir_exced_min"/>
+                            <field name="offer_modules_manufacturer"/>
+                            <field name="offer_modules_model"/>
+                            <field name="offer_modules_power_unit"/>
+                            <field name="offer_modules_quantity"/>
                         </group>
                     </group>
                 </sheet>
