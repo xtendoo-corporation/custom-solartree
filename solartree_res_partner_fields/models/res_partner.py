@@ -39,7 +39,7 @@ class Partner(models.Model):
 
     #FALTA CONOCER LAS LISTAS DE CANALES COMERCIALES
     associated_commercial_channel = fields.Many2one(
-        comodel_name='associated.commercial.channel',
+        comodel_name='crm.lead.channel',
         string="Associated Commercial Channel"
     )
 

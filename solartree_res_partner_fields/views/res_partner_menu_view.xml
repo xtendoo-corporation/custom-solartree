@@ -4,39 +4,33 @@
               parent="contacts.res_partner_menu_config"
               sequence="21"/>
 
-    <menuitem id="submenu_associated_commercial_channel"
-              name="Associated Commercial Channel"
-              parent="menu_contacts_solartree_group"
-              action="action_associated_commercial_channel"
-              sequence="22"/>
-
     <menuitem id="submenu_colaborator_type"
               name="Colaborator Type"
               parent="menu_contacts_solartree_group"
               action="action_colaborator_type"
-              sequence="23"/>
+              sequence="22"/>
 
     <menuitem id="submenu_commercial_team"
               name="Commercial Team"
               parent="menu_contacts_solartree_group"
               action="action_commercial_team"
-              sequence="24"/>
+              sequence="23"/>
 
     <menuitem id="submenu_contact_profile"
               name="Contact Profile"
               parent="menu_contacts_solartree_group"
               action="action_contact_profile"
-              sequence="25"/>
+              sequence="24"/>
 
     <menuitem id="submenu_geographical_scope"
               name="Geographical Scope"
               parent="menu_contacts_solartree_group"
               action="action_geographical_scope"
-              sequence="26"/>
+              sequence="25"/>
 
     <menuitem id="submenu_industrial_contact"
               name="Industrial Contact"
               parent="menu_contacts_solartree_group"
               action="action_industrial_contact"
-              sequence="27"/>
+              sequence="26"/>
 </odoo>
