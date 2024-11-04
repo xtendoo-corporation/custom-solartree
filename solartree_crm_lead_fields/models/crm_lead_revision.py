@@ -128,24 +128,25 @@ class CrmLeadRevision(models.Model):
     @api.onchange('offer_selected')
     def _onchange_offer_selected(self):
         for record in self:
-            print("*"*80)
+            print("*" * 80)
             print("Onchange Offer Selected", record.id)
-            record.lead_id.selected_revision_id.id = record.id
+            if record.offer_selected:
+                # Deseleccionar otras revisiones
+                record.lead_id.revision_ids.filtered(lambda r: r.id != record.id).write({'offer_selected': False})
+                record.lead_id.selected_revision_id = record
 
     def _compute_offer_selected(self):
-        print("/"*80)
-        print("_compute_offer_selected")
-
-        # self.lead_id.selected_revision_id.id = self.id
-
         for record in self:
+            record.offer_selected = record.id == record.lead_id.selected_revision_id.id
 
-            print("Compute offer selected", record.id)
-            print("Lead ID", record.lead_id)
-            print("Selected Revision ID", record.lead_id.selected_revision_id)
-            print("record.id == record.lead_id.selected_revision_id.id", record.id == record.lead_id.selected_revision_id.id)
-
-            record.offer_selected = (record.id == record.lead_id.selected_revision_id.id)
+    @api.model
+    def write(self, vals):
+        result = super(CrmLeadRevision, self).write(vals)
+        if 'offer_selected' in vals and vals['offer_selected']:
+            for record in self:
+                # Deseleccionar otras revisiones del mismo lead_id
+                record.lead_id.revision_ids.filtered(lambda r: r.id != record.id).write({'offer_selected': False})
+        return result
 
     @api.depends('offer_kwn')
     def _compute_offer_class(self):
@@ -195,20 +196,19 @@ class CrmLeadRevision(models.Model):
             print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
     @api.model_create_multi
-    def create(self, vals):
-        print("Valores recibidos: ", vals)
-        lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
+    def create(self, vals_list):
+        for vals in vals_list:
+            lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
 
-        if lead_id:
-            existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-            vals['name'] = f'R{existing_revisions_count}'
-            print("LEAD ID encontrado: " + str(lead_id))
-            print("Nombre de la revisión asignado: " + vals['name'])
+            if lead_id:
+                existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+                vals['name'] = f'R{existing_revisions_count}'
+                print(f"LEAD ID encontrado: {lead_id}")
+                print(f"Nombre de la revisión asignado: {vals['name']}")
+            else:
+                print("LEAD ID no encontrado en los valores o contexto")
 
-        else:
-            print("LEAD ID no encontrado en los valores o contexto")
-
-        return super(CrmLeadRevision, self).create(vals)
+        return super(CrmLeadRevision, self).create(vals_list)
 
     def action_open_revision_form(self):
         return {

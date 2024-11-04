@@ -115,28 +115,27 @@ class CrmLead(models.Model):
     selected_revision_id = fields.Many2one(
         'crm.lead.revision',
         string="Selected Revision",
+        domain="[('lead_id', '=', id)]",
     )
 
-    @api.depends('revision_ids, revision_ids.offer_selected')
+    @api.depends('revision_ids.offer_selected')
     def _compute_selected_revision_id(self):
         print("?" * 80)
         print("_compute_selected_revision_id")
         for record in self:
             selected_revision = record.revision_ids.filtered(lambda r: r.offer_selected)
-            record.selected_revision_id = selected_revision
+            record.selected_revision_id = selected_revision[:1]  # Only take the first selected revision
 
     @api.onchange('revision_ids')
     def _onchange_revision_ids(self):
         print("-" * 80)
         print("Onchange Revision IDs")
-
         for record in self:
             offer_selected_revisions = record.revision_ids.filtered(lambda r: r.offer_selected)
-
-            print("Onchange Revision IDs", offer_selected_revisions[0].name)
-
             if offer_selected_revisions:
                 record.selected_revision_id = offer_selected_revisions[0]
+            else:
+                record.selected_revision_id = False
 
     @api.constrains('solartree_cups')
     def _check_cups_length(self):
