@@ -10,27 +10,21 @@
               action="action_colaborator_type"
               sequence="22"/>
 
-    <menuitem id="submenu_commercial_team"
-              name="Commercial Team"
-              parent="menu_contacts_solartree_group"
-              action="action_commercial_team"
-              sequence="23"/>
-
     <menuitem id="submenu_contact_profile"
               name="Contact Profile"
               parent="menu_contacts_solartree_group"
               action="action_contact_profile"
-              sequence="24"/>
+              sequence="23"/>
 
     <menuitem id="submenu_geographical_scope"
               name="Geographical Scope"
               parent="menu_contacts_solartree_group"
               action="action_geographical_scope"
-              sequence="25"/>
+              sequence="24"/>
 
     <menuitem id="submenu_industrial_contact"
               name="Industrial Contact"
               parent="menu_contacts_solartree_group"
               action="action_industrial_contact"
-              sequence="26"/>
+              sequence="25"/>
 </odoo>

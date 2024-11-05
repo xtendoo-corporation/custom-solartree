@@ -14,7 +14,6 @@
         "data/res_partner_data.xml",
         "views/res_partner_view.xml",
         "views/colaborator_type_view.xml",
-        "views/commercial_team_view.xml",
         "views/contact_profile_view.xml",
         "views/geographical_scope_view.xml",
         "views/industrial_contact_view.xml",

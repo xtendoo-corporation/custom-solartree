@@ -89,17 +89,6 @@
         <field name="name">Industria de la informática</field>
     </record>
 
-    <!-- Commercial Team -->
-    <record id="commercial_team_1" model="commercial.team">
-        <field name="name">AMA</field>
-    </record>
-    <record id="commercial_team_2" model="commercial.team">
-        <field name="name">TGR</field>
-    </record>
-    <record id="commercial_team_3" model="commercial.team">
-        <field name="name">CSS</field>
-    </record>
-
     <!-- Colaborator type -->
     <record id="colaborator_type_1" model="colaborator.type">
         <field name="name">Ingeniería</field>

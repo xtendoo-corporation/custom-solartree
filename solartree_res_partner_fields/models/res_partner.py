@@ -36,17 +36,14 @@ class Partner(models.Model):
                 record.contact_profile.name == 'Industrial' if record.contact_profile else False
             )
 
-
-    #FALTA CONOCER LAS LISTAS DE CANALES COMERCIALES
     associated_commercial_channel = fields.Many2one(
         comodel_name='crm.lead.channel',
         string="Associated Commercial Channel"
     )
 
-    #VER SI ES ADECUADO SELECCIONAR UNA PERSONA DE CONTACTO
     commercial_team = fields.Many2one(
-        comodel_name='commercial.team',
-        string="Commercial Team"
+        comodel_name='hr.employee',
+        string="Commercial Team",
     )
 
     colaborator = fields.Boolean(
