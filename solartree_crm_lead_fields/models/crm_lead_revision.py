@@ -63,22 +63,22 @@ class CrmLeadRevision(models.Model):
         store=True
     )
     offer_kwp = fields.Float(
-        'Offer kWp'
+        string='Offer kWp'
     )
     offer_kwn = fields.Float(
-        'Offer kWn',
+        string='Offer kWn',
         digits=(16, 1)
     )
     offer_storage_kwh = fields.Float(
-        'Offer storage kWh',
+        string='Offer storage kWh',
         digits=(16, 1)
     )
     offer_storage_kwn = fields.Float(
-        'Offer storage kWn',
+        string='Offer storage kWn',
         digits=(16, 1)
     )
     offer_ve_kwn = fields.Float(
-        'Offer VE kWh',
+        string='Offer VE kWh',
         digits=(16, 1)
     )
     offer_tot = fields.Many2one(
@@ -86,10 +86,10 @@ class CrmLeadRevision(models.Model):
         string="TOT revisions field",
     )
     offer_HT = fields.Float(
-        'Offer HT'
+        string='Offer HT'
     )
     offer_date_deliver = fields.Date(
-        'Offer deliver date'
+        string='Offer deliver date'
     )
     # offer_fee_external = fields.Float(
     #     'Offer fee external'
@@ -113,6 +113,58 @@ class CrmLeadRevision(models.Model):
     def _compute_fee_mbsv(self):
         for record in self:
             record.fee_mbsv = record.total_revision_percentage
+
+    fee_mbsv_price = fields.Monetary(
+        string='Fee MBSV Price',
+        currency_field='company_currency',
+        compute="_compute_fee_mbsv_price",
+    )
+
+    @api.depends('fee_mbsv', 'offer_price_rx')
+    def _compute_fee_mbsv_price(self):
+        for record in self:
+            record.fee_mbsv_price = record.offer_price_rx * record.fee_mbsv
+
+    fee_mbsv_price_wp = fields.Monetary(
+        string='Fee MBSV Price WP',
+        currency_field='company_currency',
+        digits=(16, 4),
+        compute="_compute_fee_mbsv_price_wp",
+    )
+
+    @api.depends('fee_mbsv_price', 'offer_kwp')
+    def _compute_fee_mbsv_price_wp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.fee_mbsv_price_wp = record.fee_mbsv_price / (record.offer_kwp * 1000)
+            else:
+                record.fee_mbsv_price_wp = 0.0
+
+    fee_cost_price = fields.Monetary(
+        string='Fee Cost Price',
+        currency_field='company_currency',
+        compute="_compute_fee_cost_price",
+    )
+
+    @api.depends('fee_mbsv_price', 'offer_price_rx')
+    def _compute_fee_cost_price(self):
+        for record in self:
+            record.fee_cost_price = record.offer_price_rx - record.fee_mbsv_price
+
+    fee_cost_price_wp = fields.Monetary(
+        string='Fee Cost Price WP',
+        currency_field='company_currency',
+        digits=(16, 4),
+        compute="_compute_fee_cost_price_wp",
+    )
+
+    @api.depends('fee_cost_price', 'offer_kwp')
+    def _compute_fee_cost_price_wp(self):
+        for record in self:
+            if record.offer_kwp:
+                record.fee_cost_price_wp = record.fee_cost_price / (record.offer_kwp * 1000)
+            else:
+                record.fee_cost_price_wp = 0.0
 
     offer_fv_price = fields.Monetary(
         string='Offer FV price',
@@ -139,22 +191,22 @@ class CrmLeadRevision(models.Model):
         string='TIR OMIP'
     )
     offer_pb_proyection = fields.Float(
-        'PB proyection',
+        string='PB proyection',
         digits=(16, 1)
     )
     offer_tir_proyection = fields.Integer(
-        'TIR proyection'
+        string='TIR proyection'
     )
     offer_storage_price = fields.Monetary(
-        'Offer storage price',
+        string='Offer storage price',
         currency_field='company_currency',
     )
     offer_ve_price = fields.Monetary(
-        'Offer VE Price',
+        string='Offer VE Price',
         currency_field='company_currency',
     )
     offer_kwh_year = fields.Integer(
-        'Offer kWh/year',
+        string='Offer kWh/year',
     )
     company_currency = fields.Many2one(
         "res.currency",
@@ -259,34 +311,19 @@ class CrmLeadRevision(models.Model):
 
             print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
-    # @api.model_create_multi
-    # def create(self, vals_list):
-    #     for vals in vals_list:
-    #         lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
-    #
-    #         if lead_id:
-    #             existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-    #             vals['name'] = f'R{existing_revisions_count}'
-    #             print(f"LEAD ID encontrado: {lead_id}")
-    #             print(f"Nombre de la revisión asignado: {vals['name']}")
-    #         else:
-    #             print("LEAD ID no encontrado en los valores o contexto")
-    #
-    #     return super(CrmLeadRevision, self).create(vals_list)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
-            if lead_id:
-                existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-                vals['name'] = f'R{existing_revisions_count}'
-                print(f"LEAD ID encontrado: {lead_id}")
-                print(f"Nombre de la revisión asignado: {vals['name']}")
-            else:
-                print("LEAD ID no encontrado en los valores o contexto")
-
-        return super(CrmLeadRevision, self).create(vals_list)
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super(CrmLeadRevision, self).default_get(fields_list)
+        lead_id = self.env.context.get('default_lead_id')
+        if lead_id:
+            existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+            defaults['name'] = f'R{existing_revisions_count}'
+            print(f"LEAD ID encontrado: {lead_id}")
+            print(f"Nombre de la revisión asignado: {defaults['name']}")
+        else:
+            print("LEAD ID no encontrado en el contexto")
+        return defaults
 
     # @api.model
     # def default_get(self, fields):

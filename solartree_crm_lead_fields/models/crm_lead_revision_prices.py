@@ -9,12 +9,29 @@ class CrmLeadRevisionPrices(models.Model):
         "crm.lead.revision",
         required=True,
     )
+
     type_price_id = fields.Many2one(
         "crm.lead.revision.price.type",
-        string = "Revision Prices Type"
+        string = "Revision Prices Type",
+        domain = lambda self: self._domain_type_price_id(),
     )
+
+    selected_type_price_ids = fields.Many2many(
+        'crm.lead.revision.price.type',
+        compute='_compute_selected_type_price_ids',
+        store=False
+    )
+
+    @api.depends('revision_id.revision_price_ids.type_price_id')
+    def _compute_selected_type_price_ids(self):
+        for record in self:
+            record.selected_type_price_ids = record.mapped('revision_id.revision_price_ids.type_price_id')
+
+    def _domain_type_price_id(self):
+        return [('id', 'not in', self.selected_type_price_ids.ids)]
+
     percentage = fields.Float(
-        digits=(5, 2),
+        string="Percentage",
     )
 
     price = fields.Monetary(
@@ -26,11 +43,12 @@ class CrmLeadRevisionPrices(models.Model):
     @api.depends('revision_id.offer_price_rx', 'percentage')
     def _compute_price(self):
         for record in self:
-            record.price = record.revision_id.offer_price_rx * record.percentage / 100
+            record.price = record.revision_id.offer_price_rx * record.percentage
 
     price_wp = fields.Monetary(
         string="Price / WP",
         currency_field="company_currency",
+        digits=(16, 4),
         compute="_compute_price_wp",
     )
 

@@ -5,10 +5,11 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="revision_id"/>
-                <field name="type_price_id"/>
-                <field name="percentage"/>
-                <field name="price"/>
-                <field name="price_wp"/>
+                <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"/>
+                <field name="percentage" widget="percentage"/>
+                <field name="price" widget="monetary"/>
+                <field name="price_wp" digits="[16, 4]"/>
+                <field name="selected_type_price_ids" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -21,10 +22,11 @@
                 <sheet>
                     <group>
                         <field name="revision_id" invisible="1"/>
-                        <field name="type_price_id"/>
-                        <field name="percentage"/>
-                        <field name="price"/>
-                        <field name="price_wp"/>
+                        <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"/>
+                        <field name="percentage" widget="percentage"/>
+                        <field name="price" widget="monetary"/>
+                        <field name="price_wp" digits="[16, 4]"/>
+                         <field name="selected_type_price_ids" invisible="1"/>
                     </group>
                 </sheet>
             </form>

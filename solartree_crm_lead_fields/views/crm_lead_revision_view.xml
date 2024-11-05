@@ -43,7 +43,6 @@
                         </group>
                         <group>
                             <field name="offer_kwh_year"/>
-                            <field name="offer_fv_price" widget="monetary"/>
                             <field name="offer_wp"/>
                             <field name="offer_pb_actual"/>
                             <field name="offer_tir_actual" widget="percentage"/>
@@ -51,6 +50,7 @@
                             <field name="offer_tir_omip" widget="percentage"/>
                             <field name="offer_pb_proyection"/>
                             <field name="offer_tir_proyection" widget="percentage"/>
+                            <field name="offer_fv_price" widget="monetary"/>
                             <field name="offer_storage_price" widget="monetary"/>
                             <field name="offer_ve_price" widget="monetary"/>
                             <field name="offer_price_rx" widget="monetary"/>
@@ -63,22 +63,28 @@
                             <!--                            <field name="offer_fee_internal" widget="percentage"/>-->
                             <!--                            <field name="offer_gg" widget="percentage"/>-->
                             <!--                            <field name="offer_bi" widget="percentage"/>-->
-                            <field name="fee_mbsv" widget="percentage"/>
+
                         </group>
                         <group>
                             <field name="offer_evacuation" widget="selection"/>
-
-                            <field name="revision_price_ids">
-                                <tree string="Revision Prices">
-                                    <field name="revision_id"/>
-                                    <field name="type_price_id"/>
-                                    <field name="percentage"/>
-                                    <field name="price"/>
-                                    <field name="price_wp"/>
-                                </tree>
-                            </field>
                         </group>
                     </group>
+                    <group name="Economia" string="Economia">
+                                <field name="fee_mbsv" widget="percentage"/>
+                                <field name="fee_mbsv_price" widget="monetary"/>
+                                <field name="fee_mbsv_price_wp" widget="float" digits="[16, 4]"/>
+                                <field name="fee_cost_price" widget="monetary"/>
+                                <field name="fee_cost_price_wp" widget="float" digits="[16, 4]"/>
+                                <field name="revision_price_ids">
+                                    <tree string="Revision Prices">
+                                        <field name="revision_id"/>
+                                        <field name="type_price_id"/>
+                                        <field name="percentage" widget="percentage"/>
+                                        <field name="price" widget="monetary"/>
+                                        <field name="price_wp" digits="[16, 4]"/>
+                                    </tree>
+                                </field>
+                            </group>
                 </sheet>
             </form>
         </field>
