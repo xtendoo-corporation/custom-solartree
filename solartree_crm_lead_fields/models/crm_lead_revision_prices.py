@@ -12,25 +12,8 @@ class CrmLeadRevisionPrices(models.Model):
         "crm.lead.revision.price.type",
         string = "Revision Prices Type"
     )
-    field_default = fields.Char(
-        string="Field Default",
-    )
-    field_default_value = fields.Float(
-        string="Field Default Value",
-    )
-    field_default_2 = fields.Char(
-        string="Field Default 2",
-    )
-    field_default_value_2 = fields.Monetary(
-        string="Field Default Value 2",
-        currency_field='company_currency',
-    )
-    field_default_3 = fields.Char(
-        string="Field Default 3",
-    )
-    field_default_value_3 = fields.Monetary(
-        string="Field Default Value 3",
-        currency_field='company_currency',
+    percentage = fields.Float(
+        digits=(5, 2),
     )
 
     company_currency = fields.Many2one(

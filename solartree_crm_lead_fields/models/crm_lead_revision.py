@@ -282,40 +282,36 @@ class CrmLeadRevision(models.Model):
 
         return super(CrmLeadRevision, self).create(vals_list)
 
-    @api.model
-    def default_get(self, fields):
-        defaults = super(CrmLeadRevision, self).default_get(fields)
-
-        lead_id = self.env.context.get('default_lead_id')
-        if lead_id:
-            existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-            defaults['name'] = f'R{existing_revisions_count}'
-
-            # Crear los valores por defecto para los precios
-            price_types = [
-                'crm_lead_revision_price_type_1',
-                'crm_lead_revision_price_type_2',
-                'crm_lead_revision_price_type_3',
-                'crm_lead_revision_price_type_4'
-            ]
-
-            revision_prices = []
-            for price_type in price_types:
-                price_type_record = self.env.ref(f'solartree_crm_lead_fields.{price_type}')
-                revision_prices.append((0, 0, {
-                    'type_price_id': price_type_record.id,
-                    'field_default': f'Offer_{price_type_record.name}',
-                    'field_default_value': 0.0,
-                    'field_default_2': f'Offer_{price_type_record.name}_€',
-                    'field_default_value_2': 0.00,
-                    'field_default_3': f'Offer_{price_type_record.name}_€/Wp',
-                    'field_default_value_3': 0.0000,
-                }))
-
-            defaults['revision_price_ids'] = revision_prices
-            print(f"Valores predeterminados configurados para LEAD ID: {lead_id}")
-
-        return defaults
+    # @api.model
+    # def default_get(self, fields):
+    #     defaults = super(CrmLeadRevision, self).default_get(fields)
+    #
+    #     lead_id = self.env.context.get('default_lead_id')
+    #     if lead_id:
+    #         existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+    #         defaults['name'] = f'R{existing_revisions_count}'
+    #
+    #         # Crear los valores por defecto para los precios
+    #         price_types = [
+    #             'crm_lead_revision_price_type_1',
+    #             'crm_lead_revision_price_type_2',
+    #             'crm_lead_revision_price_type_3',
+    #             'crm_lead_revision_price_type_4'
+    #         ]
+    #
+    #         revision_prices = []
+    #         for price_type in price_types:
+    #             price_type_record = self.env.ref(f'solartree_crm_lead_fields.{price_type}')
+    #             revision_prices.append((0, 0, {
+    #                 'type_price_id': price_type_record.id,
+    #                 'value_2': 0.00,
+    #                 'value_3': 0.0000,
+    #             }))
+    #
+    #         defaults['revision_price_ids'] = revision_prices
+    #         print(f"Valores predeterminados configurados para LEAD ID: {lead_id}")
+    #
+    #     return defaults
 
     def action_open_revision_form(self):
         return {

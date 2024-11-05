@@ -375,16 +375,16 @@
 
     <!-- CRM LEAD REVISION PRICE TYPE -->
     <record id="crm_lead_revision_price_type_1" model="crm.lead.revision.price.type">
-        <field name="name">Fee_Externo</field>
+        <field name="name">Fee Externo</field>
     </record>
     <record id="crm_lead_revision_price_type_2" model="crm.lead.revision.price.type">
-        <field name="name">Fee_Interno</field>
+        <field name="name">Fee Interno</field>
     </record>
     <record id="crm_lead_revision_price_type_3" model="crm.lead.revision.price.type">
-        <field name="name">Fee_GG</field>
+        <field name="name">Gastos de estructura</field>
     </record>
     <record id="crm_lead_revision_price_type_4" model="crm.lead.revision.price.type">
-        <field name="name">Fee_BI</field>
+        <field name="name">Beneficio Industrial</field>
     </record>
 
     <!-- CRM LEAD REVISION PRICES -->
