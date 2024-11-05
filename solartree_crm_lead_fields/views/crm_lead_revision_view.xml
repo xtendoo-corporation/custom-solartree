@@ -10,7 +10,7 @@
                 <field name="offer_storage_kwh"/>
                 <field name="offer_storage_kwn"/>
                 <field name="offer_wp"/>
-                <!--                <field name="offer_mbsv" widget="percentage"/>-->
+                <field name="fee_mbsv" widget="percentage"/>
             </tree>
         </field>
     </record>
@@ -63,7 +63,7 @@
                             <!--                            <field name="offer_fee_internal" widget="percentage"/>-->
                             <!--                            <field name="offer_gg" widget="percentage"/>-->
                             <!--                            <field name="offer_bi" widget="percentage"/>-->
-                            <!--                            <field name="offer_mbsv" widget="percentage"/>-->
+                            <field name="fee_mbsv" widget="percentage"/>
                         </group>
                         <group>
                             <field name="offer_evacuation" widget="selection"/>
@@ -72,12 +72,9 @@
                                 <tree string="Revision Prices">
                                     <field name="revision_id"/>
                                     <field name="type_price_id"/>
-                                    <field name="field_default"/>
-                                    <field name="field_default_value"/>
-                                    <field name="field_default_2"/>
-                                    <field name="field_default_value_2"/>
-                                    <field name="field_default_3"/>
-                                    <field name="field_default_value_3"/>
+                                    <field name="percentage"/>
+                                    <field name="price"/>
+                                    <field name="price_wp"/>
                                 </tree>
                             </field>
                         </group>

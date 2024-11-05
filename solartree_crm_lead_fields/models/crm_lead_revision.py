@@ -103,34 +103,40 @@ class CrmLeadRevision(models.Model):
     # offer_bi = fields.Float(
     #     'Offer BI'
     # )
-    # offer_mbsv = fields.Float(
-    #     'Offer MBSV',
-    #     readonly=True,
-    #     compute="_compute_mbsv",
-    # )
+    fee_mbsv = fields.Float(
+         string='Fee MBSV',
+         readonly=True,
+         compute="_compute_fee_mbsv",
+    )
+
+    @api.depends('total_revision_percentage')
+    def _compute_fee_mbsv(self):
+        for record in self:
+            record.fee_mbsv = record.total_revision_percentage
+
     offer_fv_price = fields.Monetary(
-        'Offer FV price',
+        string='Offer FV price',
         currency_field='company_currency',
     )
     offer_wp = fields.Float(
-        'Offer €/Wp',
+        string='Offer €/Wp',
         readonly=True,
         compute="_compute_wp",
         digits=(12, 4),
     )
     offer_pb_actual = fields.Float(
-        'PB actuals',
+        string='PB actuals',
         digits=(16, 1)
     )
     offer_tir_actual = fields.Integer(
-        'TIR actuals'
+        string='TIR actuals'
     )
     offer_pb_omip = fields.Float(
-        'PB OMIP',
+        string='PB OMIP',
         digits=(16, 1)
     )
     offer_tir_omip = fields.Integer(
-        'TIR OMIP'
+        string='TIR OMIP'
     )
     offer_pb_proyection = fields.Float(
         'PB proyection',
@@ -181,7 +187,16 @@ class CrmLeadRevision(models.Model):
         "revision_id",
         string="Revision Prices"
     )
+    total_revision_percentage = fields.Monetary(
+        string="Total Revision Price",
+        currency_field="company_currency",
+        compute="_compute_total_revision_percentage",
+    )
 
+    @api.depends('revision_price_ids.percentage')
+    def _compute_total_revision_percentage(self):
+        for record in self:
+            record.total_revision_percentage = sum(record.revision_price_ids.mapped('percentage'))
 
     @api.onchange('offer_selected')
     def _onchange_offer_selected(self):
@@ -233,15 +248,6 @@ class CrmLeadRevision(models.Model):
             else:
                 record.offer_wp = 0.0
 
-    # @api.depends('offer_fee_external', 'offer_fee_internal', 'offer_gg', 'offer_bi')
-    # def _compute_mbsv(self):
-    #     for record in self:
-    #         external = record.offer_fee_external or 0.0
-    #         internal = record.offer_fee_internal or 0.0
-    #         gg = record.offer_gg or 0.0
-    #         bi = record.offer_bi or 0.0
-    #
-    #         record.offer_mbsv = external + internal + gg + bi
 
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):
