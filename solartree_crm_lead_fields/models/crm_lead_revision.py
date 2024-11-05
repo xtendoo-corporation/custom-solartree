@@ -91,18 +91,6 @@ class CrmLeadRevision(models.Model):
     offer_date_deliver = fields.Date(
         string='Offer deliver date'
     )
-    # offer_fee_external = fields.Float(
-    #     'Offer fee external'
-    # )
-    # offer_fee_internal = fields.Float(
-    #     'Offer fee internal'
-    # )
-    # offer_gg = fields.Float(
-    #     'Offer GG'
-    # )
-    # offer_bi = fields.Float(
-    #     'Offer BI'
-    # )
     fee_mbsv = fields.Float(
          string='Fee MBSV',
          readonly=True,
@@ -237,7 +225,7 @@ class CrmLeadRevision(models.Model):
     revision_price_ids = fields.One2many(
         "crm.lead.revision.prices",
         "revision_id",
-        string="Revision Prices"
+        string="",
     )
     total_revision_percentage = fields.Monetary(
         string="Total Revision Price",

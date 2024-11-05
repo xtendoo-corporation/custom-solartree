@@ -23,16 +23,10 @@
                 <sheet>
                     <group>
                         <field name="name" readonly="1"/>
-                        <field name="lead_id" readonly="1"/>
                     </group>
                     <group colspan="4">
-                        <group>
-                            <field name="offer_kwp"/>
-                            <field name="offer_kwn"/>
-                            <field name="offer_storage_kwh"/>
-                            <field name="offer_storage_kwn"/>
-                            <field name="offer_ve_kwn"/>
-                            <field name="offer_class"/>
+                        <group name="Offer Data" string="Offer Data">
+                            <field name="lead_id" readonly="1"/>
                             <field name="solartree_lead_type_id"/>
                             <field name="solartree_lead_scope"/>
                             <field name="solartree_lead_modality_id"/>
@@ -40,17 +34,25 @@
                             <field name="solartree_lead_storage"/>
                             <field name="solartree_lead_structure_type"/>
                             <field name="solartree_lead_structure_model"/>
+                            <field name="offer_class"/>
                         </group>
-                        <group>
+                        <group string="Revision fields">
+                            <field name="offer_kwn"/>
+                            <field name="offer_storage_kwh"/>
+                            <field name="offer_storage_kwn"/>
+                            <field name="offer_ve_kwn"/>
                             <field name="offer_kwh_year"/>
-                            <field name="offer_wp"/>
                             <field name="offer_pb_actual"/>
                             <field name="offer_tir_actual" widget="percentage"/>
                             <field name="offer_pb_omip"/>
                             <field name="offer_tir_omip" widget="percentage"/>
                             <field name="offer_pb_proyection"/>
                             <field name="offer_tir_proyection" widget="percentage"/>
+                        </group>
+                        <group name="fields_calculated" string="Calculated fields">
+                            <field name="offer_kwp"/>
                             <field name="offer_fv_price" widget="monetary"/>
+                            <field name="offer_wp"/>
                             <field name="offer_storage_price" widget="monetary"/>
                             <field name="offer_ve_price" widget="monetary"/>
                             <field name="offer_price_rx" widget="monetary"/>
@@ -59,32 +61,26 @@
                             <field name="offer_tot" widget="selection"/>
                             <field name="offer_HT"/>
                             <field name="offer_date_deliver"/>
-                            <!--                            <field name="offer_fee_external" widget="percentage"/>-->
-                            <!--                            <field name="offer_fee_internal" widget="percentage"/>-->
-                            <!--                            <field name="offer_gg" widget="percentage"/>-->
-                            <!--                            <field name="offer_bi" widget="percentage"/>-->
-
-                        </group>
-                        <group>
                             <field name="offer_evacuation" widget="selection"/>
                         </group>
+                        <group name="Economy" string="Economy">
+                            <field name="fee_mbsv" widget="percentage"/>
+                            <field name="fee_mbsv_price" widget="monetary"/>
+                            <field name="fee_mbsv_price_wp" widget="float" digits="[16, 4]"/>
+                            <field name="fee_cost_price" widget="monetary"/>
+                            <field name="fee_cost_price_wp" widget="float" digits="[16, 4]"/>
+                        </group>
+                        <group name="Economic Section" string="Economic Section">
+                            <field name="revision_price_ids">
+                                <tree>
+                                    <field name="type_price_id" options="{'no_create': True,}"/>
+                                    <field name="percentage" widget="percentage"/>
+                                    <field name="price" widget="monetary"/>
+                                    <field name="price_wp" digits="[16, 4]"/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
-                    <group name="Economia" string="Economia">
-                                <field name="fee_mbsv" widget="percentage"/>
-                                <field name="fee_mbsv_price" widget="monetary"/>
-                                <field name="fee_mbsv_price_wp" widget="float" digits="[16, 4]"/>
-                                <field name="fee_cost_price" widget="monetary"/>
-                                <field name="fee_cost_price_wp" widget="float" digits="[16, 4]"/>
-                                <field name="revision_price_ids">
-                                    <tree string="Revision Prices">
-                                        <field name="revision_id"/>
-                                        <field name="type_price_id"/>
-                                        <field name="percentage" widget="percentage"/>
-                                        <field name="price" widget="monetary"/>
-                                        <field name="price_wp" digits="[16, 4]"/>
-                                    </tree>
-                                </field>
-                            </group>
                 </sheet>
             </form>
         </field>

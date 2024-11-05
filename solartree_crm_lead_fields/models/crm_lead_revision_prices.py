@@ -12,7 +12,7 @@ class CrmLeadRevisionPrices(models.Model):
 
     type_price_id = fields.Many2one(
         "crm.lead.revision.price.type",
-        string = "Revision Prices Type",
+        string = "Type",
         domain = lambda self: self._domain_type_price_id(),
     )
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-05 10:44+0000\n"
-"PO-Revision-Date: 2024-11-05 10:44+0000\n"
+"POT-Creation-Date: 2024-11-05 12:15+0000\n"
+"PO-Revision-Date: 2024-11-05 12:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,11 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_cups
 msgid "CUPS"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Calculated fields"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -152,7 +157,12 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Economia"
+msgid "Economic Section"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Economy"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -271,6 +281,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_collective
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_collective
 msgid "Lead Collective"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_revision_price_type
+#: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_revision_price_type
+msgid "Lead Economic"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -461,6 +477,11 @@ msgid "Offer Class"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Offer Data"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fv_price
 msgid "Offer FV price"
 msgstr ""
@@ -589,13 +610,12 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__revision_price_ids
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Revision Prices"
+msgid "Revision Price"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_prices__type_price_id
-msgid "Revision Prices Type"
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Revision fields"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -738,6 +758,11 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__total_revision_percentage
 msgid "Total Revision Price"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_prices__type_price_id
+msgid "Type"
 msgstr ""
 
 #. module: solartree_crm_lead_fields

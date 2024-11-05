@@ -4,8 +4,8 @@
         <field name="model">crm.lead.revision.prices</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="revision_id"/>
-                <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"/>
+                <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"
+                       options="{'no_create': True,}"/>
                 <field name="percentage" widget="percentage"/>
                 <field name="price" widget="monetary"/>
                 <field name="price_wp" digits="[16, 4]"/>
@@ -21,12 +21,12 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="revision_id" invisible="1"/>
-                        <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"/>
+                        <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"
+                               options="{'no_create': True,}"/>
                         <field name="percentage" widget="percentage"/>
                         <field name="price" widget="monetary"/>
                         <field name="price_wp" digits="[16, 4]"/>
-                         <field name="selected_type_price_ids" invisible="1"/>
+                        <field name="selected_type_price_ids" invisible="1"/>
                     </group>
                 </sheet>
             </form>
