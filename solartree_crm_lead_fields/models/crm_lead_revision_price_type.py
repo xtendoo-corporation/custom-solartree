@@ -9,11 +9,4 @@ class CrmLeadRevisionPrices(models.Model):
         required=True
     )
 
-    type = fields.Selection(
-        [
-            ('euro', 'Euro'),
-            ('percentage', 'Percentage')
-        ],
-        string="Type",
-        required=True
-    )
+

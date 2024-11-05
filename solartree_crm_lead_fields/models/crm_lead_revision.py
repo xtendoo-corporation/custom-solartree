@@ -91,23 +91,23 @@ class CrmLeadRevision(models.Model):
     offer_date_deliver = fields.Date(
         'Offer deliver date'
     )
-    offer_fee_external = fields.Float(
-        'Offer fee external'
-    )
-    offer_fee_internal = fields.Float(
-        'Offer fee internal'
-    )
-    offer_gg = fields.Float(
-        'Offer GG'
-    )
-    offer_bi = fields.Float(
-        'Offer BI'
-    )
-    offer_mbsv = fields.Float(
-        'Offer MBSV',
-        readonly=True,
-        compute="_compute_mbsv",
-    )
+    # offer_fee_external = fields.Float(
+    #     'Offer fee external'
+    # )
+    # offer_fee_internal = fields.Float(
+    #     'Offer fee internal'
+    # )
+    # offer_gg = fields.Float(
+    #     'Offer GG'
+    # )
+    # offer_bi = fields.Float(
+    #     'Offer BI'
+    # )
+    # offer_mbsv = fields.Float(
+    #     'Offer MBSV',
+    #     readonly=True,
+    #     compute="_compute_mbsv",
+    # )
     offer_fv_price = fields.Monetary(
         'Offer FV price',
         currency_field='company_currency',
@@ -182,137 +182,6 @@ class CrmLeadRevision(models.Model):
         string="Revision Prices"
     )
 
-    offer_autoconsumo_directo_kwh = fields.Float(
-        string='Oferta Autoconsumo Directo (kWh/año)',
-        digits=(16, 0)
-    )
-    offer_avg_price_per_kwh = fields.Float(
-        string='Precio medio (€/kWh)',
-        digits=(12, 4)
-    )
-    offer_excess_price_per_kwh = fields.Float(
-        string='Precio excedentes (€/kWh)',
-        digits=(12, 4)
-    )
-    offer_autarky_fee_percentage = fields.Float(
-        string='Cuota autárquica (%)',
-        compute='_compute_autarky_fee_percentage',
-        digits=(12, 1)
-    )
-    offer_pb_exced_min = fields.Float(
-        string='PB Exced. Min',
-        digits=(16, 1)
-    )
-    offer_tir_exced_min = fields.Float(
-        string='TIR Exced. Min',
-        digits=(16, 1)
-    )
-    offer_modules_manufacturer = fields.Text(
-        string='Oferta Módulos Fabricante'
-    )
-    offer_modules_model = fields.Text(
-        string='Oferta Módulos Modelo'
-    )
-    offer_modules_power_unit = fields.Integer(
-        string='Oferta Módulos Potencia Unitaria (Wp)'
-    )
-    offer_modules_quantity = fields.Integer(
-        string='Oferta Módulos Cantidad'
-    )
-
-    @api.depends('offer_fee_external', 'offer_price_rx')
-    def _compute_offer_fee_external_euro(self):
-        for record in self:
-            record.offer_fee_external_euro = record.offer_fee_external * record.offer_price_rx if record.offer_price_rx else 0.0
-
-    @api.depends('offer_fee_external_euro', 'offer_kwp')
-    def _compute_offer_fee_external_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_fee_external_per_kWp = record.offer_fee_external_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_fee_external_per_kWp = 0.0
-
-    @api.depends('offer_fee_internal', 'offer_price_rx')
-    def _compute_offer_fee_internal_euro(self):
-        for record in self:
-            record.offer_fee_internal_euro = record.offer_fee_internal * record.offer_price_rx if record.offer_price_rx else 0.0
-
-    @api.depends('offer_fee_internal_euro', 'offer_kwp')
-    def _compute_offer_fee_internal_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_fee_internal_per_kWp = record.offer_fee_internal_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_fee_internal_per_kWp = 0.0
-
-    @api.depends('offer_gg', 'offer_price_rx')
-    def _compute_offer_fee_gg_euro(self):
-        for record in self:
-            record.offer_fee_gg_euro = record.offer_gg * record.offer_price_rx if record.offer_price_rx else 0.0
-
-    @api.depends('offer_fee_gg_euro', 'offer_kwp')
-    def _compute_offer_fee_gg_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_fee_gg_per_kWp = record.offer_fee_gg_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_fee_gg_per_kWp = 0.0
-
-    @api.depends('offer_bi', 'offer_price_rx')
-    def _compute_offer_fee_bi_euro(self):
-        for record in self:
-            record.offer_fee_bi_euro = record.offer_bi * record.offer_price_rx if record.offer_price_rx else 0.0
-
-    @api.depends('offer_fee_bi_euro', 'offer_kwp')
-    def _compute_offer_fee_bi_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_fee_bi_per_kWp = record.offer_fee_bi_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_fee_bi_per_kWp = 0.0
-
-    @api.depends('offer_mbsv', 'offer_price_rx')
-    def _compute_offer_fee_mbsv_euro(self):
-        for record in self:
-            record.offer_fee_mbsv_euro = record.offer_mbsv * record.offer_price_rx if record.offer_price_rx else 0.0
-
-    @api.depends('offer_fee_mbsv_euro', 'offer_kwp')
-    def _compute_offer_fee_mbsv_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_fee_mbsv_per_kWp = record.offer_fee_mbsv_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_fee_mbsv_per_kWp = 0.0
-
-    @api.depends('offer_price_rx', 'offer_fee_mbsv_euro')
-    def _compute_offer_cost_euro(self):
-        for record in self:
-            record.offer_cost_euro = record.offer_price_rx - record.offer_fee_mbsv_euro if record.offer_price_rx else 0.0
-
-    @api.depends('offer_cost_euro', 'offer_kwp')
-    def _compute_offer_cost_per_kwp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.offer_cost_per_kWp = record.offer_cost_euro / (record.offer_kwp * 1000)
-            else:
-                record.offer_cost_per_kWp = 0.0
-
-
-
-
-
-
-
-
-    @api.depends('offer_kwh_year', 'lead_id.customer_consumption_mwh')
-    def _compute_autarky_fee_percentage(self):
-        for record in self:
-            if record.lead_id.customer_consumption_mwh:
-                record.offer_autarky_fee_percentage = (record.offer_kwh_year / (
-                        1000 * record.lead_id.customer_consumption_mwh)) * 100
-            else:
-                record.offer_autarky_fee_percentage = 0.0
 
     @api.onchange('offer_selected')
     def _onchange_offer_selected(self):
@@ -364,15 +233,15 @@ class CrmLeadRevision(models.Model):
             else:
                 record.offer_wp = 0.0
 
-    @api.depends('offer_fee_external', 'offer_fee_internal', 'offer_gg', 'offer_bi')
-    def _compute_mbsv(self):
-        for record in self:
-            external = record.offer_fee_external or 0.0
-            internal = record.offer_fee_internal or 0.0
-            gg = record.offer_gg or 0.0
-            bi = record.offer_bi or 0.0
-
-            record.offer_mbsv = external + internal + gg + bi
+    # @api.depends('offer_fee_external', 'offer_fee_internal', 'offer_gg', 'offer_bi')
+    # def _compute_mbsv(self):
+    #     for record in self:
+    #         external = record.offer_fee_external or 0.0
+    #         internal = record.offer_fee_internal or 0.0
+    #         gg = record.offer_gg or 0.0
+    #         bi = record.offer_bi or 0.0
+    #
+    #         record.offer_mbsv = external + internal + gg + bi
 
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):
@@ -384,11 +253,25 @@ class CrmLeadRevision(models.Model):
 
             print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
 
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     for vals in vals_list:
+    #         lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
+    #
+    #         if lead_id:
+    #             existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+    #             vals['name'] = f'R{existing_revisions_count}'
+    #             print(f"LEAD ID encontrado: {lead_id}")
+    #             print(f"Nombre de la revisión asignado: {vals['name']}")
+    #         else:
+    #             print("LEAD ID no encontrado en los valores o contexto")
+    #
+    #     return super(CrmLeadRevision, self).create(vals_list)
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             lead_id = vals.get('lead_id') or self.env.context.get('default_lead_id')
-
             if lead_id:
                 existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
                 vals['name'] = f'R{existing_revisions_count}'
@@ -398,6 +281,41 @@ class CrmLeadRevision(models.Model):
                 print("LEAD ID no encontrado en los valores o contexto")
 
         return super(CrmLeadRevision, self).create(vals_list)
+
+    @api.model
+    def default_get(self, fields):
+        defaults = super(CrmLeadRevision, self).default_get(fields)
+
+        lead_id = self.env.context.get('default_lead_id')
+        if lead_id:
+            existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+            defaults['name'] = f'R{existing_revisions_count}'
+
+            # Crear los valores por defecto para los precios
+            price_types = [
+                'crm_lead_revision_price_type_1',
+                'crm_lead_revision_price_type_2',
+                'crm_lead_revision_price_type_3',
+                'crm_lead_revision_price_type_4'
+            ]
+
+            revision_prices = []
+            for price_type in price_types:
+                price_type_record = self.env.ref(f'solartree_crm_lead_fields.{price_type}')
+                revision_prices.append((0, 0, {
+                    'type_price_id': price_type_record.id,
+                    'field_default': f'Offer_{price_type_record.name}',
+                    'field_default_value': 0.0,
+                    'field_default_2': f'Offer_{price_type_record.name}_€',
+                    'field_default_value_2': 0.00,
+                    'field_default_3': f'Offer_{price_type_record.name}_€/Wp',
+                    'field_default_value_3': 0.0000,
+                }))
+
+            defaults['revision_price_ids'] = revision_prices
+            print(f"Valores predeterminados configurados para LEAD ID: {lead_id}")
+
+        return defaults
 
     def action_open_revision_form(self):
         return {

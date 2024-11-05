@@ -12,20 +12,25 @@ class CrmLeadRevisionPrices(models.Model):
         "crm.lead.revision.price.type",
         string = "Revision Prices Type"
     )
-    amount_euro = fields.Monetary(
-        string="Amount",
+    field_default = fields.Char(
+        string="Field Default",
+    )
+    field_default_value = fields.Float(
+        string="Field Default Value",
+    )
+    field_default_2 = fields.Char(
+        string="Field Default 2",
+    )
+    field_default_value_2 = fields.Monetary(
+        string="Field Default Value 2",
         currency_field='company_currency',
     )
-    amount_price_wp = fields.Monetary(
-        string="Amount WP",
+    field_default_3 = fields.Char(
+        string="Field Default 3",
+    )
+    field_default_value_3 = fields.Monetary(
+        string="Field Default Value 3",
         currency_field='company_currency',
-    )
-    amount_percentage = fields.Float(
-        string="Amount Percentage"
-    )
-    print_amount = fields.Float(
-        string="Print Amount",
-        compute="_compute_print_amount",
     )
 
     company_currency = fields.Many2one(
@@ -34,16 +39,6 @@ class CrmLeadRevisionPrices(models.Model):
         compute="_compute_company_currency",
         store=True
     )
-
-    @api.depends('amount_euro', 'amount_price_wp', 'amount_percentage')
-    def _compute_print_amount(self):
-        for record in self:
-            if record.type_price_id.type == 'euro':
-                record.print_amount = record.amount_euro
-            elif record.type_price_id.type == 'percentage':
-                record.print_amount = record.amount_percentage
-            else:
-                record.print_amount = 0
 
     @api.depends('revision_id.lead_id.company_id')
     def _compute_company_currency(self):

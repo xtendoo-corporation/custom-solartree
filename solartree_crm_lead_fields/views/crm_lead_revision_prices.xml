@@ -6,8 +6,12 @@
             <tree>
                 <field name="revision_id"/>
                 <field name="type_price_id"/>
-                <field name="amount_euro"/>
-                <field name="print_amount"/>
+                <field name="field_default"/>
+                <field name="field_default_value"/>
+                <field name="field_default_2"/>
+                <field name="field_default_value_2"/>
+                <field name="field_default_3"/>
+                <field name="field_default_value_3"/>
             </tree>
         </field>
     </record>
@@ -21,8 +25,12 @@
                     <group>
                         <field name="revision_id" invisible="1"/>
                         <field name="type_price_id"/>
-                        <field name="amount_euro"/>
-                        <field name="print_amount"/>
+                        <field name="field_default"/>
+                        <field name="field_default_value"/>
+                        <field name="field_default_2"/>
+                        <field name="field_default_value_2"/>
+                        <field name="field_default_3"/>
+                        <field name="field_default_value_3"/>
                     </group>
                 </sheet>
             </form>

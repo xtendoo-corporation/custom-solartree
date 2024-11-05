@@ -372,4 +372,20 @@
     <record id="crm_lead_evacuation_3" model="crm.lead.evacuation">
         <field name="name">MT</field>
     </record>
+
+    <!-- CRM LEAD REVISION PRICE TYPE -->
+    <record id="crm_lead_revision_price_type_1" model="crm.lead.revision.price.type">
+        <field name="name">Fee_Externo</field>
+    </record>
+    <record id="crm_lead_revision_price_type_2" model="crm.lead.revision.price.type">
+        <field name="name">Fee_Interno</field>
+    </record>
+    <record id="crm_lead_revision_price_type_3" model="crm.lead.revision.price.type">
+        <field name="name">Fee_GG</field>
+    </record>
+    <record id="crm_lead_revision_price_type_4" model="crm.lead.revision.price.type">
+        <field name="name">Fee_BI</field>
+    </record>
+
+    <!-- CRM LEAD REVISION PRICES -->
 </odoo>
