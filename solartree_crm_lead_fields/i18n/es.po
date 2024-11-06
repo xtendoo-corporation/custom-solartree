@@ -115,7 +115,7 @@ msgstr "Fecha Firma propuesta"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_request
 msgid "Date Request"
-msgstr "Solicitud de fecha"
+msgstr "Fecha de solicitud"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_required_delivery
@@ -125,7 +125,7 @@ msgstr "Fecha de entrega requerida"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_sign_contract
 msgid "Date Sign Contract"
-msgstr "Contrato de firma de fecha"
+msgstr "Fecha Firma Contrato"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_visit
@@ -173,7 +173,7 @@ msgstr "Nombre de evacuación"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_evacuation
 msgid "Evacuation revisions field"
-msgstr "Campo evacuación de revisiones"
+msgstr "Tipo de evacuación"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_cost_price
@@ -203,7 +203,7 @@ msgstr "Tarifa MBSV Precio WP"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__lead_fee
 msgid "Fee Model of the lead"
-msgstr "Modelo de tarifa de la oportunidad"
+msgstr "Tarifa eléctrica"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_fee__name
@@ -302,7 +302,7 @@ msgstr "Tarifa"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__lead_fee
 msgid "Lead Fee Model"
-msgstr "Modelo de tarifa de la oportunidad"
+msgstr "Tarifa eléctrica"
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
@@ -405,7 +405,7 @@ msgstr "Nivel de tensión de la oferta"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__lead_tension_level
 msgid "Lead Tension Level Model"
-msgstr "Modelo de nivel de tensión de la oferta"
+msgstr "Nivel de tensión"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead_tot
@@ -464,7 +464,7 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_num_proyect
 msgid "Nº Proyect"
-msgstr ""
+msgstr "Nº Proyecto"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__design_notes
@@ -710,7 +710,7 @@ msgstr "TIR proyección"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tot
 msgid "TOT revisions field"
-msgstr "TOT campo revisión"
+msgstr "Técnico revisión oferta"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
@@ -730,7 +730,7 @@ msgstr "Técnico de la oportunidad"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__lead_tension_level
 msgid "Tension Level Model of the lead"
-msgstr "Modelo de nivel de tensión de la oferta"
+msgstr "Nivel de tensión"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tension_level__name

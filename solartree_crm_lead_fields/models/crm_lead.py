@@ -1,6 +1,6 @@
 from odoo import _, api, fields, models
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 class CrmLead(models.Model):
     _inherit = ["crm.lead"]
@@ -8,7 +8,6 @@ class CrmLead(models.Model):
     solartree_code = fields.Char(
         string="Lead Code",
         required=True,
-        readonly=True,
         copy=False
     )
     solartree_lead_type_id = fields.Many2one(
@@ -74,7 +73,6 @@ class CrmLead(models.Model):
     )
     solartree_date_required_delivery = fields.Date(
         string="Date Required Delivery",
-        required=True,
     )
     solartree_additional_deliverables = fields.Char(
         string="Additional Deliverables",
@@ -142,6 +140,17 @@ class CrmLead(models.Model):
         string="Lead Tension Level Model",
         help="Tension Level Model of the lead"
     )
+    partner_address_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Partner Address',
+        domain="[('parent_id', '=', 'partner_id')]"
+    )
+
+    @api.onchange('selected_revision_id')
+    def _onchange_selected_revision_id(self):
+        for record in self:
+            if record.selected_revision_id:
+                record.solartree_date_required_delivery = record.selected_revision_id.offer_date_deliver
 
     @api.depends('revision_ids.offer_selected')
     def _compute_selected_revision_id(self):
@@ -149,7 +158,7 @@ class CrmLead(models.Model):
         print("_compute_selected_revision_id")
         for record in self:
             selected_revision = record.revision_ids.filtered(lambda r: r.offer_selected)
-            record.selected_revision_id = selected_revision[:1]  # Only take the first selected revision
+            record.selected_revision_id = selected_revision[:1]
 
     @api.onchange('revision_ids')
     def _onchange_revision_ids(self):
@@ -208,3 +217,64 @@ class CrmLead(models.Model):
                     vals["solartree_code"] = "OF-XX-XXXX"
         return super().create(vals_list)
 
+
+    def _address_as_string(self):
+        self.ensure_one()
+        addr = []
+        if self.partner_address_id:
+            if self.partner_address_id.street:
+                addr.append(self.partner_address_id.street)
+            if self.partner_address_id.street2:
+                addr.append(self.partner_address_id.street2)
+            if hasattr(self.partner_address_id, "street3") and self.partner_address_id.street3:
+                addr.append(self.partner_address_id.street3)
+            if self.partner_address_id.city:
+                addr.append(self.partner_address_id.city)
+            if self.partner_address_id.state_id:
+                addr.append(self.partner_address_id.state_id.name)
+            if self.partner_address_id.country_id:
+                addr.append(self.partner_address_id.country_id.name)
+        if not addr:
+            raise UserError(_("Address missing on partner address '%s'.") % self.partner_address_id.name)
+        return " ".join(addr)
+
+    @api.model
+    def _prepare_url(self, url, replace):
+        assert url, "Missing URL"
+        for key, value in replace.items():
+            if not isinstance(value, str):
+                if isinstance(value, float):
+                    value = "%.5f" % value
+                else:
+                    value = ""
+            url = url.replace(key, value)
+        return url
+
+    def open_map(self):
+        self.ensure_one()
+        map_website = self.env.user.context_map_website_id
+        if not map_website:
+            raise UserError(
+                _("Missing map provider: you should set it in your preferences.")
+            )
+        if map_website.lat_lon_url and self.partner_address_id.partner_latitude and self.partner_address_id.partner_longitude:
+            url = self._prepare_url(
+                map_website.lat_lon_url,
+                {
+                    "{LATITUDE}": self.partner_address_id.partner_latitude,
+                    "{LONGITUDE}": self.partner_address_id.partner_longitude,
+                },
+            )
+        else:
+            if not map_website.address_url:
+                raise UserError(
+                    _("Missing parameter 'URL that uses the address' for map website '%s'.") % map_website.name
+                )
+            url = self._prepare_url(
+                map_website.address_url, {"{ADDRESS}": self._address_as_string()}
+            )
+        return {
+            "type": "ir.actions.act_url",
+            "url": url,
+            "target": "new",
+        }

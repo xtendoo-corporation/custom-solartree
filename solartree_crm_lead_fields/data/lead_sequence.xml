@@ -367,7 +367,7 @@
         <field name="name">BT a cuadro</field>
     </record>
     <record id="crm_lead_evacuation_2" model="crm.lead.evacuation">
-        <field name="name">BT a trato</field>
+        <field name="name">BT a trafo</field>
     </record>
     <record id="crm_lead_evacuation_3" model="crm.lead.evacuation">
         <field name="name">MT</field>

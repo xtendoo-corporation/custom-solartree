@@ -18,48 +18,34 @@ class CrmLeadRevision(models.Model):
     solartree_lead_type_id = fields.Many2one(
         comodel_name="crm.lead.type",
         string="Lead Type",
-        related="lead_id.solartree_lead_type_id",
-        readonly=True,
         store=True
     )
     solartree_lead_scope = fields.Many2one(
         comodel_name="crm.lead.scope",
         string="Lead Scope",
-        related="lead_id.solartree_lead_scope",
-        readonly=True,
         store=True
     )
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
         string="Lead Modality",
-        related="lead_id.solartree_lead_modality_id",
-        readonly=True,
         store=True
     )
     solartree_lead_collective = fields.Boolean(
         string="Lead Collective",
-        related="lead_id.solartree_lead_collective",
-        readonly=True,
         store=True
     )
     solartree_lead_storage = fields.Boolean(
         string="Lead Storage",
-        related="lead_id.solartree_lead_storage",
-        readonly=True,
         store=True
     )
     solartree_lead_structure_type = fields.Many2one(
         comodel_name="crm.lead.structure.type",
         string="Lead Structure Type",
-        related="lead_id.solartree_lead_structure_type",
-        readonly=True,
         store=True
     )
     solartree_lead_structure_model = fields.Many2one(
         comodel_name="crm.lead.structure.model",
         string="Lead Structure Model",
-        related="lead_id.solartree_lead_structure_model",
-        readonly=True,
         store=True
     )
     offer_kwp = fields.Float(
