@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-05 12:15+0000\n"
-"PO-Revision-Date: 2024-11-05 12:15+0000\n"
+"POT-Creation-Date: 2024-11-06 11:04+0000\n"
+"PO-Revision-Date: 2024-11-06 11:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,13 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_additional_deliverables
 msgid "Additional Deliverables"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#. odoo-python
+#: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
+#, python-format
+msgid "Address missing on partner address '%s'."
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -32,7 +39,7 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Calculated fields"
+msgid "Calculated"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -48,6 +55,16 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_connection_point_location
 msgid "Connection Point Location"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Coste (€)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Coste (€/Wp)"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -157,12 +174,12 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Economic Section"
+msgid "Economy"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Economy"
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
+msgid "Enlace a la Geolocalización"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -173,6 +190,11 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_evacuation
 msgid "Evacuation revisions field"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "FEEs y Márgenes"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -431,6 +453,11 @@ msgid "Lead/Opportunity"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "MBSV"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__max_power_bie
 msgid "Max Power BIE (kW)"
 msgstr ""
@@ -441,13 +468,26 @@ msgid "Maximum BIE power in kW."
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#. odoo-python
+#: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
+#, python-format
+msgid "Missing map provider: you should set it in your preferences."
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#. odoo-python
+#: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
+#, python-format
+msgid "Missing parameter 'URL that uses the address' for map website '%s'."
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_modality__name
 msgid "Modality Name"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_modality_id
-#: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_modality_id
 msgid "Modality of the lead"
 msgstr ""
 
@@ -572,6 +612,11 @@ msgid "PB proyection"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__partner_address_id
+msgid "Partner Address"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_prices__percentage
 msgid "Percentage"
 msgstr ""
@@ -589,6 +634,11 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_prices__price_wp
 msgid "Price / WP"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Rentability"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -636,7 +686,6 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_scope
-#: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_scope
 msgid "Scope of the lead"
 msgstr ""
 
@@ -677,7 +726,6 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_model
-#: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_structure_model
 msgid "Structure Model of the lead"
 msgstr ""
 
@@ -688,7 +736,6 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_structure_type
-#: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_structure_type
 msgid "Structure Type of the lead"
 msgstr ""
 
@@ -772,6 +819,10 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_type_id
-#: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_type_id
 msgid "Type of the lead"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "€/Wp"
 msgstr ""

@@ -102,7 +102,6 @@ class CrmLeadRevision(models.Model):
     fee_mbsv_price_wp = fields.Monetary(
         string='Fee MBSV Price WP',
         currency_field='company_currency',
-        digits=(16, 4),
         compute="_compute_fee_mbsv_price_wp",
     )
 
@@ -128,7 +127,6 @@ class CrmLeadRevision(models.Model):
     fee_cost_price_wp = fields.Monetary(
         string='Fee Cost Price WP',
         currency_field='company_currency',
-        digits=(16, 4),
         compute="_compute_fee_cost_price_wp",
     )
 
