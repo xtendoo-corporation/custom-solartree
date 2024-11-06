@@ -39,14 +39,12 @@
                             <field name="offer_class"/>
                         </group>
                         <group string="Revision fields">
-                            <field name="offer_kwp"/>
-                            <field name="offer_kwn"/>
+                            <field name="offer_kwp" readonly="0"/>
+                            <field name="offer_kwn" readonly="0"/>
                             <field name="offer_fv_price" widget="monetary"/>
                             <field name="offer_storage_kwh"/>
                             <field name="offer_storage_kwn"/>
                             <field name="offer_storage_price" widget="monetary"/>
-                        </group>
-                        <group string="">
                             <field name="offer_ve_kwn"/>
                             <field name="offer_ve_price" widget="monetary"/>
                             <field name="offer_kwh_year"/>
@@ -55,6 +53,16 @@
                             <field name="offer_date_deliver"/>
                             <field name="offer_evacuation" widget="selection"/>
                         </group>
+                        <group string="">
+                            <field name="avg_price" string="Precio medio (€/kWh)"/>
+                            <field name="surplus_price" string="Precio excedente (€/kWh)"/>
+                            <field name="offer_fabricant_modules" widget="text"/>
+                            <field name="offer_modules_model" widget="text"/>
+                            <field name="offer_modules_unit_power" string="Potencia unitaria (Wp)"/>
+                            <field name="offer_modules_quantity"/>
+                            <field name="offer_structure_manufacturer" widget="text"/>
+                            <field name="offer_structure_description" widget="text"/>
+                        </group>
                         <group name="rentability" string="Rentability">
                             <field name="offer_pb_actual"/>
                             <field name="offer_tir_actual" widget="percentage"/>
@@ -62,10 +70,24 @@
                             <field name="offer_tir_omip" widget="percentage"/>
                             <field name="offer_pb_proyection"/>
                             <field name="offer_tir_proyection" widget="percentage"/>
+                            <field name="pb_exced_min"/>
+                            <field name="tir_exced_min" widget="percentage" digits="[16, 1]"/>
                         </group>
                         <group name="calculated" string="Calculated">
                             <field name="offer_wp"/>
                             <field name="offer_price_rx" widget="monetary"/>
+                        </group>
+                        <group name="Inversor" string="Inversor">
+                            <field name="offer_investor_manufacturer" widget="text"/>
+                            <field name="offer_investor_1_model" widget="text"/>
+                            <field name="offer_investor_1_unit_power" string="Inversor 1 Potencia Unitaria (kW)"/>
+                            <field name="offer_investor_1_quantity"/>
+                            <field name="offer_investor_2_model" widget="text"/>
+                            <field name="offer_investor_2_unit_power" string="Inversor 2 Potencia Unitaria (kW)"/>
+                            <field name="offer_investor_2_quantity"/>
+                        </group>
+                        <group>
+
                         </group>
                         <group name="Economy" string="Economy">
                             <field name="fee_mbsv_price" widget="monetary"/>

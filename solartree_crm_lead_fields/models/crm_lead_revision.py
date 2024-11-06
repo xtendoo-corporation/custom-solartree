@@ -1,3 +1,5 @@
+from os import readv
+
 from odoo import models, fields, api
 
 
@@ -49,12 +51,36 @@ class CrmLeadRevision(models.Model):
         store=True
     )
     offer_kwp = fields.Float(
-        string='Offer kWp'
+        string='Offer kWp',
+        compute='_compute_offer_kwp',
+        store=True,
+        readonly=False,
     )
+
+    @api.depends('offer_modules_quantity', 'offer_modules_unit_power')
+    def _compute_offer_kwp(self):
+        for record in self:
+            if record.offer_modules_unit_power:
+                record.offer_kwp = record.offer_modules_quantity * (record.offer_modules_unit_power / 1000)
+            else:
+                record.offer_kwp = 0.0
+
     offer_kwn = fields.Float(
         string='Offer kWn',
-        digits=(16, 1)
+        digits=(16, 1),
+        compute='_compute_offer_kwn',
+        store=True,
+        readonly=False,
     )
+
+    @api.depends('offer_investor_1_quantity', 'offer_investor_1_unit_power', 'offer_investor_2_quantity',
+                 'offer_investor_2_unit_power')
+    def _compute_offer_kwn(self):
+        for record in self:
+            record.offer_kwn = record.offer_investor_1_quantity * record.offer_investor_1_unit_power + (
+                        record.offer_investor_2_quantity * record.offer_investor_2_unit_power)
+
+
     offer_storage_kwh = fields.Float(
         string='Offer storage kWh',
         digits=(16, 1)
@@ -78,9 +104,9 @@ class CrmLeadRevision(models.Model):
         string='Offer deliver date'
     )
     fee_mbsv = fields.Float(
-         string='Fee MBSV',
-         readonly=True,
-         compute="_compute_fee_mbsv",
+        string='Fee MBSV',
+        readonly=True,
+        compute="_compute_fee_mbsv",
     )
 
     @api.depends('total_revision_percentage')
@@ -217,6 +243,66 @@ class CrmLeadRevision(models.Model):
         compute="_compute_total_revision_percentage",
     )
 
+    # New fields 06/11
+
+    avg_price = fields.Float(
+        string="Average Price",
+        digits=(12, 4),
+    )
+    surplus_price = fields.Float(
+        string="Surplus Price",
+        digits=(12, 4),
+    )
+    pb_exced_min = fields.Float(
+        string="PB Exced Min",
+        digits=(16, 1),
+    )
+    tir_exced_min = fields.Float(
+        string="TIR Exced Min",
+        digits=(16, 1),
+    )
+    offer_fabricant_modules = fields.Char(
+        string="Fabricant Modules",
+    )
+    offer_modules_model = fields.Char(
+        string="Modules Model",
+    )
+    offer_modules_unit_power = fields.Integer(
+        string="Modules Unit Power",
+    )
+    offer_modules_quantity = fields.Integer(
+        string="Modules Quantity",
+    )
+    offer_investor_manufacturer = fields.Char(
+        string="Investor Manufacturer",
+    )
+    offer_investor_1_model = fields.Char(
+        string="Investor 1 Model",
+    )
+    offer_investor_1_unit_power = fields.Float(
+        string="Investor 1 Unit Power",
+        digits=(16, 1),
+    )
+    offer_investor_1_quantity = fields.Integer(
+        string="Investor 1 Quantity",
+    )
+    offer_investor_2_model = fields.Char(
+        string="Investor 2 Model",
+    )
+    offer_investor_2_unit_power = fields.Float(
+        string="Investor 2 Unit Power",
+        digits=(16, 1),
+    )
+    offer_investor_2_quantity = fields.Integer(
+        string="Investor 2 Quantity",
+    )
+    offer_structure_manufacturer = fields.Char(
+        string="Structure Manufacturer",
+    )
+    offer_structure_description = fields.Char(
+        string="Structure Description",
+    )
+
     @api.depends('revision_price_ids.percentage')
     def _compute_total_revision_percentage(self):
         for record in self:
@@ -272,7 +358,6 @@ class CrmLeadRevision(models.Model):
             else:
                 record.offer_wp = 0.0
 
-
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):
         for record in self:
@@ -282,7 +367,6 @@ class CrmLeadRevision(models.Model):
                 record.company_currency = self.env.company.currency_id
 
             print("Record ID %s, Currency Set to %s", record.id, record.company_currency)
-
 
     @api.model
     def default_get(self, fields_list):

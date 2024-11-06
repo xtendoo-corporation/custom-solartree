@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-06 11:04+0000\n"
-"PO-Revision-Date: 2024-11-06 11:04+0000\n"
+"POT-Creation-Date: 2024-11-06 13:01+0000\n"
+"PO-Revision-Date: 2024-11-06 13:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,17 @@ msgstr "Entregables adicionales"
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
 #, python-format
 msgid "Address missing on partner address '%s'."
-msgstr ""
+msgstr "Dirección faltante en la dirección del socio '%s'."
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__customer_consumption_mwh
 msgid "Annual customer energy consumption in MWh."
 msgstr "Consumo energético anual del cliente en MWh"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__avg_price
+msgid "Average Price"
+msgstr "Precio medio"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_cups
@@ -132,7 +137,7 @@ msgstr "Fecha Firma propuesta"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_request
 msgid "Date Request"
-msgstr "Fecha de solicitud"
+msgstr "Solicitud de fecha"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_required_delivery
@@ -142,7 +147,7 @@ msgstr "Fecha de entrega requerida"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_sign_contract
 msgid "Date Sign Contract"
-msgstr "Fecha Firma Contrato"
+msgstr "Contrato de firma de fecha"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_visit
@@ -190,12 +195,17 @@ msgstr "Nombre de evacuación"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_evacuation
 msgid "Evacuation revisions field"
-msgstr "Tipo de evacuación"
+msgstr "Campo de revisiones de evacuación"
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
 msgid "FEEs y Márgenes"
 msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fabricant_modules
+msgid "Fabricant Modules"
+msgstr "Módulos fabricante"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_cost_price
@@ -249,6 +259,56 @@ msgstr "Nombre de la tarifa"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_type__id
 msgid "ID"
 msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Inversor"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Inversor 1 Potencia Unitaria (kW)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Inversor 2 Potencia Unitaria (kW)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_1_model
+msgid "Investor 1 Model"
+msgstr "Modelo Inversor 1"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_1_quantity
+msgid "Investor 1 Quantity"
+msgstr "Cantidad Inversor 1"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_1_unit_power
+msgid "Investor 1 Unit Power"
+msgstr "Potencia Unitaria Inversor 1"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_2_model
+msgid "Investor 2 Model"
+msgstr "Modelo Inversor 2"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_2_quantity
+msgid "Investor 2 Quantity"
+msgstr "Cantidad Inversor 2"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_2_unit_power
+msgid "Investor 2 Unit Power"
+msgstr "Potencia Unitaria Inversor 2"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_investor_manufacturer
+msgid "Investor Manufacturer"
+msgstr "Fabricante Inversor"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_channel__write_uid
@@ -472,14 +532,14 @@ msgstr "Potencia máxima BIE en kW."
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
 #, python-format
 msgid "Missing map provider: you should set it in your preferences."
-msgstr ""
+msgstr "Mapa faltante: debe configurarlo en sus preferencias."
 
 #. module: solartree_crm_lead_fields
 #. odoo-python
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
 #, python-format
 msgid "Missing parameter 'URL that uses the address' for map website '%s'."
-msgstr ""
+msgstr "Falta el parámetro 'URL que utiliza la dirección' para el sitio web del mapa '%s'."
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_modality__name
@@ -490,6 +550,21 @@ msgstr "Nombre modalidad"
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_modality_id
 msgid "Modality of the lead"
 msgstr "Modalidad de la Oferta"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_modules_model
+msgid "Modules Model"
+msgstr "Modelo Módulos"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_modules_quantity
+msgid "Modules Quantity"
+msgstr "Cantidad Módulos"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_modules_unit_power
+msgid "Modules Unit Power"
+msgstr "Potencia Unitaria Módulos"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_price_type__name
@@ -597,6 +672,11 @@ msgid "Opportunity"
 msgstr "Oportunidad"
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__pb_exced_min
+msgid "PB Exced Min"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_pb_omip
 msgid "PB OMIP"
 msgstr ""
@@ -622,9 +702,24 @@ msgid "Percentage"
 msgstr "Porcentaje"
 
 #. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Potencia unitaria (Wp)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
 msgid "Power and Consumption"
 msgstr "Potencia y Consumo"
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Precio excedente (€/kWh)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "Precio medio (€/kWh)"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_prices__price
@@ -720,6 +815,16 @@ msgid "Specific Comments"
 msgstr "Comentarios Específicos"
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_structure_description
+msgid "Structure Description"
+msgstr "Descripción Estructura"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_structure_manufacturer
+msgid "Structure Manufacturer"
+msgstr "Fabricante Estructura"
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_structure_model__name
 msgid "Structure Model Name"
 msgstr "Nombre Estructura Modelo"
@@ -740,6 +845,16 @@ msgid "Structure Type of the lead"
 msgstr "Estructura Tipo de la oferta"
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__surplus_price
+msgid "Surplus Price"
+msgstr "Precio excedente"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__tir_exced_min
+msgid "TIR Exced Min"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_omip
 msgid "TIR OMIP"
 msgstr ""
@@ -757,7 +872,7 @@ msgstr "TIR proyección"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tot
 msgid "TOT revisions field"
-msgstr "Técnico revisión oferta"
+msgstr "TOT campo revisión"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
@@ -791,6 +906,11 @@ msgstr "Nombre Nivel de Tensión"
 #, python-format
 msgid "The lead code must be unique!"
 msgstr "El código de la oferta debe ser único"
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_prices_form
+msgid "Tipo"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_tot__name
