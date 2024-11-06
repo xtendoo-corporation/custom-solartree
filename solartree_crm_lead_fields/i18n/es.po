@@ -190,7 +190,7 @@ msgstr "Nombre de evacuación"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_evacuation
 msgid "Evacuation revisions field"
-msgstr "Campo de revisiones de evacuación"
+msgstr "Tipo de evacuación"
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
@@ -757,7 +757,7 @@ msgstr "TIR proyección"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tot
 msgid "TOT revisions field"
-msgstr "TOT campo revisión"
+msgstr "Técnico revisión oferta"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
