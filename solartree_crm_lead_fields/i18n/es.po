@@ -132,7 +132,7 @@ msgstr "Fecha Firma propuesta"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_request
 msgid "Date Request"
-msgstr "Solicitud de fecha"
+msgstr "Fecha de solicitud"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_required_delivery
@@ -142,7 +142,7 @@ msgstr "Fecha de entrega requerida"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_sign_contract
 msgid "Date Sign Contract"
-msgstr "Contrato de firma de fecha"
+msgstr "Fecha Firma Contrato"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_visit
