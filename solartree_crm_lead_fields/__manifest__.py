@@ -6,7 +6,6 @@
     "license": "AGPL-3",
     "depends": [
         "crm",
-        "solartree_res_partner_fields",
     ],
     "data": [
         "data/lead_sequence.xml",
