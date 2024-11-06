@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-31 07:16+0000\n"
-"PO-Revision-Date: 2024-10-31 07:16+0000\n"
+"POT-Creation-Date: 2024-11-06 08:19+0000\n"
+"PO-Revision-Date: 2024-11-06 08:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: solartree_res_partner_fields
-#: model:ir.actions.act_window,name:solartree_res_partner_fields.action_associated_commercial_channel
-#: model:ir.model,name:solartree_res_partner_fields.model_associated_commercial_channel
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_partner__associated_commercial_channel
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_users__associated_commercial_channel
-#: model:ir.ui.menu,name:solartree_res_partner_fields.submenu_associated_commercial_channel
 msgid "Associated Commercial Channel"
 msgstr ""
 
@@ -40,11 +37,8 @@ msgid "Colaborator Type"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.actions.act_window,name:solartree_res_partner_fields.action_commercial_team
-#: model:ir.model,name:solartree_res_partner_fields.model_commercial_team
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_partner__commercial_team
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_users__commercial_team
-#: model:ir.ui.menu,name:solartree_res_partner_fields.submenu_commercial_team
+#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_partner__hr_employee_ids
+#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_res_users__hr_employee_ids
 msgid "Commercial Team"
 msgstr ""
 
@@ -73,9 +67,7 @@ msgid "Contact Profile"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__create_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__create_uid
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__create_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__create_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__create_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__create_uid
@@ -83,9 +75,7 @@ msgid "Created by"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__create_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__create_date
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__create_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__create_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__create_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__create_date
@@ -93,9 +83,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__display_name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__display_name
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__display_name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__display_name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__display_name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__display_name
@@ -117,9 +105,7 @@ msgid "Geographical Scope"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__id
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__id
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__id
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__id
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__id
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__id
@@ -136,9 +122,7 @@ msgid "Industrial Contact"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__write_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__write_uid
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__write_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__write_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__write_uid
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__write_uid
@@ -146,9 +130,7 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__write_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__write_date
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__write_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__write_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__write_date
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__write_date
@@ -171,9 +153,7 @@ msgid "Map"
 msgstr ""
 
 #. module: solartree_res_partner_fields
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_associated_commercial_channel__name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_colaborator_type__name
-#: model:ir.model.fields,field_description:solartree_res_partner_fields.field_commercial_team__name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_contact_profile__name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_geographical_scope__name
 #: model:ir.model.fields,field_description:solartree_res_partner_fields.field_industrial_contact__name
