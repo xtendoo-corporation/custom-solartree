@@ -22,7 +22,7 @@
                 <sheet>
                     <group>
                         <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids)]"
-                               options="{'no_create': True,}" string=""/>
+                               options="{'no_create': True,}" string="Tipo"/>
                         <field name="percentage" widget="percentage"/>
                         <field name="price" widget="monetary"/>
                         <field name="price_wp" digits="[16, 4]"/>
