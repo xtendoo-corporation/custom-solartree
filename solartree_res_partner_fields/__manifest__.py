@@ -6,6 +6,7 @@
     "license": "AGPL-3",
     "depends": [
         "base",
+        "hr",
         "partner_external_map",
         "base_geolocalize",
         "solartree_crm_lead_fields",

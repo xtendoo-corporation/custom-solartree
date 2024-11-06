@@ -41,7 +41,7 @@ class Partner(models.Model):
         string="Associated Commercial Channel"
     )
 
-    commercial_team = fields.Many2one(
+    hr_employee_ids = fields.Many2one(
         comodel_name='hr.employee',
         string="Commercial Team",
     )

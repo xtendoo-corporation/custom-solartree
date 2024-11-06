@@ -17,7 +17,7 @@
                 </xpath>
                 <xpath expr="//form/sheet/group/group[1]" position="inside">
                     <field name="geographical_scope" widget="selection"/>
-                    <field name="commercial_team" widget="selection"/>
+                    <field name="hr_employee_ids" widget="selection"/>
                     <field name="associated_commercial_channel" widget="selection"/>
                 </xpath>
                 <!--Partner child-->
