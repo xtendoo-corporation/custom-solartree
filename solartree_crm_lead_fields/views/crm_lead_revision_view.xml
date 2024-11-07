@@ -41,12 +41,9 @@
                         <group string="Revision fields">
                             <field name="offer_kwp" readonly="0"/>
                             <field name="offer_kwn" readonly="0"/>
-                            <field name="offer_fv_price" widget="monetary"/>
                             <field name="offer_storage_kwh"/>
                             <field name="offer_storage_kwn"/>
-                            <field name="offer_storage_price" widget="monetary"/>
                             <field name="offer_ve_kwn"/>
-                            <field name="offer_ve_price" widget="monetary"/>
                             <field name="offer_kwh_year"/>
                             <field name="offer_tot" widget="selection"/>
                             <field name="offer_HT"/>
@@ -82,7 +79,16 @@
                         </group>
                         <group name="calculated" string="Calculated">
                             <field name="offer_wp"/>
-                            <field name="offer_price_rx" widget="monetary"/>
+                        </group>
+                        <group name="total_price" string="Precio Total">
+                            <field name="revision_total_price_ids" string="">
+                                <tree>
+                                    <field name="type_total_price_id" options="{'no_create': True,}" string=""/>
+                                    <field name="price" sum="Total Price RX"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
                         </group>
                         <group name="Economy" string="Economy">
                             <field name="fee_mbsv_price" widget="monetary"/>

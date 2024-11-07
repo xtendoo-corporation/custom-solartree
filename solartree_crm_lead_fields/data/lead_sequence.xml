@@ -387,5 +387,14 @@
         <field name="name">Beneficio Industrial</field>
     </record>
 
-    <!-- CRM LEAD REVISION PRICES -->
+    <!-- CRM LEAD REVISION TOTAL PRICE RX TYPE -->
+    <record id="crm_lead_revision_total_price_rx_type_1" model="crm.lead.revision.total.price.rx.type">
+        <field name="name">FV</field>
+    </record>
+    <record id="crm_lead_revision_total_price_rx_type_2" model="crm.lead.revision.total.price.rx.type">
+        <field name="name">Storage</field>
+    </record>
+    <record id="crm_lead_revision_total_price_rx_type_3" model="crm.lead.revision.total.price.rx.type">
+        <field name="name">VE</field>
+    </record>
 </odoo>

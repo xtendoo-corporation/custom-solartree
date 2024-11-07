@@ -164,10 +164,6 @@ class CrmLeadRevision(models.Model):
             else:
                 record.fee_cost_price_wp = 0.0
 
-    offer_fv_price = fields.Monetary(
-        string='Offer FV price',
-        currency_field='company_currency',
-    )
     offer_wp = fields.Float(
         string='Offer €/Wp',
         readonly=True,
@@ -198,14 +194,6 @@ class CrmLeadRevision(models.Model):
         string='TIR proyection',
         digits = (16, 1),
     )
-    offer_storage_price = fields.Monetary(
-        string='Offer storage price',
-        currency_field='company_currency',
-    )
-    offer_ve_price = fields.Monetary(
-        string='Offer VE Price',
-        currency_field='company_currency',
-    )
     offer_kwh_year = fields.Integer(
         string='Offer kWh/year',
     )
@@ -215,12 +203,22 @@ class CrmLeadRevision(models.Model):
         compute="_compute_company_currency",
         compute_sudo=True
     )
-    offer_price_rx = fields.Monetary(
+    offer_price_rx = fields.Float(
         string='Offer Total Price',
-        currency_field='company_currency',
         compute='_compute_offer_price_rx',
         store=True
     )
+
+    @api.depends('revision_total_price_ids.total_price_rx')
+    def _compute_offer_price_rx(self):
+        for record in self:
+            if record.revision_total_price_ids:
+                record.offer_price_rx = record.revision_total_price_ids[0].total_price_rx
+                print("Offer Price RX 1", record.offer_price_rx)
+            else:
+                record.offer_price_rx = 0.0
+                print("Offer Price RX 2", record.offer_price_rx)
+
     offer_class = fields.Char(
         string='Offer Class',
         readonly=True,
@@ -237,6 +235,12 @@ class CrmLeadRevision(models.Model):
 
     revision_price_ids = fields.One2many(
         "crm.lead.revision.prices",
+        "revision_id",
+        string="",
+    )
+
+    revision_total_price_ids = fields.One2many(
+        "crm.lead.revision.total.price.rx",
         "revision_id",
         string="",
     )
@@ -348,18 +352,19 @@ class CrmLeadRevision(models.Model):
             if record.offer_kwn <= 10:
                 record.offer_class = "PEQUEÑA INSTALACIÓN"
 
-    @api.depends('offer_fv_price', 'offer_storage_price', 'offer_ve_price')
-    def _compute_offer_price_rx(self):
-        for record in self:
-            record.offer_price_rx = (record.offer_fv_price or 0.0) + \
-                                    (record.offer_storage_price or 0.0) + \
-                                    (record.offer_ve_price or 0.0)
 
-    @api.depends('offer_fv_price', 'offer_kwp', )
+    @api.depends('revision_total_price_ids.price', 'offer_kwp')
     def _compute_wp(self):
         for record in self:
-            if record.offer_kwp:
-                record.offer_wp = round(record.offer_fv_price / (record.offer_kwp * 1000), 4)
+            fv_price_type = self.env['crm.lead.revision.total.price.rx.type'].search([('name', '=', 'FV')],
+                                                                                     limit=1)
+            if fv_price_type:
+                fv_price_record = record.revision_total_price_ids.filtered(
+                    lambda r: r.type_total_price_id == fv_price_type)
+                if fv_price_record and record.offer_kwp:
+                    record.offer_wp = round(fv_price_record.price / (record.offer_kwp * 1000), 4)
+                else:
+                    record.offer_wp = 0.0
             else:
                 record.offer_wp = 0.0
 
@@ -395,6 +400,17 @@ class CrmLeadRevision(models.Model):
             }))
 
         defaults['revision_price_ids'] = revision_prices
+
+        total_price_types = self.env['crm.lead.revision.total.price.rx.type'].search([])
+        revision_total_prices = []
+        for total_price_type in total_price_types:
+            revision_total_prices.append((0, 0, {
+                'type_total_price_id': total_price_type.id,
+                'price': 0.0,
+
+            }))
+
+        defaults['revision_total_price_ids'] = revision_total_prices
         return defaults
 
     def action_open_revision_form(self):

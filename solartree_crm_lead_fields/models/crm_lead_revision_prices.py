@@ -38,6 +38,7 @@ class CrmLeadRevisionPrices(models.Model):
         string="Price",
         currency_field="company_currency",
         compute="_compute_price",
+        store=True
     )
 
     @api.depends('revision_id.offer_price_rx', 'percentage')
@@ -50,6 +51,7 @@ class CrmLeadRevisionPrices(models.Model):
         currency_field="company_currency",
         digits=(16, 4),
         compute="_compute_price_wp",
+        store=True
     )
 
     @api.depends('revision_id.offer_kwp', 'price')

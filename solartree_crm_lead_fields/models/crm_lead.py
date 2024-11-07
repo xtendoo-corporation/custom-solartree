@@ -163,10 +163,9 @@ class CrmLead(models.Model):
         string='Offer kWp',
         readonly=False
     )
-    offer_price_rx = fields.Monetary(
+    offer_price_rx = fields.Float(
         related='selected_revision_id.offer_price_rx',
         string='Offer Price RX',
-        currency_field='company_currency',
         readonly=False
     )
     offer_wp = fields.Float(
