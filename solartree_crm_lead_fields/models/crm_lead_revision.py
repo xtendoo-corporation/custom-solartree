@@ -178,22 +178,25 @@ class CrmLeadRevision(models.Model):
         string='PB actuals',
         digits=(16, 1)
     )
-    offer_tir_actual = fields.Integer(
-        string='TIR actuals'
+    offer_tir_actual = fields.Float(
+        string='TIR actuals',
+        digits = (16, 2),
     )
     offer_pb_omip = fields.Float(
         string='PB OMIP',
-        digits=(16, 1)
+        digits=(16, 2)
     )
-    offer_tir_omip = fields.Integer(
-        string='TIR OMIP'
+    offer_tir_omip = fields.Float(
+        string='TIR OMIP',
+        digits=(16, 2),
     )
     offer_pb_proyection = fields.Float(
         string='PB proyection',
         digits=(16, 1)
     )
-    offer_tir_proyection = fields.Integer(
-        string='TIR proyection'
+    offer_tir_proyection = fields.Float(
+        string='TIR proyection',
+        digits = (16, 1),
     )
     offer_storage_price = fields.Monetary(
         string='Offer storage price',
@@ -303,6 +306,8 @@ class CrmLeadRevision(models.Model):
         string="Structure Description",
     )
 
+
+
     @api.depends('revision_price_ids.percentage')
     def _compute_total_revision_percentage(self):
         for record in self:
@@ -381,37 +386,6 @@ class CrmLeadRevision(models.Model):
             print("LEAD ID no encontrado en el contexto")
         return defaults
 
-    # @api.model
-    # def default_get(self, fields):
-    #     defaults = super(CrmLeadRevision, self).default_get(fields)
-    #
-    #     lead_id = self.env.context.get('default_lead_id')
-    #     if lead_id:
-    #         existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-    #         defaults['name'] = f'R{existing_revisions_count}'
-    #
-    #         # Crear los valores por defecto para los precios
-    #         price_types = [
-    #             'crm_lead_revision_price_type_1',
-    #             'crm_lead_revision_price_type_2',
-    #             'crm_lead_revision_price_type_3',
-    #             'crm_lead_revision_price_type_4'
-    #         ]
-    #
-    #         revision_prices = []
-    #         for price_type in price_types:
-    #             price_type_record = self.env.ref(f'solartree_crm_lead_fields.{price_type}')
-    #             revision_prices.append((0, 0, {
-    #                 'type_price_id': price_type_record.id,
-    #                 'value_2': 0.00,
-    #                 'value_3': 0.0000,
-    #             }))
-    #
-    #         defaults['revision_price_ids'] = revision_prices
-    #         print(f"Valores predeterminados configurados para LEAD ID: {lead_id}")
-    #
-    #     return defaults
-
     def action_open_revision_form(self):
         return {
             'type': 'ir.actions.act_window',
@@ -422,3 +396,11 @@ class CrmLeadRevision(models.Model):
             'res_id': self.id,
             'target': 'current',
         }
+
+    def copy(self, default=None):
+        if default is None:
+            default = {}
+        lead_id = self.lead_id.id
+        existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+        default['name'] = f'R{existing_revisions_count}'
+        return super(CrmLeadRevision, self).copy(default)

@@ -21,6 +21,7 @@
         "views/crm_lead_revision_prices.xml",
         "views/crm_lead_revision_price_type.xml",
         "views/crm_lead_tot_view.xml",
+        "views/crm_leadopportunity_partner_form.xml",
         'security/ir.model.access.csv',
     ],
     "installable": True,

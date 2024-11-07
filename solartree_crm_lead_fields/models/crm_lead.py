@@ -37,7 +37,6 @@ class CrmLead(models.Model):
     solartree_lead_channel = fields.Many2one(
         comodel_name="crm.lead.channel",
         string="Lead Channel",
-        required=True,
         help="Channel of the lead"
     )
     solartree_lead_technical = fields.Many2one(
@@ -65,11 +64,9 @@ class CrmLead(models.Model):
     )
     solartree_lead_identification = fields.Char(
         string="Lead Identification",
-        required=True,
     )
     solartree_date_request = fields.Date(
         string="Date Request",
-        required=True,
     )
     solartree_date_required_delivery = fields.Date(
         string="Date Required Delivery",
@@ -145,6 +142,26 @@ class CrmLead(models.Model):
         string='Partner Address',
         domain="[('parent_id', '=', 'partner_id')]"
     )
+    expected_revenue = fields.Monetary(
+        string='Expected Revenue',
+        currency_field='company_currency',
+        tracking=True,
+        compute='_compute_expected_revenue',
+        store=True
+    )
+    extension_rights = fields.Float(
+        string="Extension Rights (kW)",
+        digits=(16, 2),
+    )
+    access_rights = fields.Float(
+        string="Access Rights (kW)",
+        digits=(16, 2),
+    )
+
+    @api.depends('selected_revision_id.offer_price_rx')
+    def _compute_expected_revenue(self):
+        for lead in self:
+            lead.expected_revenue = lead.selected_revision_id.offer_price_rx if lead.selected_revision_id else 0.0
 
     @api.onchange('selected_revision_id')
     def _onchange_selected_revision_id(self):
@@ -215,6 +232,7 @@ class CrmLead(models.Model):
                     vals["solartree_code"] = f"OF-{current_year_suffix:02d}-{sequence_number}"
                 else:
                     vals["solartree_code"] = "OF-XX-XXXX"
+
         return super().create(vals_list)
 
 
@@ -278,3 +296,11 @@ class CrmLead(models.Model):
             "url": url,
             "target": "new",
         }
+
+    @api.constrains('type', 'solartree_lead_channel', 'solartree_lead_identification', 'solartree_date_request')
+    def _check_required_fields_for_opportunity(self):
+        for record in self:
+            if record.type == 'opportunity':
+                if not record.solartree_lead_channel or not record.solartree_lead_identification or not record.solartree_date_request:
+                    raise ValidationError(
+                        _("The fields 'Lead Channel', 'Lead Identification', and 'Date Request' must be filled when the type is 'opportunity'."))
