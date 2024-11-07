@@ -10,12 +10,12 @@ class CrmLead(models.Model):
         required=True,
         copy=False
     )
-    solartree_lead_type_id = fields.Many2one(
-        comodel_name="crm.lead.type",
-        string="Lead Type",
-        required=True,
-        help="Type of the lead"
-    )
+    # solartree_lead_type_id = fields.Many2one(
+    #     comodel_name="crm.lead.type",
+    #     string="Lead Type",
+    #     required=True,
+    #     help="Type of the lead"
+    # )
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
         string="Lead Modality",
@@ -156,6 +156,29 @@ class CrmLead(models.Model):
     access_rights = fields.Float(
         string="Access Rights (kW)",
         digits=(16, 2),
+    )
+    #FIELDS TO VIEW IN KANBAN VIEW
+    offer_kwp = fields.Float(
+        related='selected_revision_id.offer_kwp',
+        string='Offer kWp',
+        readonly=False
+    )
+    offer_price_rx = fields.Monetary(
+        related='selected_revision_id.offer_price_rx',
+        string='Offer Price RX',
+        currency_field='company_currency',
+        readonly=False
+    )
+    offer_wp = fields.Float(
+        related='selected_revision_id.offer_wp',
+        string='Offer WP',
+        readonly=False
+    )
+    solartree_lead_type_id = fields.Many2one(
+        related='selected_revision_id.solartree_lead_type_id',
+        comodel_name='crm.lead.type',
+        string='Lead Type',
+        readonly=False
     )
 
     @api.depends('selected_revision_id.offer_price_rx')

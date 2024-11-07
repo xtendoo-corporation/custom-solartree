@@ -5,14 +5,15 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_phone_update']" position="after">
-                <field name="partner_address_id" domain="[('parent_id', '=', partner_id)]"/>
+                <field name="partner_address_id" domain="[('parent_id', '=', partner_id)]"
+                       options="{'no_create': True}"/>
                 <button
-                    class="btn btn-primary"
-                    name="open_map"
-                    type="object"
-                    string="Enlace a la Geolocalización"
-                    icon="fa-map-marker"
-                    invisible="not partner_address_id"/>
+                        class="btn btn-primary"
+                        name="open_map"
+                        type="object"
+                        string="Enlace a la Geolocalización"
+                        icon="fa-map-marker"
+                        invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//notebook" position="before">
@@ -20,18 +21,18 @@
                     <group string="Solar Tree Information">
                         <field name="solartree_code" required="0"/>
                         <field name="solartree_lead_identification" invisible="type != 'opportunity'"/>
-<!--                        <field name="solartree_lead_type_id" widget="selection"/>-->
-<!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
-<!--                        <field name="solartree_lead_collective"/>-->
-<!--                        <field name="solartree_lead_storage"/>-->
+                        <!--                        <field name="solartree_lead_type_id" widget="selection"/>-->
+                        <!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
+                        <!--                        <field name="solartree_lead_collective"/>-->
+                        <!--                        <field name="solartree_lead_storage"/>-->
                         <field name="solartree_num_proyect" invisible="type != 'opportunity'"/>
                     </group>
                     <group string="Lead Scope and Channels" invisible="type != 'opportunity'">
-<!--                        <field name="solartree_lead_scope" widget="selection"/>-->
+                        <!--                        <field name="solartree_lead_scope" widget="selection"/>-->
                         <field name="solartree_lead_channel" widget="selection"/>
                         <field name="solartree_lead_technical" widget="selection"/>
-<!--                        <field name="solartree_lead_structure_type" widget="selection"/>-->
-<!--                        <field name="solartree_lead_structure_model" widget="selection"/>-->
+                        <!--                        <field name="solartree_lead_structure_type" widget="selection"/>-->
+                        <!--                        <field name="solartree_lead_structure_model" widget="selection"/>-->
                     </group>
                     <group string="Dates and Deliverables" invisible="type != 'opportunity'">
                         <field name="solartree_date_request"/>
@@ -76,7 +77,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                    name="filter_domain"
+                        name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -90,45 +91,60 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                    name="filter_domain"
+                        name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
         </field>
     </record>
 
-    <!--    <record id="crm_case_tree_view_leads_inherit" model="ir.ui.view">-->
-    <!--        <field name="name">crm.lead.tree.lead</field>-->
-    <!--        <field name="model">crm.lead</field>-->
-    <!--        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
-    <!--                <field name="solartree_code"/>-->
-    <!--                <field name="solartree_lead_type_id"/>-->
-    <!--            </xpath>-->
-    <!--        </field>-->
-    <!--    </record>-->
+    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.lead.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']" position="after">
+                <hr/>
+                <div>
+                    <b>
+                        <span>Código oferta: </span>
+                    </b>
+                    <field name="solartree_code"/>
+                    <br/>
+                    <b>
+                        <span>Identificación oferta: </span>
+                    </b>
+                    <field name="solartree_lead_identification"/>
 
-    <!--    <record id="crm_case_tree_view_oppor_inherit" model="ir.ui.view">-->
-    <!--        <field name="name">crm.lead.tree.opportunity</field>-->
-    <!--        <field name="model">crm.lead</field>-->
-    <!--        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
-    <!--                <field name="solartree_code"/>-->
-    <!--                <field name="solartree_lead_type_id"/>-->
-    <!--            </xpath>-->
-    <!--        </field>-->
-    <!--    </record>-->
-    <!--    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">-->
-    <!--        <field name="name">crm.lead.kanban.lead</field>-->
-    <!--        <field name="model">crm.lead</field>-->
-    <!--        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
-    <!--                <field name="solartree_code"/>-->
-    <!--                <field name="solartree_lead_type_id"/>-->
-    <!--            </xpath>-->
-    <!--        </field>-->
-    <!--    </record>-->
+                </div>
+                <div>
+                    <b>
+                        <span>Potencia pico: </span>
+                    </b>
+                    <field name="offer_kwp"/>
+                    <span>kWp</span>
+                    <br/>
+                    <b>
+                        <span>Precio de venta: </span>
+                    </b>
+                    <field name="offer_price_rx"/>
+                    <span>€</span>
+                    <br/>
+                    <b>
+                        <span>Precio de venta €/Wp: </span>
+                    </b>
+                    <field name="offer_wp"/>
+                    <span>€</span>
+                    <br/>
+                    <b>
+                        <span>Tipo: </span>
+                    </b>
+                    <field name="solartree_lead_type_id"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='o_kanban_record_subtitle']/t/field[@name='expected_revenue']" position="replace">
+
+            </xpath>
+        </field>
+    </record>
 </odoo>

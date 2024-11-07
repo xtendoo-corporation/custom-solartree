@@ -384,6 +384,17 @@ class CrmLeadRevision(models.Model):
             print(f"Nombre de la revisión asignado: {defaults['name']}")
         else:
             print("LEAD ID no encontrado en el contexto")
+        price_types = self.env['crm.lead.revision.price.type'].search([])
+        revision_prices = []
+        for price_type in price_types:
+            revision_prices.append((0, 0, {
+                'type_price_id': price_type.id,
+                'percentage': 0.0,
+                'price': 0.0,
+                'price_wp': 0.0,
+            }))
+
+        defaults['revision_price_ids'] = revision_prices
         return defaults
 
     def action_open_revision_form(self):

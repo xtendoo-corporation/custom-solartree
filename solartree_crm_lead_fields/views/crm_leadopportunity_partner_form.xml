@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <xpath expr="//form/group[@name='name']" position="after">
                 <group string="Additional Information">
-                    <field name="solartree_lead_channel"/>
+                    <field name="solartree_lead_channel" options="{'no_create': True}"/>
                     <field name="solartree_lead_identification"/>
                     <field name="solartree_date_request"/>
                 </group>

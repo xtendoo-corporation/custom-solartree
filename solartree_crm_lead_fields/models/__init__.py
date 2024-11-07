@@ -14,3 +14,4 @@ from . import crm_lead_evacuation
 from . import crm_lead_revision_prices
 from . import crm_lead_revision_price_type
 from . import crm_leadopportunity_partner
+from . import crm_lead_revision_total_price_rx
