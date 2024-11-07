@@ -50,15 +50,14 @@ class CrmLeadRevisionTotalPriceRX(models.Model):
             else:
                 record.company_currency = self.env.company.currency_id
 
-
-    total_price_rx = fields.Float(
-        string="Total Price RX",
-        compute="_compute_total_price_rx",
-        store=True
-    )
-
-    @api.depends('revision_id.revision_total_price_ids.price')
-    def _compute_total_price_rx(self):
-        for record in self:
-            record.total_price_rx = sum(record.revision_id.revision_total_price_ids.mapped('price'))
-            print("PRINT DESDE CRM LEAD REVISION TOTAL PRICE RX",record.total_price_rx)
+    # total_price_rx = fields.Float(
+    #     string="Total Price RX",
+    #     compute="_compute_total_price_rx",
+    #     store=True
+    # )
+    #
+    # @api.depends('revision_id.revision_total_price_ids.price')
+    # def _compute_total_price_rx(self):
+    #     for record in self:
+    #         record.total_price_rx = sum(record.revision_id.revision_total_price_ids.mapped('price'))
+    #         print("PRINT DESDE CRM LEAD REVISION TOTAL PRICE RX",record.total_price_rx)

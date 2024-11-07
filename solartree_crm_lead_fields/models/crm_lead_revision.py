@@ -209,11 +209,11 @@ class CrmLeadRevision(models.Model):
         store=True
     )
 
-    @api.depends('revision_total_price_ids.total_price_rx')
+    @api.depends('revision_total_price_ids.price')
     def _compute_offer_price_rx(self):
         for record in self:
             if record.revision_total_price_ids:
-                record.offer_price_rx = record.revision_total_price_ids[0].total_price_rx
+                record.offer_price_rx = sum(record.revision_total_price_ids.mapped('price'))
                 print("Offer Price RX 1", record.offer_price_rx)
             else:
                 record.offer_price_rx = 0.0
