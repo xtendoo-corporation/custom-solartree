@@ -11,13 +11,13 @@ class CrmLeadRevisionPrices(models.Model):
     )
 
     type_price_id = fields.Many2one(
-        "crm.lead.revision.price.type",
+        "crm.lead.revision.global.type",
         string = "Type",
         domain = lambda self: self._domain_type_price_id(),
     )
 
     selected_type_price_ids = fields.Many2many(
-        'crm.lead.revision.price.type',
+        'crm.lead.revision.global.type',
         compute='_compute_selected_type_price_ids',
         store=False
     )
@@ -28,11 +28,37 @@ class CrmLeadRevisionPrices(models.Model):
             record.selected_type_price_ids = record.mapped('revision_id.revision_price_ids.type_price_id')
 
     def _domain_type_price_id(self):
-        return [('id', 'not in', self.selected_type_price_ids.ids)]
+        return [('id', 'not in', self.selected_type_price_ids.ids),
+                ('behavior', '=', 'fee_and_margins')
+                ]
 
     percentage = fields.Float(
         string="Percentage",
+        compute="_compute_percentage",
+        store=True
     )
+
+    @api.depends('revision_id.revision_price_ids')
+    def _compute_percentage(self):
+        for record in self:
+            if record.type_price_id.name == "MBSV Proyecto":
+                total_percentage = sum(
+                    rec.percentage for rec in record.revision_id.revision_price_ids
+                    if rec.type_price_id.name in [
+                        "Venta", "Coste", "Fee Externo", "Fee Interno", "Gastos de estructura", "Beneficio Industrial"
+                    ]
+                )
+                record.percentage = total_percentage
+            elif record.type_price_id.name == "MBSV Solartree":
+                total_percentage = sum(
+                    rec.percentage for rec in record.revision_id.revision_price_ids
+                    if rec.type_price_id.name in [
+                        "Gastos de estructura", "Beneficio Industrial"
+                    ]
+                )
+                record.percentage = total_percentage
+            else:
+                record.percentage = record.percentage
 
     price = fields.Monetary(
         string="Price",

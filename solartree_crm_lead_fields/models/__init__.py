@@ -12,7 +12,6 @@ from . import crm_lead_fee
 from . import crm_tension_level
 from . import crm_lead_evacuation
 from . import crm_lead_revision_prices
-from . import crm_lead_revision_price_type
+from . import crm_lead_revision_global_type
 from . import crm_leadopportunity_partner
-from . import crm_lead_revision_total_price_rx_type
 from . import crm_lead_revision_total_price_rx

@@ -11,13 +11,13 @@ class CrmLeadRevisionTotalPriceRX(models.Model):
     )
 
     type_total_price_id = fields.Many2one(
-        "crm.lead.revision.total.price.rx.type",
+        "crm.lead.revision.global.type",
         string = "Type",
         domain = lambda self: self._domain_type_total_price_id(),
     )
 
     selected_type_total_price_ids = fields.Many2many(
-        'crm.lead.revision.total.price.rx.type',
+        'crm.lead.revision.global.type',
         compute='_compute_selected_type_total_price_ids',
         store=False
     )
@@ -28,7 +28,12 @@ class CrmLeadRevisionTotalPriceRX(models.Model):
             record.selected_type_total_price_ids = record.mapped('revision_id.revision_total_price_ids.type_total_price_id')
 
     def _domain_type_total_price_id(self):
-        return [('id', 'not in', self.selected_type_total_price_ids.ids)]
+        domain = [
+            ('id', 'not in', self.selected_type_total_price_ids.ids),
+        ]
+        print("Domain filter:", domain)  # Debug statement
+        return domain
+
 
     price = fields.Float(
         string="Price",

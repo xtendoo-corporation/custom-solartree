@@ -4,7 +4,7 @@
         <field name="model">crm.lead.revision.total.price.rx</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="type_total_price_id" domain="[('id', 'not in', selected_type_total_price_ids)]"
+                <field name="type_total_price_id" domain="[('id', 'not in', selected_type_total_price_ids), ('behavior', '=', 'total_price')]"
                                options="{'no_create': True,}" string="Tipo"/>
                 <field name="price" sum="Total Price RX"/>
                 <field name="selected_type_total_price_ids" invisible="1"/>
@@ -19,7 +19,7 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="type_total_price_id" domain="[('id', 'not in', selected_type_total_price_ids)]"
+                        <field name="type_total_price_id" domain="[('id', 'not in', selected_type_total_price_ids), ('behavior', '=', 'total_price')]"
                                options="{'no_create': True,}" string="Tipo"/>
                         <field name="price" sum="Total Price RX"/>
                         <field name="selected_type_total_price_ids" invisible="1"/>

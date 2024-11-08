@@ -254,12 +254,12 @@ msgstr "Tarifa MBSV"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_mbsv_price
 msgid "Fee MBSV Price"
-msgstr "Tarifa MBSV Precio"
+msgstr "MBSV Precio"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_mbsv_price_wp
 msgid "Fee MBSV Price WP"
-msgstr "Tarifa MBSV Precio WP"
+msgstr "MBSV Precio WP"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__lead_fee

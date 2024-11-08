@@ -84,7 +84,7 @@
     <record id="crm_lead_channel_11" model="crm.lead.channel">
         <field name="name">EPROVOX - MSG</field>
     </record>
-     <record id="crm_lead_channel_12" model="crm.lead.channel">
+    <record id="crm_lead_channel_12" model="crm.lead.channel">
         <field name="name">ESPARCOR - TAIYO</field>
     </record>
     <record id="crm_lead_channel_13" model="crm.lead.channel">
@@ -123,7 +123,7 @@
     <record id="crm_lead_channel_24" model="crm.lead.channel">
         <field name="name">AMA - TEMPOS</field>
     </record>
-     <record id="crm_lead_channel_25" model="crm.lead.channel">
+    <record id="crm_lead_channel_25" model="crm.lead.channel">
         <field name="name">FMC - TEPRO</field>
     </record>
     <record id="crm_lead_channel_26" model="crm.lead.channel">
@@ -156,7 +156,7 @@
     <record id="crm_lead_channel_35" model="crm.lead.channel">
         <field name="name">DSG</field>
     </record>
-     <record id="crm_lead_channel_36" model="crm.lead.channel">
+    <record id="crm_lead_channel_36" model="crm.lead.channel">
         <field name="name">SERVIEL - MANUEL DOMINGUEZ</field>
     </record>
     <record id="crm_lead_channel_37" model="crm.lead.channel">
@@ -168,7 +168,7 @@
     <record id="crm_lead_channel_39" model="crm.lead.channel">
         <field name="name">CSS</field>
     </record>
-     <record id="crm_lead_channel_40" model="crm.lead.channel">
+    <record id="crm_lead_channel_40" model="crm.lead.channel">
         <field name="name">CSS - NOEMI</field>
     </record>
     <record id="crm_lead_channel_41" model="crm.lead.channel">
@@ -201,10 +201,10 @@
     <record id="crm_lead_channel_50" model="crm.lead.channel">
         <field name="name">ACC</field>
     </record>
-     <record id="crm_lead_channel_51" model="crm.lead.channel">
+    <record id="crm_lead_channel_51" model="crm.lead.channel">
         <field name="name">TGR - MA GALIANA</field>
     </record>
-     <record id="crm_lead_channel_52" model="crm.lead.channel">
+    <record id="crm_lead_channel_52" model="crm.lead.channel">
         <field name="name">TGR - ALEJANDRO INFANTES</field>
     </record>
     <record id="crm_lead_channel_53" model="crm.lead.channel">
@@ -235,7 +235,7 @@
     </record>
 
     <!-- Data Structure Type -->
-     <record id="crm_lead_structure_type_1" model="crm.lead.structure.type">
+    <record id="crm_lead_structure_type_1" model="crm.lead.structure.type">
         <field name="name">CUBIERTA</field>
     </record>
     <record id="crm_lead_structure_type_2" model="crm.lead.structure.type">
@@ -252,7 +252,7 @@
     </record>
 
     <!-- Data Structure Model -->
-     <record id="crm_lead_structure_model_1" model="crm.lead.structure.model">
+    <record id="crm_lead_structure_model_1" model="crm.lead.structure.model">
         <field name="name">Suelo Hormigon 1H</field>
     </record>
     <record id="crm_lead_structure_model_2" model="crm.lead.structure.model">
@@ -302,7 +302,7 @@
     </record>
 
     <!-- Data Tot -->
-      <record id="crm_lead_tot_1" model="crm.lead.tot">
+    <record id="crm_lead_tot_1" model="crm.lead.tot">
         <field name="name">JPB</field>
     </record>
     <record id="crm_lead_tot_2" model="crm.lead.tot">
@@ -322,10 +322,10 @@
     <record id="sequence_lead" model="ir.sequence">
         <field name="name">Lead Code</field>
         <field name="code">crm.lead</field>
-        <field eval="4" name="padding" />
+        <field eval="4" name="padding"/>
     </record>
 
-     <!-- LEAD FEE -->
+    <!-- LEAD FEE -->
     <record id="crm_lead_fee_1" model="crm.lead.fee">
         <field name="name">2.0TD</field>
     </record>
@@ -363,7 +363,7 @@
     </record>
 
     <!-- EVACUATION -->
-     <record id="crm_lead_evacuation_1" model="crm.lead.evacuation">
+    <record id="crm_lead_evacuation_1" model="crm.lead.evacuation">
         <field name="name">BT a cuadro</field>
     </record>
     <record id="crm_lead_evacuation_2" model="crm.lead.evacuation">
@@ -373,34 +373,50 @@
         <field name="name">MT</field>
     </record>
 
-    <!-- CRM LEAD REVISION PRICE TYPE -->
-    <record id="crm_lead_revision_price_type_1" model="crm.lead.revision.price.type">
+    <!-- CRM LEAD REVISION GLOBAL TYPE -->
+    <record id="crm_lead_revision_global_type_1" model="crm.lead.revision.global.type">
         <field name="name">Venta</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
-    <record id="crm_lead_revision_price_type_2" model="crm.lead.revision.price.type">
+    <record id="crm_lead_revision_global_type_2" model="crm.lead.revision.global.type">
         <field name="name">Coste</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
-    <record id="crm_lead_revision_price_type_3" model="crm.lead.revision.price.type">
+    <record id="crm_lead_revision_global_type_3" model="crm.lead.revision.global.type">
         <field name="name">Fee Externo</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
-    <record id="crm_lead_revision_price_type_4" model="crm.lead.revision.price.type">
+    <record id="crm_lead_revision_global_type_4" model="crm.lead.revision.global.type">
         <field name="name">Fee Interno</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
-    <record id="crm_lead_revision_price_type_5" model="crm.lead.revision.price.type">
+    <record id="crm_lead_revision_global_type_5" model="crm.lead.revision.global.type">
         <field name="name">Gastos de estructura</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
-    <record id="crm_lead_revision_price_type_6" model="crm.lead.revision.price.type">
+    <record id="crm_lead_revision_global_type_6" model="crm.lead.revision.global.type">
         <field name="name">Beneficio Industrial</field>
+        <field name="behavior">fee_and_margins</field>
+    </record>
+    <record id="crm_lead_revision_global_type_7" model="crm.lead.revision.global.type">
+        <field name="name">MBSV Proyecto</field>
+        <field name="behavior">fee_and_margins</field>
+    </record>
+    <record id="crm_lead_revision_global_type_8" model="crm.lead.revision.global.type">
+        <field name="name">MBSV Solartree</field>
+        <field name="behavior">fee_and_margins</field>
     </record>
 
-    <!-- CRM LEAD REVISION TOTAL PRICE RX TYPE -->
-    <record id="crm_lead_revision_total_price_rx_type_1" model="crm.lead.revision.total.price.rx.type">
+    <record id="crm_lead_revision_global_type_9" model="crm.lead.revision.global.type">
         <field name="name">FV</field>
+        <field name="behavior">total_price</field>
     </record>
-    <record id="crm_lead_revision_total_price_rx_type_2" model="crm.lead.revision.total.price.rx.type">
+    <record id="crm_lead_revision_global_type_10" model="crm.lead.revision.global.type">
         <field name="name">Storage</field>
+        <field name="behavior">total_price</field>
     </record>
-    <record id="crm_lead_revision_total_price_rx_type_3" model="crm.lead.revision.total.price.rx.type">
+    <record id="crm_lead_revision_global_type_11" model="crm.lead.revision.global.type">
         <field name="name">VE</field>
+        <field name="behavior">total_price</field>
     </record>
 </odoo>

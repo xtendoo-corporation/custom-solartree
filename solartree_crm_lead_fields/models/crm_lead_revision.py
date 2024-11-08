@@ -356,7 +356,7 @@ class CrmLeadRevision(models.Model):
     @api.depends('revision_total_price_ids.price', 'offer_kwp')
     def _compute_wp(self):
         for record in self:
-            fv_price_type = self.env['crm.lead.revision.total.price.rx.type'].search([('name', '=', 'FV')],
+            fv_price_type = self.env['crm.lead.revision.global.type'].search([('name', '=', 'FV')],
                                                                                      limit=1)
             if fv_price_type:
                 fv_price_record = record.revision_total_price_ids.filtered(
@@ -389,7 +389,7 @@ class CrmLeadRevision(models.Model):
             print(f"Nombre de la revisión asignado: {defaults['name']}")
         else:
             print("LEAD ID no encontrado en el contexto")
-        price_types = self.env['crm.lead.revision.price.type'].search([])
+        price_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'fee_and_margins')])
         revision_prices = []
         for price_type in price_types:
             revision_prices.append((0, 0, {
@@ -401,7 +401,7 @@ class CrmLeadRevision(models.Model):
 
         defaults['revision_price_ids'] = revision_prices
 
-        total_price_types = self.env['crm.lead.revision.total.price.rx.type'].search([])
+        total_price_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'total_price')])
         revision_total_prices = []
         for total_price_type in total_price_types:
             revision_total_prices.append((0, 0, {

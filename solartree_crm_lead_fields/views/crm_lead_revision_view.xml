@@ -91,6 +91,7 @@
                         <group>
                         </group>
                         <group name="Economy" string="Economy">
+                            <field name="fee_mbsv" widget="percentage" string="MBSV"/>
                             <field name="fee_mbsv_price" widget="monetary"/>
                             <field name="fee_mbsv_price_wp" widget="float" digits="[16, 4]"/>
                             <field name="fee_cost_price" widget="monetary" string="Coste (€)"/>
@@ -100,12 +101,11 @@
                             <field name="revision_price_ids" string="">
                                 <tree>
                                     <field name="type_price_id" options="{'no_create': True,}" string=""/>
-                                    <field name="percentage" widget="percentage"/>
+                                    <field name="percentage" widget="percentage" readonly="0"/>
                                     <field name="price" widget="monetary" string="€"/>
                                     <field name="price_wp" digits="[16, 4]" string="€/Wp"/>
                                 </tree>
                             </field>
-                            <field name="fee_mbsv" widget="percentage" string="MBSV"/>
                         </group>
                     </group>
                 </sheet>
