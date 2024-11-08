@@ -16,9 +16,6 @@ class CrmLead(models.Model):
         self.ensure_one()
         template = self.env.ref("solartree_crm_lead_email.mail_template_data_crm_lead_email", False)
         compose_form = self.env.ref("mail.email_compose_message_wizard_form")
-        email_values = {
-            'email_to': self.all_users_emails,
-        }
         ctx = dict(
             default_model="crm.lead",
             default_res_ids=self.ids,

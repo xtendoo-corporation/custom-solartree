@@ -10,9 +10,11 @@
         "partner_external_map",
         "base_geolocalize",
         "solartree_crm_lead_fields",
+        "crm",
     ],
     "data": [
         "data/res_partner_data.xml",
+        "data/res_group_data.xml",
         "views/res_partner_view.xml",
         "views/colaborator_type_view.xml",
         "views/contact_profile_view.xml",
