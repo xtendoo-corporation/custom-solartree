@@ -139,7 +139,7 @@ msgstr "Consumo del cliente (MWh/año)"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_deliverables
 msgid "Date Deliverables"
-msgstr "Fecha de entrega"
+msgstr "Fecha Entregables"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_kom
@@ -934,7 +934,7 @@ msgstr "Nombre Nivel de Tensión"
 msgid ""
 "The fields 'Lead Channel', 'Lead Identification', and 'Date Request' must be"
 " filled when the type is 'opportunity'."
-msgstr "Los campos 'Canal de la oportunidad', 'Identificación de la oportunidad' y 'Solicitud de fecha' deben estar llenos cuando el tipo es 'oportunidad'."
+msgstr "Los campos 'Oferta Canal', 'Identificación Oferta' y 'Solicitud de fecha' deben estar llenos cuando el tipo es 'oportunidad'."
 
 #. module: solartree_crm_lead_fields
 #. odoo-python

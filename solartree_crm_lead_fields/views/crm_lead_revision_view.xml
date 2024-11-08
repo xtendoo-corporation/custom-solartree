@@ -51,21 +51,21 @@
                             <field name="offer_evacuation" widget="selection"/>
                             <field name="avg_price" string="Precio medio (€/kWh)"/>
                             <field name="surplus_price" string="Precio excedente (€/kWh)"/>
-                        </group>
-                        <group string="">
                             <field name="offer_fabricant_modules" widget="text"/>
                             <field name="offer_modules_model" widget="text"/>
                             <field name="offer_modules_unit_power" string="Potencia unitaria (Wp)"/>
                             <field name="offer_modules_quantity"/>
                             <field name="offer_structure_manufacturer" widget="text"/>
                             <field name="offer_structure_description" widget="text"/>
-                            <field name="offer_investor_manufacturer" widget="text"/>
-                            <field name="offer_investor_1_model" widget="text"/>
-                            <field name="offer_investor_1_unit_power" string="Inversor 1 Potencia Unitaria (kW)"/>
-                            <field name="offer_investor_1_quantity"/>
-                            <field name="offer_investor_2_model" widget="text"/>
-                            <field name="offer_investor_2_unit_power" string="Inversor 2 Potencia Unitaria (kW)"/>
-                            <field name="offer_investor_2_quantity"/>
+                        </group>
+                        <group string="">
+                            <field name="offer_inverter_manufacturer" widget="text"/>
+                            <field name="offer_inverter_1_model" widget="text"/>
+                            <field name="offer_inverter_1_unit_power" string="Inversor 1 Potencia Nominal (kW)"/>
+                            <field name="offer_inverter_1_quantity"/>
+                            <field name="offer_inverter_2_model" widget="text"/>
+                            <field name="offer_inverter_2_unit_power" string="Inversor 2 Potencia Nominal (kW)"/>
+                            <field name="offer_inverter_2_quantity"/>
                         </group>
                         <group name="rentability" string="Rentability">
                             <field name="offer_pb_actual"/>

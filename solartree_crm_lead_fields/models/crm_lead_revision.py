@@ -73,12 +73,12 @@ class CrmLeadRevision(models.Model):
         readonly=False,
     )
 
-    @api.depends('offer_investor_1_quantity', 'offer_investor_1_unit_power', 'offer_investor_2_quantity',
-                 'offer_investor_2_unit_power')
+    @api.depends('offer_inverter_1_quantity', 'offer_inverter_1_unit_power', 'offer_inverter_2_quantity',
+                 'offer_inverter_2_unit_power')
     def _compute_offer_kwn(self):
         for record in self:
-            record.offer_kwn = record.offer_investor_1_quantity * record.offer_investor_1_unit_power + (
-                        record.offer_investor_2_quantity * record.offer_investor_2_unit_power)
+            record.offer_kwn = record.offer_inverter_1_quantity * record.offer_inverter_1_unit_power + (
+                        record.offer_inverter_2_quantity * record.offer_inverter_2_unit_power)
 
 
     offer_storage_kwh = fields.Float(
@@ -280,27 +280,27 @@ class CrmLeadRevision(models.Model):
     offer_modules_quantity = fields.Integer(
         string="Modules Quantity",
     )
-    offer_investor_manufacturer = fields.Char(
+    offer_inverter_manufacturer = fields.Char(
         string="Investor Manufacturer",
     )
-    offer_investor_1_model = fields.Char(
+    offer_inverter_1_model = fields.Char(
         string="Investor 1 Model",
     )
-    offer_investor_1_unit_power = fields.Float(
+    offer_inverter_1_unit_power = fields.Float(
         string="Investor 1 Unit Power",
         digits=(16, 1),
     )
-    offer_investor_1_quantity = fields.Integer(
+    offer_inverter_1_quantity = fields.Integer(
         string="Investor 1 Quantity",
     )
-    offer_investor_2_model = fields.Char(
+    offer_inverter_2_model = fields.Char(
         string="Investor 2 Model",
     )
-    offer_investor_2_unit_power = fields.Float(
+    offer_inverter_2_unit_power = fields.Float(
         string="Investor 2 Unit Power",
         digits=(16, 1),
     )
-    offer_investor_2_quantity = fields.Integer(
+    offer_inverter_2_quantity = fields.Integer(
         string="Investor 2 Quantity",
     )
     offer_structure_manufacturer = fields.Char(
