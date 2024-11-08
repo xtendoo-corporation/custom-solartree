@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Acción del wizard de importación -->
+    <record id="action_import_crm_lead_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Leads</field>
+        <field name="res_model">import.crm.lead.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menú de importación de leads -->
+    <menuitem id="submenu_import_crm_lead_wizard"
+              name="Importar Leads"
+              parent="solartree_crm_lead_fields.menu_crm_solartree_group"
+              action="action_import_crm_lead_wizard"
+              sequence="33"/>
+
+</odoo>

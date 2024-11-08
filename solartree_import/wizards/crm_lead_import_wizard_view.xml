@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_import_crm_lead" model="ir.ui.view">
+        <field name="name">import.crm.lead.wizard.form</field>
+        <field name="model">import.crm.lead.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar Leads">
+                <group>
+                    <field name="file" filename="file_name"/>
+                </group>
+                <footer>
+                    <button name="action_import_crm_lead" string="Importar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
