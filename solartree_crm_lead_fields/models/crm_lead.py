@@ -180,6 +180,13 @@ class CrmLead(models.Model):
         readonly=False
     )
 
+    offer_class = fields.Char(
+        string='Offer Class',
+        related='selected_revision_id.offer_class',
+        store=True,
+        readonly=True
+    )
+
     @api.depends('selected_revision_id.offer_price_rx')
     def _compute_expected_revenue(self):
         for lead in self:

@@ -8,12 +8,12 @@
                 <field name="partner_address_id" domain="[('parent_id', '=', partner_id)]"
                        options="{'no_create': True}"/>
                 <button
-                        class="btn btn-primary"
-                        name="open_map"
-                        type="object"
-                        string="Enlace a la Geolocalización"
-                        icon="fa-map-marker"
-                        invisible="not partner_address_id"/>
+                    class="btn btn-primary"
+                    name="open_map"
+                    type="object"
+                    string="Enlace a la Geolocalización"
+                    icon="fa-map-marker"
+                    invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//notebook" position="before">
@@ -77,7 +77,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                        name="filter_domain"
+                    name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -91,7 +91,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                        name="filter_domain"
+                    name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -107,43 +107,37 @@
                 <hr/>
                 <div>
                     <b>
-                        <span>Código oferta: </span>
-                    </b>
-                    <field name="solartree_code"/>
-                    <br/>
-                    <b>
                         <span>Identificación oferta: </span>
                     </b>
                     <field name="solartree_lead_identification"/>
-
+                    <br/>
+                    <field name="solartree_code"/>
                 </div>
                 <div>
-                    <b>
-                        <span>Potencia pico: </span>
-                    </b>
                     <field name="offer_kwp"/>
-                    <span>kWp</span>
+                    <span> kWp</span>
                     <br/>
-                    <b>
-                        <span>Precio de venta: </span>
-                    </b>
                     <field name="offer_price_rx"/>
-                    <span>€</span>
+                    <span> €</span>
                     <br/>
-                    <b>
-                        <span>Precio de venta €/Wp: </span>
-                    </b>
                     <field name="offer_wp"/>
-                    <span>€</span>
+                    <span> €/Wp</span>
                     <br/>
-                    <b>
-                        <span>Tipo: </span>
-                    </b>
                     <field name="solartree_lead_type_id"/>
+                    <br/>
+                    <field name="offer_class"/>
                 </div>
             </xpath>
-            <xpath expr="//div[@class='o_kanban_record_subtitle']/t/field[@name='expected_revenue']" position="replace">
-
+             <xpath expr="//div[span[@class='o_text_overflow' and @t-if='record.partner_id.value']]" position="replace">
+             </xpath>
+            <xpath expr="//div[field[@name='tag_ids']]" position="replace">
+            </xpath>
+            <xpath expr="//div[field[@name='lead_properties']]" position="replace">
+            </xpath>
+            <xpath expr="//div[@class='o_kanban_record_subtitle']" position="replace">
+            </xpath>
+            <xpath expr="//div[@class='o_kanban_record_bottom']/div[@class='oe_kanban_bottom_left']" position="replace">
+                <div class="oe_kanban_bottom_left"/>
             </xpath>
         </field>
     </record>
