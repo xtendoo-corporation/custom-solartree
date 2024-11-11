@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_crm_lead_revision_direct_costs_tree" model="ir.ui.view">
+        <field name="name">crm.lead.revision.direct.costs.tree</field>
+        <field name="model">crm.lead.revision.direct.costs</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type_direct_costs_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
+                       options="{'no_create': True,}" string=""/>
+                <field name="price_cost" widget="monetary"/>
+                <field name="price_cost_wp" digits="[16, 4]"/>
+                <field name="price_sale" widget="monetary" />
+                <field name="price_sale_wp" digits="[16, 4]"/>
+                <field name="selected_type_price_ids" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_direct_costs_form" model="ir.ui.view">
+        <field name="name">crm.lead.revision.direct.costs.form</field>
+        <field name="model">crm.lead.revision.direct.costs</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="type_direct_costs_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
+                               options="{'no_create': True,}" string="Type"/>
+                        <field name="price_cost" widget="monetary" readonly="0"/>
+                        <field name="price_cost_wp" digits="[16, 4]"/>
+                        <field name="price_sale" widget="monetary" readonly="0"/>
+                        <field name="price_sale_wp" digits="[16, 4]"/>
+                        <field name="selected_type_price_ids" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

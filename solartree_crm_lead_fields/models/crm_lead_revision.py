@@ -73,12 +73,11 @@ class CrmLeadRevision(models.Model):
         readonly=False,
     )
 
-    @api.depends('offer_inverter_1_quantity', 'offer_inverter_1_unit_power', 'offer_inverter_2_quantity',
-                 'offer_inverter_2_unit_power')
+    @api.depends('revision_inverter_ids.offer_inverter_quantity', 'revision_inverter_ids.offer_inverter_unit_power')
     def _compute_offer_kwn(self):
         for record in self:
-            record.offer_kwn = record.offer_inverter_1_quantity * record.offer_inverter_1_unit_power + (
-                        record.offer_inverter_2_quantity * record.offer_inverter_2_unit_power)
+            record.offer_kwn = sum(inverter.offer_inverter_quantity * inverter.offer_inverter_unit_power for inverter in
+                                   record.revision_inverter_ids)
 
 
     offer_storage_kwh = fields.Float(
@@ -192,7 +191,7 @@ class CrmLeadRevision(models.Model):
     )
     offer_tir_proyection = fields.Float(
         string='TIR proyection',
-        digits = (16, 1),
+        digits = (16, 2),
     )
     offer_kwh_year = fields.Integer(
         string='Offer kWh/year',
@@ -239,6 +238,24 @@ class CrmLeadRevision(models.Model):
         string="",
     )
 
+    revision_direct_costs_ids = fields.One2many(
+        "crm.lead.revision.direct.costs",
+        "revision_id",
+        string="",
+    )
+
+    revision_inverter_ids = fields.One2many(
+        "crm.lead.revision.inverter",
+        "revision_id",
+        string="",
+    )
+
+    revision_battery_ids = fields.One2many(
+        "crm.lead.revision.battery",
+        "revision_id",
+        string="",
+    )
+
     revision_total_price_ids = fields.One2many(
         "crm.lead.revision.total.price.rx",
         "revision_id",
@@ -266,7 +283,7 @@ class CrmLeadRevision(models.Model):
     )
     tir_exced_min = fields.Float(
         string="TIR Exced Min",
-        digits=(16, 1),
+        digits=(16, 2),
     )
     offer_fabricant_modules = fields.Char(
         string="Fabricant Modules",
@@ -281,28 +298,33 @@ class CrmLeadRevision(models.Model):
         string="Modules Quantity",
     )
     offer_inverter_manufacturer = fields.Char(
-        string="Investor Manufacturer",
+        string="Inverter Manufacturer",
     )
-    offer_inverter_1_model = fields.Char(
-        string="Investor 1 Model",
+    revision_inverter_ids = fields.One2many(
+        "crm.lead.revision.inverter",
+        "revision_id",
+        string="",
     )
-    offer_inverter_1_unit_power = fields.Float(
-        string="Investor 1 Unit Power",
-        digits=(16, 1),
-    )
-    offer_inverter_1_quantity = fields.Integer(
-        string="Investor 1 Quantity",
-    )
-    offer_inverter_2_model = fields.Char(
-        string="Investor 2 Model",
-    )
-    offer_inverter_2_unit_power = fields.Float(
-        string="Investor 2 Unit Power",
-        digits=(16, 1),
-    )
-    offer_inverter_2_quantity = fields.Integer(
-        string="Investor 2 Quantity",
-    )
+    # offer_inverter_1_model = fields.Char(
+    #     string="Inverter 1 Model",
+    # )
+    # offer_inverter_1_unit_power = fields.Float(
+    #     string="Inverter 1 Unit Power",
+    #     digits=(16, 1),
+    # )
+    # offer_inverter_1_quantity = fields.Integer(
+    #     string="Inverter 1 Quantity",
+    # )
+    # offer_inverter_2_model = fields.Char(
+    #     string="Inverter 2 Model",
+    # )
+    # offer_inverter_2_unit_power = fields.Float(
+    #     string="Inverter 2 Unit Power",
+    #     digits=(16, 1),
+    # )
+    # offer_inverter_2_quantity = fields.Integer(
+    #     string="Inverter 2 Quantity",
+    # )
     offer_structure_manufacturer = fields.Char(
         string="Structure Manufacturer",
     )
@@ -400,6 +422,43 @@ class CrmLeadRevision(models.Model):
             }))
 
         defaults['revision_price_ids'] = revision_prices
+
+        direct_costs_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'direct_costs')])
+        revision_direct_costs = []
+        for direct_costs_type in direct_costs_types:
+            revision_direct_costs.append((0, 0, {
+                'type_direct_costs_id': direct_costs_type.id,
+                'price_cost': 0.0,
+                'price_cost_wp': 0.0,
+                'price_sale': 0.0,
+                'price_sale_wp': 0.0,
+            }))
+
+        defaults['revision_direct_costs_ids'] = revision_direct_costs
+
+        inverter_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'inverter')])
+        revision_inverter = []
+        for inverter_type in inverter_types:
+            revision_inverter.append((0, 0, {
+                'type_inverter_id': inverter_type.id,
+                'offer_inverter_model': '',
+                'offer_inverter_unit_power': 0.0,
+                'offer_inverter_quantity': 0,
+            }))
+
+        defaults['revision_inverter_ids'] = revision_inverter
+
+        battery_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'battery')])
+        revision_battery = []
+        for battery_type in battery_types:
+            revision_battery.append((0, 0, {
+                'type_battery_id': battery_type.id,
+                'offer_battery_model': '',
+                'offer_battery_capacity': 0.0,
+                'offer_battery_power': 0.0,
+            }))
+
+        defaults['revision_battery_ids'] = revision_battery
 
         total_price_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'total_price')])
         revision_total_prices = []

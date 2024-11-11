@@ -12,7 +12,10 @@ class CrmLeadRevisionPrices(models.Model):
     behavior = fields.Selection(
         selection=[
             ('fee_and_margins', 'Fee and Margins'),
-            ('total_price', 'Total Price')
+            ('total_price', 'Total Price'),
+            ('direct_costs', 'Direct Costs'),
+            ('inverter', 'Inverter'),
+            ('battery', 'Battery'),
         ],
         string="Behavior",
         required=True

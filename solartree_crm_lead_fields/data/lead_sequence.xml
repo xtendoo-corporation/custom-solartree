@@ -419,4 +419,65 @@
         <field name="name">VE</field>
         <field name="behavior">total_price</field>
     </record>
+
+    <record id="crm_lead_revision_global_type_12" model="crm.lead.revision.global.type">
+        <field name="name">Modules</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_13" model="crm.lead.revision.global.type">
+        <field name="name">Inverter</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_14" model="crm.lead.revision.global.type">
+        <field name="name">Batery</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_15" model="crm.lead.revision.global.type">
+        <field name="name">Structure</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_16" model="crm.lead.revision.global.type">
+        <field name="name">Evacuation</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_17" model="crm.lead.revision.global.type">
+        <field name="name">H&amp;S</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_18" model="crm.lead.revision.global.type">
+        <field name="name">BOP</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_19" model="crm.lead.revision.global.type">
+        <field name="name">Engineering</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_20" model="crm.lead.revision.global.type">
+        <field name="name">Staff and Work services</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_21" model="crm.lead.revision.global.type">
+        <field name="name">Fee Cost</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_22" model="crm.lead.revision.global.type">
+        <field name="name">MBSV Solartree</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_23" model="crm.lead.revision.global.type">
+        <field name="name">Inverter 1</field>
+        <field name="behavior">inverter</field>
+    </record>
+    <record id="crm_lead_revision_global_type_24" model="crm.lead.revision.global.type">
+        <field name="name">Inverter 2</field>
+        <field name="behavior">inverter</field>
+    </record>
+     <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
+        <field name="name">Battery 1</field>
+        <field name="behavior">battery</field>
+    </record>
+    <record id="crm_lead_revision_global_type_26" model="crm.lead.revision.global.type">
+        <field name="name">Battery 2</field>
+        <field name="behavior">battery</field>
+    </record>
 </odoo>

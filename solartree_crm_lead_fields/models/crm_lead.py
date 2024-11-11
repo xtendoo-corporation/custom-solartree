@@ -19,7 +19,6 @@ class CrmLead(models.Model):
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
         string="Lead Modality",
-        required=True,
         help="Modality of the lead"
     )
     solartree_lead_collective = fields.Boolean(
@@ -31,7 +30,6 @@ class CrmLead(models.Model):
     solartree_lead_scope = fields.Many2one(
         comodel_name="crm.lead.scope",
         string="Lead Scope",
-        required=True,
         help="Scope of the lead"
     )
     solartree_lead_channel = fields.Many2one(
@@ -47,7 +45,6 @@ class CrmLead(models.Model):
     solartree_lead_structure_type = fields.Many2one(
         comodel_name="crm.lead.structure.type",
         string="Lead Structure Type",
-        required=True,
         help="Structure Type of the lead"
     )
     solartree_lead_structure_model = fields.Many2one(

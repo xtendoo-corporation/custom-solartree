@@ -1,0 +1,32 @@
+<odoo>
+    <record id="view_crm_lead_revision_battery_tree" model="ir.ui.view">
+        <field name="name">crm.lead.revision.battery.tree</field>
+        <field name="model">crm.lead.revision.battery</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="revision_id" invisible="1"/>
+                <field name="offer_battery_model"/>
+                <field name="offer_battery_capacity"/>
+                <field name="offer_battery_power"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_battery_form" model="ir.ui.view">
+        <field name="name">crm.lead.revision.battery.form</field>
+        <field name="model">crm.lead.revision.battery</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="revision_id" invisible="1"/>
+                        <field name="offer_battery_model"/>
+                        <field name="offer_battery_capacity"/>
+                        <field name="offer_battery_power"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
