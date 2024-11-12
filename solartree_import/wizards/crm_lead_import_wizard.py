@@ -39,6 +39,7 @@ class ImportCrmLead(models.TransientModel):
                     revision_record = self.env['crm.lead.revision'].with_context(default_lead_id=crm_lead_record.id).create(revision_data)
                     # Crear el registro de precios con el porcentaje
                     self.create_fee_and_margins(row_values, header_indexes, revision, revision_record)
+                    self.create_direct_costs(row_values, header_indexes, revision, revision_record)
 
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
@@ -54,8 +55,13 @@ class ImportCrmLead(models.TransientModel):
                                                               book),
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
                                                                 row_values[header_indexes['Oferta_Canal']]).id,
-            'solartree_lead_technical': self.get_or_create_record('crm.lead.technical',
-                                                                  row_values[header_indexes['Tecnico']]).id,
+            # 'solartree_intern_channel': self.get_or_create_record('crm.lead',
+            #                                                       row_values[header_indexes['Tecnico']]).id,
+            'solartree_date_kom': self.get_date_formatted(row_values[header_indexes['Fecha_KOM']], book),
+            'solartree_date_visit': self.get_date_formatted(row_values[header_indexes['Fecha_Visita']], book),
+            'solartree_date_deliverables': self.get_date_formatted(row_values[header_indexes['Fecha_Entregables']],book),
+            'solartree_date_sign_contract': self.get_date_formatted(row_values[header_indexes['Fecha_Firma_Contrato']],book),
+            'solartree_cups': row_values[header_indexes['CUPS']],
         }
         return crm_lead_data
 
@@ -94,28 +100,43 @@ class ImportCrmLead(models.TransientModel):
             'offer_tot': self.get_or_create_record('crm.lead.tot', row_values[header_indexes[f'TOT-{revision}']]).id,
             'offer_HT': row_values[header_indexes[f'HT_Oferta-{revision}']],
             'offer_date_deliver': self.get_date_formatted(
-                row_values[header_indexes[f'Fecha_Entrega_Oferta-{revision}']], book)
+                row_values[header_indexes[f'Fecha_Entrega_Oferta-{revision}']], book),
+            'offer_tir_proyection': row_values[header_indexes[f'Oferta_Almacenamiento_Precio-{revision}']],####VER
         }
         # Combina los datos comunes con los específicos de la revisión
         return {**common_data, **specific_data}
 
     @api.model
     def create_fee_and_margins(self, row_values, header_indexes, revision, revision_record):
-        # Buscar el registro de tipo de precio "Fee Interno"
-        type_fee_and_margins = self.env['crm.lead.revision.global.type'].search([('name', '=', 'Fee Interno')], limit=1)
-        # Si no existe, créalo con el comportamiento especificado
-        if not type_fee_and_margins:
-            type_fee_and_margins = self.env['crm.lead.revision.global.type'].create({
-                'name': 'Fee Interno',
-                'behavior': 'fee_and_margins',
-            })
-        # Crear el registro de precios con el porcentaje
-        fee_and_margins_data = {
-            'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-            'type_price_id': type_fee_and_margins.id,
-            'percentage': row_values[header_indexes[f'Oferta_Fee_interno_%-{revision}']]
-        }
-        self.env['crm.lead.revision.prices'].create(fee_and_margins_data)
+        # Definir los tipos de precio a procesar
+        fee_types = [
+            ('Fee Interno', 'Oferta_Fee_interno_%-'),
+            ('Fee Externo', 'Oferta_Fee_externo_%-'),
+            ('Beneficio Industrial', 'Oferta_BI_%-'),
+            ('Gastos de estructura', 'Oferta_GG_%-')
+        ]
+
+        # Iterar sobre los tipos de precio
+        for fee_name, fee_column in fee_types:
+            # Buscar el registro de tipo de precio
+            type_fee = self.env['crm.lead.revision.global.type'].search([('name', '=', fee_name)], limit=1)
+
+            # Si no existe, crear el tipo de precio con el comportamiento especificado
+            if not type_fee:
+                type_fee = self.env['crm.lead.revision.global.type'].create({
+                    'name': fee_name,
+                    'behavior': 'fee_and_margins',
+                })
+
+            # Crear el registro de precios con el porcentaje para cada revisión
+            fee_data = {
+                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                'type_price_id': type_fee.id,
+                'percentage': row_values[header_indexes[f'{fee_column}{revision}']]
+            }
+
+            # Crear el registro de precios en la base de datos
+            self.env['crm.lead.revision.prices'].create(fee_data)
 
     # Metodo para construir los datos de inversor
     @api.model
@@ -127,8 +148,35 @@ class ImportCrmLead(models.TransientModel):
         pass
 
     @api.model
-    def create_direct_costs(self, row_values, header_indexes, revision, common_data, book):
-        pass
+    def create_direct_costs(self, row_values, header_indexes, revision, revision_record):
+        # Definir los tipos de precio a procesar
+        cost_types = [
+            ('Batería', 'Oferta_Almacenamiento_Precio-'),
+            ('VE', 'Oferta_VE_Precio-'),
+
+        ]
+
+        # Iterar sobre los tipos de precio
+        for cost_name, cost_column in cost_types:
+            # Buscar el registro de tipo de precio
+            type_cost = self.env['crm.lead.revision.global.type'].search([('name', '=', cost_name)], limit=1)
+
+            # Si no existe, crear el tipo de precio con el comportamiento especificado
+            if not type_cost:
+                type_cost = self.env['crm.lead.revision.global.type'].create({
+                    'name': cost_name,
+                    'behavior': 'direct_costs',
+                })
+
+            # Crear el registro de precios con el porcentaje para cada revisión
+            cost_data = {
+                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                'type_price_id': type_cost.id,
+                'percentage': row_values[header_indexes[f'{cost_column}{revision}']]
+            }
+
+            # Crear el registro de precios en la base de datos
+            self.env['crm.lead.revision.prices'].create(cost_data)
 
     @api.model
     def create_total_price(self, row_values, header_indexes, revision, common_data, book):
