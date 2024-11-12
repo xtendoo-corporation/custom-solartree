@@ -8,6 +8,7 @@
                 <field name="offer_battery_model"/>
                 <field name="offer_battery_capacity"/>
                 <field name="offer_battery_power"/>
+                <field name="offer_battery_quantity"/>
             </tree>
         </field>
     </record>
@@ -23,6 +24,7 @@
                         <field name="offer_battery_model"/>
                         <field name="offer_battery_capacity"/>
                         <field name="offer_battery_power"/>
+                        <field name="offer_battery_quantity"/>
                     </group>
                 </sheet>
             </form>

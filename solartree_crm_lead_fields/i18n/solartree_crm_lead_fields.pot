@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 12:23+0000\n"
-"PO-Revision-Date: 2024-11-11 12:23+0000\n"
+"POT-Creation-Date: 2024-11-12 09:59+0000\n"
+"PO-Revision-Date: 2024-11-12 09:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,11 @@ msgid "Battery Capacity (kWh)"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_battery_manufacturer
+msgid "Battery Manufacturer"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_model
 msgid "Battery Model"
 msgstr ""
@@ -95,6 +100,11 @@ msgstr ""
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_power
 msgid "Battery Power (kWn)"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_quantity
+msgid "Battery Quantity"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -117,6 +127,11 @@ msgstr ""
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead2opportunity_partner_mass__solartree_lead_channel
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_channel
 msgid "Channel of the lead"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
+msgid "Channels"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -489,11 +504,6 @@ msgid "Lead Fee Model"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
-msgid "Lead Fee and Tension"
-msgstr ""
-
-#. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_revision_global_type
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_revision_global_type
 msgid "Lead Global Types"
@@ -561,11 +571,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__solartree_lead_scope
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_scope
 msgid "Lead Scope"
-msgstr ""
-
-#. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
-msgid "Lead Scope and Channels"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -1038,22 +1043,22 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__tir_exced_min
-msgid "TIR Exced Min"
+msgid "TIR Exced Min %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_omip
-msgid "TIR OMIP"
+msgid "TIR OMIP %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_actual
-msgid "TIR actuals"
+msgid "TIR actuals %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_proyection
-msgid "TIR proyection"
+msgid "TIR proyection %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields

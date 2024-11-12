@@ -174,24 +174,24 @@ class CrmLeadRevision(models.Model):
         digits=(16, 1)
     )
     offer_tir_actual = fields.Float(
-        string='TIR actuals',
-        digits = (16, 2),
+        string='TIR actuals %',
+        digits = (16, 1),
     )
     offer_pb_omip = fields.Float(
         string='PB OMIP',
-        digits=(16, 2)
+        digits=(16, 1)
     )
     offer_tir_omip = fields.Float(
-        string='TIR OMIP',
-        digits=(16, 2),
+        string='TIR OMIP %',
+        digits=(16, 1),
     )
     offer_pb_proyection = fields.Float(
         string='PB proyection',
         digits=(16, 1)
     )
     offer_tir_proyection = fields.Float(
-        string='TIR proyection',
-        digits = (16, 2),
+        string='TIR proyection %',
+        digits = (16, 1),
     )
     offer_kwh_year = fields.Integer(
         string='Offer kWh/year',
@@ -271,19 +271,19 @@ class CrmLeadRevision(models.Model):
 
     avg_price = fields.Float(
         string="Average Price",
-        digits=(12, 4),
+        digits=(12, 5),
     )
     surplus_price = fields.Float(
         string="Surplus Price",
-        digits=(12, 4),
+        digits=(12, 5),
     )
     pb_exced_min = fields.Float(
         string="PB Exced Min",
         digits=(16, 1),
     )
     tir_exced_min = fields.Float(
-        string="TIR Exced Min",
-        digits=(16, 2),
+        string="TIR Exced Min %",
+        digits=(16, 1),
     )
     offer_fabricant_modules = fields.Char(
         string="Fabricant Modules",
@@ -299,6 +299,9 @@ class CrmLeadRevision(models.Model):
     )
     offer_inverter_manufacturer = fields.Char(
         string="Inverter Manufacturer",
+    )
+    offer_battery_manufacturer = fields.Char(
+        string="Battery Manufacturer",
     )
     revision_inverter_ids = fields.One2many(
         "crm.lead.revision.inverter",

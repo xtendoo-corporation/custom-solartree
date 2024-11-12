@@ -7,7 +7,7 @@ from . import crm_lead_technical
 from . import crm_lead_structure_type
 from . import crm_lead_structure_model
 from . import crm_lead_revision
-from . import crm_tot
+from . import crm_lead_tot
 from . import crm_lead_fee
 from . import crm_tension_level
 from . import crm_lead_evacuation

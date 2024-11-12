@@ -45,7 +45,7 @@ class CrmLeadRevisionPrices(models.Model):
                 total_percentage = sum(
                     rec.percentage for rec in record.revision_id.revision_price_ids
                     if rec.type_price_id.name in [
-                        "Venta", "Coste", "Fee Externo", "Fee Interno", "Gastos de estructura", "Beneficio Industrial"
+                        "Fee Externo", "Fee Interno", "Gastos de estructura", "Beneficio Industrial"
                     ]
                 )
                 record.percentage = total_percentage

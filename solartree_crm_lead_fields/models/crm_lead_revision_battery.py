@@ -45,3 +45,7 @@ class CrmLeadRevisionBattery(models.Model):
         string="Battery Power (kWn)",
         digits=(16, 1),
     )
+
+    offer_battery_quantity = fields.Integer(
+        string="Battery Quantity",
+    )

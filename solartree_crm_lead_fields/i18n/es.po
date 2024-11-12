@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 12:23+0000\n"
-"PO-Revision-Date: 2024-11-11 12:23+0000\n"
+"POT-Creation-Date: 2024-11-12 09:59+0000\n"
+"PO-Revision-Date: 2024-11-12 09:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Información adicional"
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
 #, python-format
 msgid "Address missing on partner address '%s'."
-msgstr "Dirección faltante en la dirección del contacto '%s'."
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__customer_consumption_mwh
@@ -88,6 +88,11 @@ msgid "Battery Capacity (kWh)"
 msgstr "Capacidad (kWh)"
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_battery_manufacturer
+msgid "Battery Manufacturer"
+msgstr "Fabricante de baterías"
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_model
 msgid "Battery Model"
 msgstr "Modelo"
@@ -96,6 +101,11 @@ msgstr "Modelo"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_power
 msgid "Battery Power (kWn)"
 msgstr "Potencia (kWn)"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_battery__offer_battery_quantity
+msgid "Battery Quantity"
+msgstr "Cantidad"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_global_type__behavior
@@ -118,6 +128,11 @@ msgstr "Nombre Canal"
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__solartree_lead_channel
 msgid "Channel of the lead"
 msgstr "Canal de la oportunidad"
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
+msgid "Channels"
+msgstr "Canales"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_connection_point_location
@@ -226,7 +241,7 @@ msgstr "Fecha Firma propuesta"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead2opportunity_partner_mass__solartree_date_request
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_request
 msgid "Date Request"
-msgstr "Solicitud de fecha"
+msgstr "Fecha de Solicitud de Oferta"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_required_delivery
@@ -236,7 +251,7 @@ msgstr "Fecha de entrega requerida"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_sign_contract
 msgid "Date Sign Contract"
-msgstr "Contrato de firma de fecha"
+msgstr "Fecha Firma Contrato"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_visit
@@ -294,7 +309,7 @@ msgstr "Nombre de evacuación"
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_evacuation
 msgid "Evacuation revisions field"
-msgstr "Campo de revisiones de evacuación"
+msgstr "Tipo de evacuación"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__expected_revenue
@@ -489,11 +504,6 @@ msgid "Lead Fee Model"
 msgstr "Tarifa eléctrica"
 
 #. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
-msgid "Lead Fee and Tension"
-msgstr "Tarifa y Tensión"
-
-#. module: solartree_crm_lead_fields
 #: model:ir.actions.act_window,name:solartree_crm_lead_fields.action_crm_lead_revision_global_type
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_revision_global_type
 msgid "Lead Global Types"
@@ -562,11 +572,6 @@ msgstr "Precio total RX"
 #: model:ir.ui.menu,name:solartree_crm_lead_fields.submenu_crm_lead_scope
 msgid "Lead Scope"
 msgstr "Oferta Alcance"
-
-#. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
-msgid "Lead Scope and Channels"
-msgstr "Alcance y Canales"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_storage
@@ -1038,28 +1043,28 @@ msgstr "Precio excedente"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__tir_exced_min
-msgid "TIR Exced Min"
+msgid "TIR Exced Min %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_omip
-msgid "TIR OMIP"
+msgid "TIR OMIP %"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_actual
-msgid "TIR actuals"
-msgstr "TIR actuales"
+msgid "TIR actuals %"
+msgstr "TIR actuales %"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tir_proyection
-msgid "TIR proyection"
-msgstr "TIR proyección"
+msgid "TIR proyection %"
+msgstr "TIR proyección %"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_tot
 msgid "TOT revisions field"
-msgstr "TOT campo revisión"
+msgstr "Técnico OT"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_lead_technical
@@ -1093,7 +1098,7 @@ msgstr "Nombre Nivel de Tensión"
 msgid ""
 "The fields 'Lead Channel', 'Lead Identification', and 'Date Request' must be"
 " filled when the type is 'opportunity'."
-msgstr " Los campos 'Canal de la Oferta', 'Identificación de la Oferta' y 'Fecha de Solicitud' deben estar rellenos cuando el tipo es 'oportunidad'."
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #. odoo-python

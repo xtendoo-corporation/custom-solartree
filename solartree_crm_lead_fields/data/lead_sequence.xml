@@ -374,14 +374,6 @@
     </record>
 
     <!-- CRM LEAD REVISION GLOBAL TYPE -->
-    <record id="crm_lead_revision_global_type_1" model="crm.lead.revision.global.type">
-        <field name="name">Venta</field>
-        <field name="behavior">fee_and_margins</field>
-    </record>
-    <record id="crm_lead_revision_global_type_2" model="crm.lead.revision.global.type">
-        <field name="name">Coste</field>
-        <field name="behavior">fee_and_margins</field>
-    </record>
     <record id="crm_lead_revision_global_type_3" model="crm.lead.revision.global.type">
         <field name="name">Fee Externo</field>
         <field name="behavior">fee_and_margins</field>
@@ -412,7 +404,7 @@
         <field name="behavior">total_price</field>
     </record>
     <record id="crm_lead_revision_global_type_10" model="crm.lead.revision.global.type">
-        <field name="name">Storage</field>
+        <field name="name">Almacenamiento</field>
         <field name="behavior">total_price</field>
     </record>
     <record id="crm_lead_revision_global_type_11" model="crm.lead.revision.global.type">
@@ -421,23 +413,23 @@
     </record>
 
     <record id="crm_lead_revision_global_type_12" model="crm.lead.revision.global.type">
-        <field name="name">Modules</field>
+        <field name="name">Modulos</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_13" model="crm.lead.revision.global.type">
-        <field name="name">Inverter</field>
+        <field name="name">Inversor</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_14" model="crm.lead.revision.global.type">
-        <field name="name">Batery</field>
+        <field name="name">Batería</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_15" model="crm.lead.revision.global.type">
-        <field name="name">Structure</field>
+        <field name="name">Estructura</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_16" model="crm.lead.revision.global.type">
-        <field name="name">Evacuation</field>
+        <field name="name">Evacuación</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_17" model="crm.lead.revision.global.type">
@@ -449,15 +441,15 @@
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_19" model="crm.lead.revision.global.type">
-        <field name="name">Engineering</field>
+        <field name="name">Ingeniería</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_20" model="crm.lead.revision.global.type">
-        <field name="name">Staff and Work services</field>
+        <field name="name">Staff y Servicios de Obra</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_21" model="crm.lead.revision.global.type">
-        <field name="name">Fee Cost</field>
+        <field name="name">Costes fee</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_22" model="crm.lead.revision.global.type">
@@ -465,19 +457,19 @@
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_23" model="crm.lead.revision.global.type">
-        <field name="name">Inverter 1</field>
+        <field name="name">Inversor 1</field>
         <field name="behavior">inverter</field>
     </record>
     <record id="crm_lead_revision_global_type_24" model="crm.lead.revision.global.type">
-        <field name="name">Inverter 2</field>
+        <field name="name">Inversor 2</field>
         <field name="behavior">inverter</field>
     </record>
      <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
-        <field name="name">Battery 1</field>
+        <field name="name">Batería 1</field>
         <field name="behavior">battery</field>
     </record>
     <record id="crm_lead_revision_global_type_26" model="crm.lead.revision.global.type">
-        <field name="name">Battery 2</field>
+        <field name="name">Batería 2</field>
         <field name="behavior">battery</field>
     </record>
 </odoo>

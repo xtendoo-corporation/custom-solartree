@@ -69,9 +69,8 @@ class CrmLeadRevisionDirectCosts(models.Model):
             else:
                 record.price_cost = record.price_cost
 
-    price_cost_wp = fields.Monetary(
+    price_cost_wp = fields.Float(
         string="Cost / WP",
-        currency_field="company_currency",
         digits=(16, 4),
         compute="_compute_price_cost_wp",
         store=True
@@ -116,9 +115,8 @@ class CrmLeadRevisionDirectCosts(models.Model):
             else:
                 record.price_sale = record.price_sale
 
-    price_sale_wp = fields.Monetary(
+    price_sale_wp = fields.Float(
         string="Sale / WP",
-        currency_field="company_currency",
         digits=(16, 4),
         compute="_compute_price_wp",
         store=True
