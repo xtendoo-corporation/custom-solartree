@@ -24,72 +24,117 @@ class ImportCrmLead(models.TransientModel):
 
         for row in range(1, sheet.nrows):
             row_values = sheet.row_values(row)
-            # Obtener o crear el registro del técnico
-            solartree_lead_technical_record = self.get_or_create_record('crm.lead.technical',
-                                                                        row_values[header_indexes['Tecnico']])
-            solartree_lead_channel_record = self.get_or_create_record('crm.lead.channel',
-                                                                      row_values[header_indexes['Oferta_Canal']])
-            # Asegúrate de que obtienes un valor en formato de fecha adecuado
-            solartree_date_request_record = self.get_date_formatted(row_values[header_indexes['Fecha_Solicitud_Oferta']],book)
 
-
-            crm_lead_data = {
-                'name': row_values[header_indexes['Codigo_Oferta']] + ' - ' + row_values[
-                    header_indexes['Identificacion']],
-                'type': 'opportunity',
-                'solartree_code': row_values[header_indexes['Codigo_Oferta']],
-                'solartree_lead_identification': row_values[header_indexes['Identificacion']],
-                'solartree_date_request': solartree_date_request_record,  # Usa el valor convertido
-                'solartree_lead_channel': solartree_lead_channel_record.id,
-                'solartree_lead_technical': solartree_lead_technical_record.id,
-            }
-
+            # Datos de lead
+            crm_lead_data = self.create_crm_lead(row_values, header_indexes, book)
             # Crear registro de lead y capturar el ID
             crm_lead_record = self.env['crm.lead'].create(crm_lead_data)
 
-            # Datos comunes para todas las revisiones
-            crm_lead_revision_data_common = {
-                'solartree_lead_type_id': self.get_or_create_record('crm.lead.type',
-                                                                    row_values[header_indexes['Oferta_Tipo']]).id,
-                'solartree_lead_modality_id': self.get_or_create_record('crm.lead.modality', row_values[
-                    header_indexes['Oferta_Modalidad']]).id,
-                'solartree_lead_collective': self.get_boolean_value(row_values[header_indexes['Oferta_Colectivo']]),
-                'solartree_lead_storage': self.get_boolean_value(row_values[header_indexes['Oferta_Almacenamiento']]),
-                'solartree_lead_scope': self.get_or_create_record('crm.lead.scope',
-                                                                  row_values[header_indexes['Oferta_Alcance']]).id,
-                'solartree_lead_structure_type': self.get_or_create_record('crm.lead.structure.type', row_values[
-                    header_indexes['Oferta_Estructura_Tipo']]).id,
-                'solartree_lead_structure_model': self.get_or_create_record('crm.lead.structure.model', row_values[
-                    header_indexes['Oferta_Estructura_Modelo']]).id,
-            }
-            # Crear revisiones R0 a R6 si están activas (valor "1")
+            # Crear revisiones R0 a R6 si están activas
             for revision in ['R0', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6']:
                 if row_values[header_indexes[revision]] == 1:
-                    revision_data = self.create_revision(row_values, header_indexes, revision,
-                                                                 crm_lead_revision_data_common)
-                    # Aquí pasamos el lead_id en el contexto
-                    context = dict(self.env.context)
-                    context.update({'default_lead_id': crm_lead_record.id})
-                    # Crear la revisión pasando el contexto con el default_lead_id
-                    self.env['crm.lead.revision'].with_context(context).create(revision_data)
+                    # Generar y crear la revisión pasando el contexto con el default_lead_id
+                    revision_data = self.create_revision(row_values, header_indexes, revision, book)
+                    # Crear el registro de revisión
+                    revision_record = self.env['crm.lead.revision'].with_context(default_lead_id=crm_lead_record.id).create(revision_data)
+                    # Crear el registro de precios con el porcentaje
+                    self.create_fee_and_margins(row_values, header_indexes, revision, revision_record)
+
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
 
-    # Metodo para construir los datos de revisión
-    def create_revision(self, row_values, header_indices, revision, common_data):
-        # Datos específicos de la revisión
-        revision_data = {
-            'offer_kwp': row_values[header_indices[f'Oferta_kWp-{revision}']],
-            'offer_kwn': row_values[header_indices[f'Oferta_kWn-{revision}']],
-            'offer_storage_kwh': row_values[header_indices[f'Oferta_Almacenamiento_kWh-{revision}']],
-            'offer_storage_kwn': row_values[header_indices[f'Oferta_Almacenamiento_kWn-{revision}']],
-            'offer_ve_kwn': row_values[header_indices[f'Oferta_VE_kWn-{revision}']],
-            'offer_kwh_year': row_values[header_indices[f'Oferta_kWh_año-{revision}']],
+    @api.model
+    def create_crm_lead(self, row_values, header_indexes, book):
+        crm_lead_data = {
+            'name': row_values[header_indexes['Codigo_Oferta']] + ' - ' + row_values[header_indexes['Identificacion']],
+            'type': 'opportunity',
+            'solartree_code': row_values[header_indexes['Codigo_Oferta']],
+            'solartree_lead_identification': row_values[header_indexes['Identificacion']],
+            'solartree_date_request': self.get_date_formatted(row_values[header_indexes['Fecha_Solicitud_Oferta']],
+                                                              book),
+            'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
+                                                                row_values[header_indexes['Oferta_Canal']]).id,
+            'solartree_lead_technical': self.get_or_create_record('crm.lead.technical',
+                                                                  row_values[header_indexes['Tecnico']]).id,
+        }
+        return crm_lead_data
+
+    # Metodo para construir y devolver los datos de revisión (comunes y específicos)
+    def create_revision(self, row_values, header_indexes, revision, book):
+        # Datos comunes a todas las revisiones
+        common_data = {
+            'solartree_lead_type_id': self.get_or_create_record('crm.lead.type',
+                                                                row_values[header_indexes['Oferta_Tipo']]).id,
+            'solartree_lead_modality_id': self.get_or_create_record('crm.lead.modality',
+                                                                    row_values[header_indexes['Oferta_Modalidad']]).id,
+            'solartree_lead_collective': self.get_boolean_value(row_values[header_indexes['Oferta_Colectivo']]),
+            'solartree_lead_storage': self.get_boolean_value(row_values[header_indexes['Oferta_Almacenamiento']]),
+            'solartree_lead_scope': self.get_or_create_record('crm.lead.scope',
+                                                              row_values[header_indexes['Oferta_Alcance']]).id,
+            'solartree_lead_structure_type': self.get_or_create_record('crm.lead.structure.type', row_values[
+                header_indexes['Oferta_Estructura_Tipo']]).id,
+            'solartree_lead_structure_model': self.get_or_create_record('crm.lead.structure.model', row_values[
+                header_indexes['Oferta_Estructura_Modelo']]).id,
         }
 
+        # Datos específicos de la revisión
+        specific_data = {
+            'offer_kwp': row_values[header_indexes[f'Oferta_kWp-{revision}']],
+            'offer_kwn': row_values[header_indexes[f'Oferta_kWn-{revision}']],
+            'offer_storage_kwh': row_values[header_indexes[f'Oferta_Almacenamiento_kWh-{revision}']],
+            'offer_storage_kwn': row_values[header_indexes[f'Oferta_Almacenamiento_kWn-{revision}']],
+            'offer_ve_kwn': row_values[header_indexes[f'Oferta_VE_kWn-{revision}']],
+            'offer_kwh_year': row_values[header_indexes[f'Oferta_kWh_año-{revision}']],
+            'offer_pb_actual': row_values[header_indexes[f'PB_actuales-{revision}']],
+            'offer_tir_actual': row_values[header_indexes[f'TIR_actuales-{revision}']],
+            'offer_pb_omip': row_values[header_indexes[f'PB_OMIP-{revision}']],
+            'offer_tir_omip': row_values[header_indexes[f'TIR_OMIP-{revision}']],
+            'offer_pb_proyection': row_values[header_indexes[f'PB_proyección-{revision}']],
+            'offer_tir_proyection': row_values[header_indexes[f'TIR_proyección-{revision}']],
+            'offer_tot': self.get_or_create_record('crm.lead.tot', row_values[header_indexes[f'TOT-{revision}']]).id,
+            'offer_HT': row_values[header_indexes[f'HT_Oferta-{revision}']],
+            'offer_date_deliver': self.get_date_formatted(
+                row_values[header_indexes[f'Fecha_Entrega_Oferta-{revision}']], book)
+        }
         # Combina los datos comunes con los específicos de la revisión
-        return {**common_data, **revision_data}
+        return {**common_data, **specific_data}
 
+    @api.model
+    def create_fee_and_margins(self, row_values, header_indexes, revision, revision_record):
+        # Buscar el registro de tipo de precio "Fee Interno"
+        type_fee_and_margins = self.env['crm.lead.revision.global.type'].search([('name', '=', 'Fee Interno')], limit=1)
+        # Si no existe, créalo con el comportamiento especificado
+        if not type_fee_and_margins:
+            type_fee_and_margins = self.env['crm.lead.revision.global.type'].create({
+                'name': 'Fee Interno',
+                'behavior': 'fee_and_margins',
+            })
+        # Crear el registro de precios con el porcentaje
+        fee_and_margins_data = {
+            'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+            'type_price_id': type_fee_and_margins.id,
+            'percentage': row_values[header_indexes[f'Oferta_Fee_interno_%-{revision}']]
+        }
+        self.env['crm.lead.revision.prices'].create(fee_and_margins_data)
+
+    # Metodo para construir los datos de inversor
+    @api.model
+    def create_inversor(self, row_values, header_indexes, revision, common_data, book):
+        pass
+
+    @api.model
+    def create_battery(self, row_values, header_indexes, revision, common_data, book):
+        pass
+
+    @api.model
+    def create_direct_costs(self, row_values, header_indexes, revision, common_data, book):
+        pass
+
+    @api.model
+    def create_total_price(self, row_values, header_indexes, revision, common_data, book):
+        pass
+
+    # Metodo para obtener la fecha en formato 'YYYY-MM-DD'
     def get_date_formatted(self, date_value, book):
         if isinstance(date_value, float):  # Verifica si es un float (el formato típico de fecha en Excel)
             # Convierte el número en una fecha usando xlrd.xldate_as_datetime
@@ -107,37 +152,11 @@ class ImportCrmLead(models.TransientModel):
         if not record:
             # Si no existe, crear un nuevo registro
             record = self.env[model_name].create({'name': name})
-
         return record
 
-    # Metodo que asigna un boolean segun el valor de la celda SI/NO
+    # Metodo que asigna un boolean segun el valor de la celda SÍ/NO
     def get_boolean_value(self, value):
         if value == 'SÍ':
             return True
         else:
             return False
-
-    # def create_record(self, model_name, model_data):
-    #     try:
-    #         # Si no existe un registro con el mismo 'name', lo crea
-    #         new_record = self.env[model_name].create(model_data)
-    #         print(f"Registro creado exitosamente en el modelo {model_name} con nombre '{model_data.get('name')}'")
-    #         return new_record  # Devuelve el nuevo registro creado
-    #
-    #     except Exception as e:
-    #         record_name = model_data.get('name', 'desconocido')
-    #         print(f"Error al crear el registro en el modelo {model_name} con nombre '{record_name}': {e}")
-    #
-    # def existing_record(self, model_name, data):
-    #     existing_record = self.env[model_name].search([('name', '=', data.get('name'))], limit=1)
-    #     if existing_record:
-    #         print(
-    #             f"El registro con el nombre '{data.get('name')}' ya existe en el modelo {model_name}. No se creó un nuevo registro.")
-    #         return existing_record
-
-    # crm_lead_revision_total_price_rx = {
-    #     'revision_id': lambda self: self.env['crm.lead.revision'].search([('name', '=', crm_lead_revision_data.get('name'))], limit=1),#Pendiente de revisar
-    #     'type_total_price_id': row_values[header_indices['Oferta_Precio_Total_R2']],
-    #     'company_currency': self.env.company.currency_id,
-    #     'price': row_values[header_indices['Oferta_Precio_Total_R2']],
-    # }
