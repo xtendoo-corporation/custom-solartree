@@ -79,15 +79,34 @@ class CrmLeadRevision(models.Model):
             record.offer_kwn = sum(inverter.offer_inverter_quantity * inverter.offer_inverter_unit_power for inverter in
                                    record.revision_inverter_ids)
 
-
     offer_storage_kwh = fields.Float(
         string='Offer storage kWh',
-        digits=(16, 1)
+        digits=(16, 1),
+        compute='_compute_offer_storage_kwh',
+        store=True,
     )
+
+    @api.depends('revision_battery_ids.offer_battery_capacity', 'revision_battery_ids.offer_battery_quantity')
+    def _compute_offer_storage_kwh(self):
+        for record in self:
+            record.offer_storage_kwh = sum(
+                battery.offer_battery_capacity * battery.offer_battery_quantity for battery in
+                record.revision_battery_ids)
+
     offer_storage_kwn = fields.Float(
         string='Offer storage kWn',
-        digits=(16, 1)
+        digits=(16, 1),
+        compute='_compute_offer_storage_kwn',
+        store=True,
     )
+
+    @api.depends('revision_battery_ids.offer_battery_power', 'revision_battery_ids.offer_battery_quantity')
+    def _compute_offer_storage_kwn(self):
+        for record in self:
+            record.offer_storage_kwn = sum(
+                battery.offer_battery_power * battery.offer_battery_quantity for battery in
+                record.revision_battery_ids)
+
     offer_ve_kwn = fields.Float(
         string='Offer VE kWh',
         digits=(16, 1)

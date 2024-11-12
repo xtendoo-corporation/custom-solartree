@@ -37,10 +37,22 @@ class CrmLead(models.Model):
         string="Lead Channel",
         help="Channel of the lead"
     )
-    solartree_lead_technical = fields.Many2one(
-        comodel_name="crm.lead.technical",
-        string="Technical",
-        help="Technical of the lead"
+    solartree_intern_channel = fields.Many2one(
+        'res.users',
+        string="Canal interno",
+        help="Canal interno",
+        domain = "[('share', '=', False)]",
+        check_company = True, index = True, tracking = True
+    )
+
+    #sobreescribir commercial
+    user_id = fields.Many2one(
+        'res.users',
+        string='Salesperson',
+        domain=lambda self: [('groups_id', 'in', self.env.ref('solartree_res_partner_fields.group_crm_business_development').id)],
+        check_company=True,
+        index=True,
+        tracking=True
     )
     solartree_lead_structure_type = fields.Many2one(
         comodel_name="crm.lead.structure.type",

@@ -3,7 +3,6 @@ from . import crm_lead_type
 from . import crm_lead_modality
 from . import crm_lead_scope
 from . import crm_lead_channel
-from . import crm_lead_technical
 from . import crm_lead_structure_type
 from . import crm_lead_structure_model
 from . import crm_lead_revision

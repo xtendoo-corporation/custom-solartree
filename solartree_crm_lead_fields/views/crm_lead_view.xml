@@ -30,7 +30,7 @@
                     <group string="Channels" invisible="type != 'opportunity'">
                         <!--                        <field name="solartree_lead_scope" widget="selection"/>-->
                         <field name="solartree_lead_channel" widget="selection"/>
-                        <field name="solartree_lead_technical" widget="selection"/>
+                        <field name="solartree_intern_channel" options="{'no_create': True}"/>
                         <!--                        <field name="solartree_lead_structure_type" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_structure_model" widget="selection"/>-->
                     </group>

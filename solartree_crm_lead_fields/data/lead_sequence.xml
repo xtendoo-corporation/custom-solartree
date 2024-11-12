@@ -214,26 +214,6 @@
         <field name="name">AAC-INGEMED</field>
     </record>
 
-    <!-- Data Technical -->
-    <record id="crm_lead_technical_1" model="crm.lead.technical">
-        <field name="name">JPB</field>
-    </record>
-    <record id="crm_lead_technical_2" model="crm.lead.technical">
-        <field name="name">JMR</field>
-    </record>
-    <record id="crm_lead_technical_3" model="crm.lead.technical">
-        <field name="name">MPP</field>
-    </record>
-    <record id="crm_lead_technical_4" model="crm.lead.technical">
-        <field name="name">AMA</field>
-    </record>
-    <record id="crm_lead_technical_5" model="crm.lead.technical">
-        <field name="name">BMG</field>
-    </record>
-    <record id="crm_lead_technical_6" model="crm.lead.technical">
-        <field name="name">CFT</field>
-    </record>
-
     <!-- Data Structure Type -->
     <record id="crm_lead_structure_type_1" model="crm.lead.structure.type">
         <field name="name">CUBIERTA</field>
@@ -445,31 +425,40 @@
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_20" model="crm.lead.revision.global.type">
-        <field name="name">Staff y Servicios de Obra</field>
+        <field name="name">Vehículo Eléctrico (VE)</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_21" model="crm.lead.revision.global.type">
-        <field name="name">Costes fee</field>
+        <field name="name">Staff y Servicios de Obra</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_22" model="crm.lead.revision.global.type">
-        <field name="name">MBSV Solartree</field>
+        <field name="name">Operación y Mantenimiento</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_23" model="crm.lead.revision.global.type">
+        <field name="name">Costes fee</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_24" model="crm.lead.revision.global.type">
+        <field name="name">MBSV Solartree</field>
+        <field name="behavior">direct_costs</field>
+    </record>
+    <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
         <field name="name">Inversor 1</field>
         <field name="behavior">inverter</field>
     </record>
-    <record id="crm_lead_revision_global_type_24" model="crm.lead.revision.global.type">
+    <record id="crm_lead_revision_global_type_26" model="crm.lead.revision.global.type">
         <field name="name">Inversor 2</field>
         <field name="behavior">inverter</field>
     </record>
-     <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
+     <record id="crm_lead_revision_global_type_27" model="crm.lead.revision.global.type">
         <field name="name">Batería 1</field>
         <field name="behavior">battery</field>
     </record>
-    <record id="crm_lead_revision_global_type_26" model="crm.lead.revision.global.type">
+    <record id="crm_lead_revision_global_type_28" model="crm.lead.revision.global.type">
         <field name="name">Batería 2</field>
         <field name="behavior">battery</field>
     </record>
+
 </odoo>

@@ -49,14 +49,7 @@ class CrmLeadRevisionDirectCosts(models.Model):
     @api.depends('revision_id.revision_direct_costs_ids','revision_id.revision_price_ids')
     def _compute_price_cost(self):
         for record in self:
-            if record.type_direct_costs_id.name == 'BOP':
-                direct_costs = record.revision_id.revision_direct_costs_ids.filtered(
-                    lambda r: r.type_direct_costs_id.name in ['Modules', 'Inverter', 'Batery', 'Structure',
-                                                              'Evacuation', 'H&S']
-                )
-                total_direct_costs = sum(direct_cost.price_cost for direct_cost in direct_costs)
-                record.price_cost = record.revision_id.fee_cost_price - total_direct_costs
-            elif record.type_direct_costs_id.name == 'Fee Cost':
+            if record.type_direct_costs_id.name == 'Fee Cost':
                 fee_costs = record.revision_id.revision_price_ids.filtered(
                     lambda r: r.type_price_id.name in ['Fee Externo', 'Fee Interno']
                 )
@@ -105,14 +98,6 @@ class CrmLeadRevisionDirectCosts(models.Model):
     @api.depends('revision_id.revision_direct_costs_ids')
     def _compute_price_sale(self):
         for record in self:
-            if record.type_direct_costs_id.name == 'BOP':
-                direct_costs = record.revision_id.revision_direct_costs_ids.filtered(
-                    lambda r: r.type_direct_costs_id.name in ['Modules', 'Inverter', 'Batery', 'Structure',
-                                                              'Evacuation', 'H&S']
-                )
-                total_direct_costs = sum(direct_cost.price_sale for direct_cost in direct_costs)
-                record.price_sale = record.revision_id.offer_price_rx - total_direct_costs
-            else:
                 record.price_sale = record.price_sale
 
     price_sale_wp = fields.Float(
