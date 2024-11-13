@@ -126,7 +126,7 @@
                         </group>
                          <group name="total_price" string="Precio Total">
                            <field name="installation_sale_price" string="Venta de instalación (€)" readonly="0"/>
-                             <field name="offer_fv"/>
+                             <field name="offer_fv" string="Precio de venta FV"/>
                         </group>
                     </group>
                 </sheet>
