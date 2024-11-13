@@ -13,7 +13,6 @@ from . import crm_lead_evacuation
 from . import crm_lead_revision_prices
 from . import crm_lead_revision_global_type
 from . import crm_leadopportunity_partner
-from . import crm_lead_revision_total_price_rx
 from . import crm_lead_revision_direct_costs
 from . import crm_lead_revision_inverter
 from . import crm_lead_revision_battery

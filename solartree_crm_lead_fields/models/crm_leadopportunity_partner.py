@@ -18,5 +18,6 @@ class CrmLead2OpportunityPartner(models.TransientModel):
         related='lead_id.solartree_date_request',
         string='Date Request',
         default=fields.Date.context_today,
-        readonly=True
+        store=True,
+        readonly=False,
     )

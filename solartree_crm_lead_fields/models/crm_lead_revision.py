@@ -138,10 +138,10 @@ class CrmLeadRevision(models.Model):
         compute="_compute_fee_mbsv_price",
     )
 
-    @api.depends('fee_mbsv', 'offer_price_rx')
+    @api.depends('fee_mbsv', 'installation_sale_price')
     def _compute_fee_mbsv_price(self):
         for record in self:
-            record.fee_mbsv_price = record.offer_price_rx * record.fee_mbsv
+            record.fee_mbsv_price = record.installation_sale_price * record.fee_mbsv
 
     fee_mbsv_price_wp = fields.Monetary(
         string='Fee MBSV Price WP',
@@ -163,10 +163,10 @@ class CrmLeadRevision(models.Model):
         compute="_compute_fee_cost_price",
     )
 
-    @api.depends('fee_mbsv_price', 'offer_price_rx')
+    @api.depends('fee_mbsv_price', 'installation_sale_price')
     def _compute_fee_cost_price(self):
         for record in self:
-            record.fee_cost_price = record.offer_price_rx - record.fee_mbsv_price
+            record.fee_cost_price = record.installation_sale_price - record.fee_mbsv_price
 
     fee_cost_price_wp = fields.Monetary(
         string='Fee Cost Price WP',
@@ -194,7 +194,7 @@ class CrmLeadRevision(models.Model):
     )
     offer_tir_actual = fields.Float(
         string='TIR actuals %',
-        digits = (16, 1),
+        digits=(16, 1),
     )
     offer_pb_omip = fields.Float(
         string='PB OMIP',
@@ -210,7 +210,7 @@ class CrmLeadRevision(models.Model):
     )
     offer_tir_proyection = fields.Float(
         string='TIR proyection %',
-        digits = (16, 1),
+        digits=(16, 1),
     )
     offer_kwh_year = fields.Integer(
         string='Offer kWh/year',
@@ -221,21 +221,6 @@ class CrmLeadRevision(models.Model):
         compute="_compute_company_currency",
         compute_sudo=True
     )
-    offer_price_rx = fields.Float(
-        string='Offer Total Price',
-        compute='_compute_offer_price_rx',
-        store=True
-    )
-
-    @api.depends('revision_total_price_ids.price')
-    def _compute_offer_price_rx(self):
-        for record in self:
-            if record.revision_total_price_ids:
-                record.offer_price_rx = sum(record.revision_total_price_ids.mapped('price'))
-                print("Offer Price RX 1", record.offer_price_rx)
-            else:
-                record.offer_price_rx = 0.0
-                print("Offer Price RX 2", record.offer_price_rx)
 
     offer_class = fields.Char(
         string='Offer Class',
@@ -275,11 +260,6 @@ class CrmLeadRevision(models.Model):
         string="",
     )
 
-    revision_total_price_ids = fields.One2many(
-        "crm.lead.revision.total.price.rx",
-        "revision_id",
-        string="",
-    )
     total_revision_percentage = fields.Monetary(
         string="Total Revision Price",
         currency_field="company_currency",
@@ -353,8 +333,51 @@ class CrmLeadRevision(models.Model):
     offer_structure_description = fields.Char(
         string="Structure Description",
     )
+    installation_cost_price = fields.Float(
+        string="Installation Cost Price",
+        digits=(16, 2),
+        compute="_compute_total_direct_costs",
+    )
 
+    @api.depends('revision_direct_costs_ids.price_cost')
+    def _compute_total_direct_costs(self):
+        for record in self:
+            record.installation_cost_price = sum(
+                cost.price_cost for cost in record.revision_direct_costs_ids
+                if cost.type_direct_costs_id
+            )
 
+    installation_sale_price = fields.Float(
+        string="Installation Sale Price",
+        digits=(16, 2),
+        compute="_compute_total_sale_price",
+        readonly=False,
+    )
+
+    @api.depends('revision_direct_costs_ids.price_sale')
+    def _compute_total_sale_price(self):
+        for record in self:
+            record.installation_sale_price = sum(
+                cost.price_sale for cost in record.revision_direct_costs_ids
+                if cost.type_direct_costs_id
+            )
+
+    offer_fv = fields.Float(
+        string="Offer FV",
+        digits=(16, 2),
+        compute="_compute_offer_fv",
+    )
+
+    @api.depends('revision_direct_costs_ids.price_sale', 'installation_sale_price')
+    def _compute_offer_fv(self):
+        for record in self:
+            include_types = self.env['crm.lead.revision.global.type'].search([
+                ('name', 'in', ['Batería', 'Vehículo Eléctrico (VE)'])
+            ])
+
+            record.offer_fv = record.installation_sale_price - sum(
+                cost.price_sale for cost in record.revision_direct_costs_ids if
+                cost.type_direct_costs_id in include_types)
 
     @api.depends('revision_price_ids.percentage')
     def _compute_total_revision_percentage(self):
@@ -396,19 +419,11 @@ class CrmLeadRevision(models.Model):
             if record.offer_kwn <= 10:
                 record.offer_class = "PEQUEÑA INSTALACIÓN"
 
-
-    @api.depends('revision_total_price_ids.price', 'offer_kwp')
+    @api.depends('installation_sale_price', 'offer_kwp')
     def _compute_wp(self):
         for record in self:
-            fv_price_type = self.env['crm.lead.revision.global.type'].search([('name', '=', 'FV')],
-                                                                                     limit=1)
-            if fv_price_type:
-                fv_price_record = record.revision_total_price_ids.filtered(
-                    lambda r: r.type_total_price_id == fv_price_type)
-                if fv_price_record and record.offer_kwp:
-                    record.offer_wp = round(fv_price_record.price / (record.offer_kwp * 1000), 4)
-                else:
-                    record.offer_wp = 0.0
+            if record.installation_sale_price and record.offer_kwp:
+                record.offer_wp = round(record.installation_sale_price / (record.offer_kwp * 1000), 4)
             else:
                 record.offer_wp = 0.0
 
@@ -482,16 +497,6 @@ class CrmLeadRevision(models.Model):
 
         defaults['revision_battery_ids'] = revision_battery
 
-        total_price_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'total_price')])
-        revision_total_prices = []
-        for total_price_type in total_price_types:
-            revision_total_prices.append((0, 0, {
-                'type_total_price_id': total_price_type.id,
-                'price': 0.0,
-
-            }))
-
-        defaults['revision_total_price_ids'] = revision_total_prices
         return defaults
 
     def action_open_revision_form(self):

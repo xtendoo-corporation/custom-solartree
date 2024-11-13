@@ -115,9 +115,6 @@
                     <field name="offer_kwp"/>
                     <span> kWp</span>
                     <br/>
-                    <field name="offer_price_rx"/>
-                    <span> €</span>
-                    <br/>
                     <field name="offer_wp"/>
                     <span> €/Wp</span>
                     <br/>

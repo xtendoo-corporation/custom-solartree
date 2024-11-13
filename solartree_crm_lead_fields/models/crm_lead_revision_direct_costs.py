@@ -41,26 +41,9 @@ class CrmLeadRevisionDirectCosts(models.Model):
     price_cost = fields.Monetary(
         string="Cost",
         currency_field="company_currency",
-        compute="_compute_price_cost",
         digits=(16, 2),
         store=True
     )
-
-    @api.depends('revision_id.revision_direct_costs_ids','revision_id.revision_price_ids')
-    def _compute_price_cost(self):
-        for record in self:
-            if record.type_direct_costs_id.name == 'Fee Cost':
-                fee_costs = record.revision_id.revision_price_ids.filtered(
-                    lambda r: r.type_price_id.name in ['Fee Externo', 'Fee Interno']
-                )
-                record.price_cost = sum(fee_cost.price for fee_cost in fee_costs)
-            elif record.type_direct_costs_id.name == 'MBSV Solartree':
-                fee_costs = record.revision_id.revision_price_ids.filtered(
-                    lambda r: r.type_price_id.name in ['Gastos de estructura', 'Beneficio Industrial']
-                )
-                record.price_cost = sum(fee_cost.price for fee_cost in fee_costs)
-            else:
-                record.price_cost = record.price_cost
 
     price_cost_wp = fields.Float(
         string="Cost / WP",
@@ -74,31 +57,15 @@ class CrmLeadRevisionDirectCosts(models.Model):
         for record in self:
             if record.revision_id.offer_kwp:
                 record.price_cost_wp = record.price_cost / (record.revision_id.offer_kwp * 1000)
-            elif record.type_direct_costs_id.name == 'Fee Cost':
-                fee_costs = record.revision_id.revision_price_ids.filtered(
-                    lambda r: r.type_price_id.name in ['Fee Externo', 'Fee Interno']
-                )
-                record.price_cost_wp = sum(fee_cost.price_wp for fee_cost in fee_costs)
-            elif record.type_direct_costs_id.name == 'MBSV Solartree':
-                fee_costs = record.revision_id.revision_price_ids.filtered(
-                    lambda r: r.type_price_id.name in ['Gastos de estructura', 'Beneficio Industrial']
-                )
-                record.price_cost_wp = sum(fee_cost.price_wp for fee_cost in fee_costs)
             else:
                 record.price_cost_wp = 0
 
     price_sale = fields.Monetary(
         string="Sale",
         currency_field="company_currency",
-        compute="_compute_price_sale",
         digits=(16, 2),
         store=True
     )
-
-    @api.depends('revision_id.revision_direct_costs_ids')
-    def _compute_price_sale(self):
-        for record in self:
-                record.price_sale = record.price_sale
 
     price_sale_wp = fields.Float(
         string="Sale / WP",

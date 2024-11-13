@@ -67,10 +67,10 @@ class CrmLeadRevisionPrices(models.Model):
         store=True
     )
 
-    @api.depends('revision_id.offer_price_rx', 'percentage')
+    @api.depends('revision_id.installation_sale_price', 'percentage')
     def _compute_price(self):
         for record in self:
-            record.price = record.revision_id.offer_price_rx * record.percentage
+            record.price = record.revision_id.installation_sale_price * record.percentage
 
     price_wp = fields.Monetary(
         string="Price / WP",

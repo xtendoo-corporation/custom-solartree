@@ -379,19 +379,6 @@
         <field name="behavior">fee_and_margins</field>
     </record>
 
-    <record id="crm_lead_revision_global_type_9" model="crm.lead.revision.global.type">
-        <field name="name">FV</field>
-        <field name="behavior">total_price</field>
-    </record>
-    <record id="crm_lead_revision_global_type_10" model="crm.lead.revision.global.type">
-        <field name="name">Almacenamiento</field>
-        <field name="behavior">total_price</field>
-    </record>
-    <record id="crm_lead_revision_global_type_11" model="crm.lead.revision.global.type">
-        <field name="name">VE</field>
-        <field name="behavior">total_price</field>
-    </record>
-
     <record id="crm_lead_revision_global_type_12" model="crm.lead.revision.global.type">
         <field name="name">Modulos</field>
         <field name="behavior">direct_costs</field>
@@ -438,10 +425,6 @@
     </record>
     <record id="crm_lead_revision_global_type_23" model="crm.lead.revision.global.type">
         <field name="name">Costes fee</field>
-        <field name="behavior">direct_costs</field>
-    </record>
-    <record id="crm_lead_revision_global_type_24" model="crm.lead.revision.global.type">
-        <field name="name">MBSV Solartree</field>
         <field name="behavior">direct_costs</field>
     </record>
     <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">

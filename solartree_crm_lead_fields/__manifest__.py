@@ -24,7 +24,6 @@
         "views/crm_lead_revision_battery_view.xml",
         "views/crm_lead_tot_view.xml",
         "views/crm_leadopportunity_partner_form.xml",
-        "views/crm_lead_revision_total_price_rx_view.xml",
         'security/ir.model.access.csv',
     ],
     "installable": True,

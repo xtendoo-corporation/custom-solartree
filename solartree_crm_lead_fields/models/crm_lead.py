@@ -172,11 +172,6 @@ class CrmLead(models.Model):
         string='Offer kWp',
         readonly=False
     )
-    offer_price_rx = fields.Float(
-        related='selected_revision_id.offer_price_rx',
-        string='Offer Price RX',
-        readonly=False
-    )
     offer_wp = fields.Float(
         related='selected_revision_id.offer_wp',
         string='Offer WP',
@@ -196,10 +191,10 @@ class CrmLead(models.Model):
         readonly=True
     )
 
-    @api.depends('selected_revision_id.offer_price_rx')
+    @api.depends('selected_revision_id.installation_sale_price')
     def _compute_expected_revenue(self):
         for lead in self:
-            lead.expected_revenue = lead.selected_revision_id.offer_price_rx if lead.selected_revision_id else 0.0
+            lead.expected_revenue = lead.selected_revision_id.installation_sale_price if lead.selected_revision_id else 0.0
 
     @api.onchange('selected_revision_id')
     def _onchange_selected_revision_id(self):
