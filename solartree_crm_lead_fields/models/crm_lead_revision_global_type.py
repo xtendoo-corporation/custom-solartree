@@ -20,3 +20,20 @@ class CrmLeadRevisionPrices(models.Model):
         string="Behavior",
         required=True
     )
+
+    behavior_extra = fields.Selection(
+        selection=[
+            ('project', 'Proyecto'),
+            ('solartree', 'Solartree'),
+        ],
+        string="Behavior Extra",
+    )
+
+    project = fields.Boolean(
+        string="Project",
+    )
+
+    solartree = fields.Boolean(
+        string="Solartree",
+    )
+

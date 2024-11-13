@@ -6,6 +6,9 @@
             <tree>
                 <field name="name"/>
                 <field name="behavior"/>
+                <field name="behavior_extra" invisible="not behavior == 'fee_and_margins'"/>
+                <field name="project" invisible="not behavior == 'fee_and_margins'"/>
+                <field name="solartree" invisible="not behavior == 'fee_and_margins'"/>
             </tree>
         </field>
     </record>
@@ -18,6 +21,9 @@
                     <group>
                         <field name="name"/>
                         <field name="behavior"/>
+                        <field name="behavior_extra" invisible="not behavior == 'fee_and_margins'"/>
+                        <field name="project" invisible="not behavior == 'fee_and_margins'"/>
+                        <field name="solartree" invisible="not behavior == 'fee_and_margins'"/>
                     </group>
                 </sheet>
             </form>

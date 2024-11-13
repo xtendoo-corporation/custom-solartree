@@ -41,20 +41,16 @@ class CrmLeadRevisionPrices(models.Model):
     @api.depends('revision_id.revision_price_ids')
     def _compute_percentage(self):
         for record in self:
-            if record.type_price_id.name == "MBSV Proyecto":
+            if record.type_price_id.behavior_extra == "project":
                 total_percentage = sum(
                     rec.percentage for rec in record.revision_id.revision_price_ids
-                    if rec.type_price_id.name in [
-                        "Fee Externo", "Fee Interno", "Gastos de estructura", "Beneficio Industrial"
-                    ]
+                    if rec.type_price_id.project
                 )
                 record.percentage = total_percentage
-            elif record.type_price_id.name == "MBSV Solartree":
+            elif record.type_price_id.behavior_extra == "solartree":
                 total_percentage = sum(
                     rec.percentage for rec in record.revision_id.revision_price_ids
-                    if rec.type_price_id.name in [
-                        "Gastos de estructura", "Beneficio Industrial"
-                    ]
+                    if rec.type_price_id.solartree
                 )
                 record.percentage = total_percentage
             else:

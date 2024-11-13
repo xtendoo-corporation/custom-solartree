@@ -357,26 +357,34 @@
     <record id="crm_lead_revision_global_type_3" model="crm.lead.revision.global.type">
         <field name="name">Fee Externo</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="project">true</field>
     </record>
     <record id="crm_lead_revision_global_type_4" model="crm.lead.revision.global.type">
         <field name="name">Fee Interno</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="project">true</field>
     </record>
     <record id="crm_lead_revision_global_type_5" model="crm.lead.revision.global.type">
         <field name="name">Gastos de estructura</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="project">true</field>
+        <field name="solartree">true</field>
     </record>
     <record id="crm_lead_revision_global_type_6" model="crm.lead.revision.global.type">
         <field name="name">Beneficio Industrial</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="project">true</field>
+        <field name="solartree">true</field>
     </record>
     <record id="crm_lead_revision_global_type_7" model="crm.lead.revision.global.type">
         <field name="name">MBSV Proyecto</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="behavior_extra">project</field>
     </record>
     <record id="crm_lead_revision_global_type_8" model="crm.lead.revision.global.type">
         <field name="name">MBSV Solartree</field>
         <field name="behavior">fee_and_margins</field>
+        <field name="behavior_extra">solartree</field>
     </record>
 
     <record id="crm_lead_revision_global_type_12" model="crm.lead.revision.global.type">
