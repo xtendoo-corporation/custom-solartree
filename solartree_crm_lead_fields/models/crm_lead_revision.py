@@ -223,6 +223,14 @@ class CrmLeadRevision(models.Model):
         string="TIR Exced Min %",
         digits=(16, 1),
     )
+    pb_battery = fields.Float(
+        string="PB Battery",
+        digits=(16, 1),
+    )
+    tir_battery = fields.Float(
+        string="TIR Battery %",
+        digits=(16, 1),
+    )
     offer_fabricant_modules = fields.Char(
         string="Fabricant Modules",
     )
