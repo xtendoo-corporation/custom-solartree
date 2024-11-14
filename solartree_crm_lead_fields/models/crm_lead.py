@@ -76,6 +76,8 @@ class CrmLead(models.Model):
     )
     solartree_date_request = fields.Date(
         string="Date Request",
+        default=fields.Date.context_today,
+        readonly=False,
     )
     solartree_date_required_delivery = fields.Date(
         string="Date Required Delivery",

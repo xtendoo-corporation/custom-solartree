@@ -12,13 +12,35 @@ class CrmLead(models.Model):
         for record in self:
             record.all_users_emails = ','.join(emails)
 
-    def action_crm_lead_send_email(self):
+    def action_crm_lead_send_email_won(self):
         self.ensure_one()
-        template = self.env.ref("solartree_crm_lead_email.mail_template_data_crm_lead_email", False)
+        template = self.env.ref("solartree_crm_lead_email.mail_template_data_crm_lead_email_won", False)
         compose_form = self.env.ref("mail.email_compose_message_wizard_form")
         ctx = dict(
             default_model="crm.lead",
             default_res_ids=self.ids,
+            default_use_template=bool(template),
+            default_template_id=template and template.id or False,
+            default_composition_mode="comment",
+        )
+        return {
+            "name": _("Compose Email"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "mail.compose.message",
+            "views": [(compose_form.id, "form")],
+            "view_id": compose_form.id,
+            "target": "new",
+            "context": ctx,
+        }
+
+    def action_crm_lead_send_email_request(self):
+        self.ensure_one()
+        template = self.env.ref("solartree_crm_lead_email.mail_template_data_crm_lead_email_request", False)
+        compose_form = self.env.ref("mail.email_compose_message_wizard_form")
+        ctx = dict(
+            default_model="crm.lead",
+            default_res_ids=[self.id],  # Cambiado a default_res_ids con una lista
             default_use_template=bool(template),
             default_template_id=template and template.id or False,
             default_composition_mode="comment",

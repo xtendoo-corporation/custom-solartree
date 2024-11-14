@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <data noupdate="1">
-        <record id="mail_template_data_crm_lead_email" model="mail.template">
-            <field name="name">Email when opportunity is won</field>
+        <record id="mail_template_data_crm_lead_email_won" model="mail.template">
+            <field name="name">Comunicación de Oportunidad Ganada</field>
             <field name="model_id" ref="model_crm_lead"/>
             <field name="subject">Firma de Contrato {{object.name}}</field>
             <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Email sent to the customer when an opportunity is won.</field>
+            <field name="description">Envia un email cuando se gana una oportunidad</field>
             <field name="body_html" type="html">
                 <p>Hola</p>
                 <p>Gracias por su interés.</p>
@@ -15,5 +15,27 @@
             </field>
             <field name="auto_delete" eval="True"/>
         </record>
+
+        <record id="mail_template_data_crm_lead_email_request" model="mail.template">
+            <field name="name">Comunicación de petición de oferta</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Firma de Contrato {{object.name}}</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+            <field name="description">Petición de oferta {{object.solartree_date_request}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 12px;">
+                        Se remite una nueva solicitud:
+                    </p>
+                    <ul style="margin: 0px; padding: 0px; font-size: 12px;">
+                        <li>
+                            <span t-out="object.solartree_date_request or ''">Nombre del Cliente</span>
+                        </li>
+                    </ul>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
     </data>
 </odoo>
