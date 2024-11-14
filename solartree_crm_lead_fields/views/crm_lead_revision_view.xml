@@ -9,7 +9,6 @@
                 <field name="offer_kwn"/>
                 <field name="offer_storage_kwh"/>
                 <field name="offer_storage_kwn"/>
-                <field name="offer_wp"/>
             </tree>
         </field>
     </record>
@@ -58,7 +57,6 @@
                             <field name="offer_modules_quantity"/>
                             <field name="offer_structure_manufacturer" widget="text"/>
                             <field name="offer_structure_description" widget="text"/>
-                            <field name="offer_wp"/>
                         </group>
                         <group name="invertes" string="Inverters">
                             <field name="offer_inverter_manufacturer" widget="text"/>

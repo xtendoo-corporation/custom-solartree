@@ -1111,9 +1111,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_cost_wp
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_sale_wp
 msgid "€/WP"
-msgstr "Coste / WP"
+msgstr "€/WP"
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
 msgid "€/Wp"
-msgstr ""
+msgstr "€/WP"

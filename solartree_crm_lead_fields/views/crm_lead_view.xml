@@ -117,9 +117,6 @@
                     <field name="offer_kwp"/>
                     <span> kWp</span>
                     <br/>
-                    <field name="offer_wp"/>
-                    <span> €/Wp</span>
-                    <br/>
                     <field name="solartree_lead_type_id"/>
                     <br/>
                     <field name="offer_class"/>

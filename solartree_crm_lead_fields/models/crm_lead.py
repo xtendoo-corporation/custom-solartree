@@ -185,11 +185,6 @@ class CrmLead(models.Model):
         string='Offer kWp',
         readonly=False
     )
-    offer_wp = fields.Float(
-        related='selected_revision_id.offer_wp',
-        string='Offer WP',
-        readonly=False
-    )
     solartree_lead_type_id = fields.Many2one(
         related='selected_revision_id.solartree_lead_type_id',
         comodel_name='crm.lead.type',

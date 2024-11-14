@@ -121,12 +121,6 @@ class CrmLeadRevision(models.Model):
     offer_date_deliver = fields.Date(
         string='Offer deliver date'
     )
-    offer_wp = fields.Float(
-        string='Offer €/Wp',
-        readonly=True,
-        compute="_compute_wp",
-        digits=(12, 4),
-    )
     offer_pb_actual = fields.Float(
         string='PB actuals',
         digits=(16, 1)
@@ -377,13 +371,6 @@ class CrmLeadRevision(models.Model):
             if record.offer_kwn <= 10:
                 record.offer_class = "PEQUEÑA INSTALACIÓN"
 
-    @api.depends('installation_sale_price', 'offer_kwp')
-    def _compute_wp(self):
-        for record in self:
-            if record.installation_sale_price and record.offer_kwp:
-                record.offer_wp = round(record.installation_sale_price / (record.offer_kwp * 1000), 4)
-            else:
-                record.offer_wp = 0.0
 
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):
