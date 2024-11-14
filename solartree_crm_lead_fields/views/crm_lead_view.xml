@@ -7,6 +7,8 @@
             <xpath expr="//field[@name='partner_phone_update']" position="after">
                 <field name="partner_address_id" domain="[('parent_id', '=', partner_id)]"
                        options="{'no_create': True}"/>
+                <field name="partner_address_city" invisible="not partner_address_id"/>
+                <field name="partner_address_state_id" invisible="not partner_address_id"/>
                 <button
                     class="btn btn-primary"
                     name="open_map"

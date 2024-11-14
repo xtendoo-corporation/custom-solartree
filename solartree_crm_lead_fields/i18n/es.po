@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 09:32+0000\n"
-"PO-Revision-Date: 2024-11-13 09:32+0000\n"
+"POT-Creation-Date: 2024-11-14 08:08+0000\n"
+"PO-Revision-Date: 2024-11-14 08:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: solartree_crm_lead_fields
+#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
+msgid "(€/Wp)"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_case_kanban_view_leads_inherit
@@ -139,6 +144,11 @@ msgid "Channels"
 msgstr "Canales"
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__partner_address_city
+msgid "City"
+msgstr "Ciudad"
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_connection_point_location
 msgid "Connection Point Location"
 msgstr "Ubicación del punto de conexión"
@@ -152,21 +162,6 @@ msgstr "Convertir lead en oportunidad (no en masa)"
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_cost
 msgid "Cost"
 msgstr "Coste"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_cost_wp
-msgid "Cost / WP"
-msgstr "Coste / WP"
-
-#. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Coste (€)"
-msgstr ""
-
-#. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Coste (€/Wp)"
-msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
@@ -294,16 +289,6 @@ msgid "Display Name"
 msgstr "Nombre a mostrar"
 
 #. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "Economy"
-msgstr "Economía"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.constraint,message:solartree_crm_lead_fields.constraint_crm_lead_crm_lead_unique_solartree_code
-msgid "El código de la oferta debe ser único"
-msgstr ""
-
-#. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.crm_lead_view_form_inherit
 msgid "Enlace a la Geolocalización"
 msgstr ""
@@ -337,31 +322,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_fabricant_modules
 msgid "Fabricant Modules"
 msgstr "Módulos fabricante"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_cost_price
-msgid "Fee Cost Price"
-msgstr "Tarifa Costo Precio"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_cost_price_wp
-msgid "Fee Cost Price WP"
-msgstr "Tarifa Costo Precio WP"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_mbsv
-msgid "Fee MBSV"
-msgstr "Tarifa MBSV"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_mbsv_price
-msgid "Fee MBSV Price"
-msgstr "MBSV Precio"
-
-#. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__fee_mbsv_price_wp
-msgid "Fee MBSV Price WP"
-msgstr "MBSV Precio WP"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,help:solartree_crm_lead_fields.field_crm_lead__lead_fee
@@ -404,8 +364,18 @@ msgid "Installation Cost Price"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__installation_cost_price_wp
+msgid "Installation Cost €/Wp"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__installation_sale_price
 msgid "Installation Sale Price"
+msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__installation_sale_price_wp
+msgid "Installation Sale Price €/Wp"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
@@ -649,11 +619,6 @@ msgstr "Oferta Tipos"
 #: model:ir.model,name:solartree_crm_lead_fields.model_crm_lead
 msgid "Lead/Opportunity"
 msgstr "Lead/Oportunidad"
-
-#. module: solartree_crm_lead_fields
-#: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
-msgid "MBSV"
-msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__max_power_bie
@@ -948,11 +913,6 @@ msgid "Sale"
 msgstr "Venta"
 
 #. module: solartree_crm_lead_fields
-#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_sale_wp
-msgid "Sale / WP"
-msgstr "Venta / WP"
-
-#. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__user_id
 msgid "Salesperson"
 msgstr "Comercial"
@@ -1009,6 +969,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_specific_comments
 msgid "Specific Comments"
 msgstr "Comentarios Específicos"
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__partner_address_state_id
+msgid "State"
+msgstr "Provincia"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__offer_structure_description
@@ -1085,16 +1050,17 @@ msgstr "Nombre Nivel de Tensión"
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
 #, python-format
 msgid ""
-"The fields 'Lead Channel', 'Lead Identification', and 'Date Request' must be"
-" filled when the type is 'opportunity'."
+"The fields 'Lead Channel', 'Lead Identification' must be filled when the "
+"type is 'opportunity'."
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #. odoo-python
 #: code:addons/solartree_crm_lead_fields/models/crm_lead.py:0
+#: model:ir.model.constraint,message:solartree_crm_lead_fields.constraint_crm_lead_crm_lead_unique_solartree_code
 #, python-format
 msgid "The lead code must be unique!"
-msgstr "El código de la oferta debe ser único"
+msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_prices_form
@@ -1140,6 +1106,12 @@ msgstr "Nombre Tipo"
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
 msgid "Venta de instalación (€)"
 msgstr ""
+
+#. module: solartree_crm_lead_fields
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_cost_wp
+#: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_direct_costs__price_sale_wp
+msgid "€/WP"
+msgstr "Coste / WP"
 
 #. module: solartree_crm_lead_fields
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form

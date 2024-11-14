@@ -10,7 +10,6 @@
                 <field name="offer_storage_kwh"/>
                 <field name="offer_storage_kwn"/>
                 <field name="offer_wp"/>
-                <field name="fee_mbsv" widget="percentage"/>
             </tree>
         </field>
     </record>
@@ -115,18 +114,15 @@
                                     <field name="price_sale_wp" digits="[16, 4]"/>
                                 </tree>
                             </field>
-                            <field name="installation_cost_price" widget="monetary" string="Coste de Instalación (€)"/>
-                        </group>
-                        <group name="Economy" string="Economy">
-                            <field name="fee_mbsv" widget="percentage" string="MBSV"/>
-                            <field name="fee_mbsv_price" widget="monetary"/>
-                            <field name="fee_mbsv_price_wp" widget="float" digits="[16, 4]"/>
-                            <field name="fee_cost_price" widget="monetary" string="Coste (€)"/>
-                            <field name="fee_cost_price_wp" widget="float" digits="[16, 4]" string="Coste (€/Wp)"/>
                         </group>
                          <group name="total_price" string="Precio Total">
+                           <field name="installation_cost_price" widget="monetary" string="Coste de Instalación (€)"
+                                   readonly="0"/>
+                           <field name="installation_cost_price_wp" widget="float" digits="[16, 4]"
+                                   string="(€/Wp)" readonly="0"/>
                            <field name="installation_sale_price" string="Venta de instalación (€)" readonly="0"/>
-                             <field name="offer_fv" string="Precio de venta FV"/>
+                           <field name="installation_sale_price_wp" string="(€/Wp)" readonly="0"/>
+                           <field name="offer_fv" string="Precio de venta FV"/>
                         </group>
                     </group>
                 </sheet>

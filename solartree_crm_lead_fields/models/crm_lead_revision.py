@@ -121,67 +121,6 @@ class CrmLeadRevision(models.Model):
     offer_date_deliver = fields.Date(
         string='Offer deliver date'
     )
-    fee_mbsv = fields.Float(
-        string='Fee MBSV',
-        readonly=True,
-        compute="_compute_fee_mbsv",
-    )
-
-    @api.depends('total_revision_percentage')
-    def _compute_fee_mbsv(self):
-        for record in self:
-            record.fee_mbsv = record.total_revision_percentage
-
-    fee_mbsv_price = fields.Monetary(
-        string='Fee MBSV Price',
-        currency_field='company_currency',
-        compute="_compute_fee_mbsv_price",
-    )
-
-    @api.depends('fee_mbsv', 'installation_sale_price')
-    def _compute_fee_mbsv_price(self):
-        for record in self:
-            record.fee_mbsv_price = record.installation_sale_price * record.fee_mbsv
-
-    fee_mbsv_price_wp = fields.Monetary(
-        string='Fee MBSV Price WP',
-        currency_field='company_currency',
-        compute="_compute_fee_mbsv_price_wp",
-    )
-
-    @api.depends('fee_mbsv_price', 'offer_kwp')
-    def _compute_fee_mbsv_price_wp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.fee_mbsv_price_wp = record.fee_mbsv_price / (record.offer_kwp * 1000)
-            else:
-                record.fee_mbsv_price_wp = 0.0
-
-    fee_cost_price = fields.Monetary(
-        string='Fee Cost Price',
-        currency_field='company_currency',
-        compute="_compute_fee_cost_price",
-    )
-
-    @api.depends('fee_mbsv_price', 'installation_sale_price')
-    def _compute_fee_cost_price(self):
-        for record in self:
-            record.fee_cost_price = record.installation_sale_price - record.fee_mbsv_price
-
-    fee_cost_price_wp = fields.Monetary(
-        string='Fee Cost Price WP',
-        currency_field='company_currency',
-        compute="_compute_fee_cost_price_wp",
-    )
-
-    @api.depends('fee_cost_price', 'offer_kwp')
-    def _compute_fee_cost_price_wp(self):
-        for record in self:
-            if record.offer_kwp:
-                record.fee_cost_price_wp = record.fee_cost_price / (record.offer_kwp * 1000)
-            else:
-                record.fee_cost_price_wp = 0.0
-
     offer_wp = fields.Float(
         string='Offer €/Wp',
         readonly=True,
@@ -307,26 +246,6 @@ class CrmLeadRevision(models.Model):
         "revision_id",
         string="",
     )
-    # offer_inverter_1_model = fields.Char(
-    #     string="Inverter 1 Model",
-    # )
-    # offer_inverter_1_unit_power = fields.Float(
-    #     string="Inverter 1 Unit Power",
-    #     digits=(16, 1),
-    # )
-    # offer_inverter_1_quantity = fields.Integer(
-    #     string="Inverter 1 Quantity",
-    # )
-    # offer_inverter_2_model = fields.Char(
-    #     string="Inverter 2 Model",
-    # )
-    # offer_inverter_2_unit_power = fields.Float(
-    #     string="Inverter 2 Unit Power",
-    #     digits=(16, 1),
-    # )
-    # offer_inverter_2_quantity = fields.Integer(
-    #     string="Inverter 2 Quantity",
-    # )
     offer_structure_manufacturer = fields.Char(
         string="Structure Manufacturer",
     )
@@ -337,6 +256,7 @@ class CrmLeadRevision(models.Model):
         string="Installation Cost Price",
         digits=(16, 2),
         compute="_compute_total_direct_costs",
+        readonly=False,
     )
 
     @api.depends('revision_direct_costs_ids.price_cost')
@@ -344,6 +264,21 @@ class CrmLeadRevision(models.Model):
         for record in self:
             record.installation_cost_price = sum(
                 cost.price_cost for cost in record.revision_direct_costs_ids
+                if cost.type_direct_costs_id
+            )
+
+    installation_cost_price_wp = fields.Float(
+        string="Installation Cost €/Wp",
+        digits=(16, 4),
+        compute="_compute_total_direct_costs_wp",
+        readonly=False,
+    )
+
+    @api.depends('revision_direct_costs_ids.price_cost_wp')
+    def _compute_total_direct_costs_wp(self):
+        for record in self:
+            record.installation_cost_price_wp = sum(
+                cost.price_cost_wp for cost in record.revision_direct_costs_ids
                 if cost.type_direct_costs_id
             )
 
@@ -359,6 +294,21 @@ class CrmLeadRevision(models.Model):
         for record in self:
             record.installation_sale_price = sum(
                 cost.price_sale for cost in record.revision_direct_costs_ids
+                if cost.type_direct_costs_id
+            )
+
+    installation_sale_price_wp = fields.Float(
+        string="Installation Sale Price €/Wp",
+        digits=(16, 4),
+        compute="_compute_total_sale_price_wp",
+        readonly=False,
+    )
+
+    @api.depends('revision_direct_costs_ids.price_sale_wp')
+    def _compute_total_sale_price_wp(self):
+        for record in self:
+            record.installation_sale_price_wp = sum(
+                cost.price_sale_wp for cost in record.revision_direct_costs_ids
                 if cost.type_direct_costs_id
             )
 
@@ -510,10 +460,49 @@ class CrmLeadRevision(models.Model):
             'target': 'current',
         }
 
+    # def copy(self, default=None):
+    #     if default is None:
+    #         default = {}
+    #     lead_id = self.lead_id.id
+    #     existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
+    #     default['name'] = f'R{existing_revisions_count}'
+    #     return super(CrmLeadRevision, self).copy(default)
+
     def copy(self, default=None):
         if default is None:
             default = {}
         lead_id = self.lead_id.id
         existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
         default['name'] = f'R{existing_revisions_count}'
+
+        # Duplicate related records
+        default['revision_price_ids'] = [(0, 0, {
+            'type_price_id': line.type_price_id.id,
+            'percentage': line.percentage,
+            'price': line.price,
+            'price_wp': line.price_wp,
+        }) for line in self.revision_price_ids]
+
+        default['revision_direct_costs_ids'] = [(0, 0, {
+            'type_direct_costs_id': line.type_direct_costs_id.id,
+            'price_cost': line.price_cost,
+            'price_cost_wp': line.price_cost_wp,
+            'price_sale': line.price_sale,
+            'price_sale_wp': line.price_sale_wp,
+        }) for line in self.revision_direct_costs_ids]
+
+        default['revision_inverter_ids'] = [(0, 0, {
+            'type_inverter_id': line.type_inverter_id.id,
+            'offer_inverter_model': line.offer_inverter_model,
+            'offer_inverter_unit_power': line.offer_inverter_unit_power,
+            'offer_inverter_quantity': line.offer_inverter_quantity,
+        }) for line in self.revision_inverter_ids]
+
+        default['revision_battery_ids'] = [(0, 0, {
+            'type_battery_id': line.type_battery_id.id,
+            'offer_battery_model': line.offer_battery_model,
+            'offer_battery_capacity': line.offer_battery_capacity,
+            'offer_battery_power': line.offer_battery_power,
+        }) for line in self.revision_battery_ids]
+
         return super(CrmLeadRevision, self).copy(default)

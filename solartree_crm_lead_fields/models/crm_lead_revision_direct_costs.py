@@ -46,7 +46,7 @@ class CrmLeadRevisionDirectCosts(models.Model):
     )
 
     price_cost_wp = fields.Float(
-        string="Cost / WP",
+        string="€/WP",
         digits=(16, 4),
         compute="_compute_price_cost_wp",
         store=True
@@ -68,7 +68,7 @@ class CrmLeadRevisionDirectCosts(models.Model):
     )
 
     price_sale_wp = fields.Float(
-        string="Sale / WP",
+        string="€/WP",
         digits=(16, 4),
         compute="_compute_price_wp",
         store=True

@@ -431,10 +431,6 @@
         <field name="name">Operación y Mantenimiento</field>
         <field name="behavior">direct_costs</field>
     </record>
-    <record id="crm_lead_revision_global_type_23" model="crm.lead.revision.global.type">
-        <field name="name">Costes fee</field>
-        <field name="behavior">direct_costs</field>
-    </record>
     <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
         <field name="name">Inversor 1</field>
         <field name="behavior">inverter</field>

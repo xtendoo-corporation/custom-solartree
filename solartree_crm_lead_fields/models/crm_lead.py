@@ -151,6 +151,17 @@ class CrmLead(models.Model):
         string='Partner Address',
         domain="[('parent_id', '=', 'partner_id')]"
     )
+    partner_address_city = fields.Char(
+        related='partner_address_id.city',
+        string='City',
+        store=True
+    )
+    partner_address_state_id = fields.Many2one(
+        'res.country.state',
+        related='partner_address_id.state_id',
+        string='State',
+        store=True
+    )
     expected_revenue = fields.Monetary(
         string='Expected Revenue',
         currency_field='company_currency',
@@ -330,10 +341,10 @@ class CrmLead(models.Model):
             "target": "new",
         }
 
-    @api.constrains('type', 'solartree_lead_channel', 'solartree_lead_identification', 'solartree_date_request')
+    @api.constrains('type', 'solartree_lead_channel', 'solartree_lead_identification')
     def _check_required_fields_for_opportunity(self):
         for record in self:
             if record.type == 'opportunity':
-                if not record.solartree_lead_channel or not record.solartree_lead_identification or not record.solartree_date_request:
+                if not record.solartree_lead_channel or not record.solartree_lead_identification:
                     raise ValidationError(
-                        _("The fields 'Lead Channel', 'Lead Identification', and 'Date Request' must be filled when the type is 'opportunity'."))
+                        _("The fields 'Lead Channel', 'Lead Identification' must be filled when the type is 'opportunity'."))
