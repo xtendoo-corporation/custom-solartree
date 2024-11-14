@@ -1,6 +1,110 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <data noupdate="1">
+        <record id="mail_template_data_crm_lead_email_request" model="mail.template">
+            <field name="name">Petición de oferta</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Petición de oferta {{object.name}} {{object.solartree_date_request}}</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+            <field name="description">Petición de oferta {{object.name}} {{object.solartree_date_request}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Se remite una nueva solicitud:</p>
+                    <ul style="margin: 0px; padding: 0px;">
+                        <li>
+                            <strong>Cliente:</strong>
+                            <span t-out="object.partner_id.name or ''">Nombre del Cliente</span>
+                        </li>
+                        <li>
+                            <strong>Identificación Oferta:</strong>
+                            <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
+                        </li>
+                        <li>
+                            <strong>Canal externo:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Fee canal externo (%):</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Canal interno:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Fee canal interno (%):</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Localización:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Clase de proyecto:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Ubicación instalación:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Tipo de estudio:</strong>
+                            <span></span>
+                        </li>
+                        <li>
+                            <strong>Entregables adicionales:</strong>
+                            <span t-out="object.solartree_additional_deliverables or ''">Entregables Adicionales</span>
+                        </li>
+                        <li>
+                            <strong>Ubicación del punto de conexión:</strong>
+                            <span t-out="object.solartree_connection_point_location or ''">Ubicación del Punto</span>
+                        </li>
+                        <li>
+                            <strong>Comentarios específicos:</strong>
+                            <span t-out="object.solartree_specific_comments or ''">Comentarios</span>
+                        </li>
+                        <li>
+                            <strong>Fecha de entrega requerida:</strong>
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!--[WIP]Refactorizar y enviar el email cuando pulsamos el boton desde convertir en oportunidad-->
+        <record id="mail_template_data_crm_lead_email_create_lead" model="mail.template">
+            <field name="name">Comunicación de Oportunidad Ganada</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="subject">Firma de Contrato {{object.name}}</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+            <field name="description">Envia un email cuando se gana una oportunidad</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Buenas,</p>
+                    <p>
+                        La oportunidad <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
+                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal interno</span> va a ser quien se encargue de registrarlo
+                        en la base de datos y de estudiar la oferta.
+                    </p>
+                    <!--La fecha acordada de entrega es: [Fecha de entrega requerida (solartree_date_required_delivery]-->
+
+                    <!-- -->
+
+                    <!--Comentarios particulares:-->
+
+                    <!--[Texto rellenable]-->
+
+                    <!-- -->
+
+                    <!--Saludos.-->
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!--[WIP]-->
         <record id="mail_template_data_crm_lead_email_won" model="mail.template">
             <field name="name">Comunicación de Oportunidad Ganada</field>
             <field name="model_id" ref="model_crm_lead"/>
@@ -16,26 +120,6 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <record id="mail_template_data_crm_lead_email_request" model="mail.template">
-            <field name="name">Comunicación de petición de oferta</field>
-            <field name="model_id" ref="crm.model_crm_lead"/>
-            <field name="subject">Firma de Contrato {{object.name}}</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Petición de oferta {{object.solartree_date_request}}</field>
-            <field name="body_html" type="html">
-                <div style="margin: 0px; padding: 0px;">
-                    <p style="margin: 0px; padding: 0px; font-size: 12px;">
-                        Se remite una nueva solicitud:
-                    </p>
-                    <ul style="margin: 0px; padding: 0px; font-size: 12px;">
-                        <li>
-                            <span t-out="object.solartree_date_request or ''">Nombre del Cliente</span>
-                        </li>
-                    </ul>
-                </div>
-            </field>
-            <field name="auto_delete" eval="True"/>
-        </record>
 
     </data>
 </odoo>
