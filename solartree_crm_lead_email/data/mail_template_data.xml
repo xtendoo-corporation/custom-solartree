@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="mail_template_data_crm_lead_email_request" model="mail.template">
             <field name="name">Petición de oferta</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
@@ -73,22 +73,88 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <!--[WIP]Refactorizar y enviar el email cuando pulsamos el boton desde convertir en oportunidad-->
         <record id="mail_template_data_crm_lead_email_create_lead" model="mail.template">
             <field name="name">Asignación de oferta a técnico de OT</field>
             <field name="model_id" ref="model_crm_lead"/>
             <field name="subject">Asignación de oferta a técnico de OT</field>
-            <field name="email_to">salvador.gon.jim@gmail.com</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
             <field name="description">Asignación de oferta a técnico de OT</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
-                    <p>Buenas esto es un test</p>
+                    <p>
+                        La oportunidad
+                        <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
+                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal
+                        interno
+                    </span> va a ser quien se encargue de registrarlo
+                        en la base de datos y de estudiar la oferta.
+                    </p>
+                    <p>Comentarios particulares:</p>
+                    <p>Saludos.</p>
                 </div>
             </field>
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <!--[WIP]-->
+        <record id="mail_template_data_crm_lead_email_close_offer" model="mail.template">
+            <field name="name">Cierre de Oferta</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="subject">Solartree - CRM - Política Cierre de Ofertas</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+            <field name="description">Notificación de cierre de oferta</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Buenas,</p>
+                    <p>
+                        Para vuestra información, remito cierre de la Oportunidad
+                        <strong>Código de Oferta:</strong>, <span t-out="object.solartree_code or ''">Código de
+                        Oferta</span>,
+                        <strong>Identificación Oferta:</strong>
+                        <span t-out="object.solartree_lead_identification or ''">Identificación Oferta</span>,
+                        <strong>revisión:</strong>
+                        <span t-out="object.selected_revision_id.name or ''">Revisión</span>
+                        de <span
+                        t-out="object.offer_kwp or ''">Oferta kWp
+                    </span> kWp.
+                    </p>
+                    <p>Saludos,</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="mail_template_data_crm_lead_email_awarded_offer" model="mail.template">
+            <field name="name">Oferta Adjudicada</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="subject">Oferta Adjudicada {{object.name}}</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+            <field name="description">Envia un email cuando se adjudica una oferta</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>
+                        Por el presente solicitamos aprobación para proceder con la <strong>firma del Contrato</strong> del
+                        proyecto en el asunto de referencia:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Documentos:</strong>
+                            <a t-att-href="object.project_url">Ver proyecto</a>
+                        </li>
+                    </ul>
+                    <p>
+                        Si te parece OK, indícanoslo, para que podamos pedirle al cliente que firme primero y después
+                        firmemos nosotros.
+                    </p>
+                    <p>
+                        Cualquier duda, a tu disposición.
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
         <record id="mail_template_data_crm_lead_email_won" model="mail.template">
             <field name="name">Comunicación de Oportunidad Ganada</field>
             <field name="model_id" ref="model_crm_lead"/>
@@ -96,23 +162,46 @@
             <field name="email_to">{{object.all_users_emails}}</field>
             <field name="description">Envia un email cuando se gana una oportunidad</field>
             <field name="body_html" type="html">
-                <p>Hola</p>
-                <p>Gracias por su interés.</p>
-                <p>En breve nos pondremos en contacto con usted.</p>
-                <p>Gracias,</p>
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Estimados,</p>
+                    <p>
+                        Tengo el placer de comunicaros que el
+                        <span t-out="object.solartree_date_sign_contract or ''">Fecha de firma de contrato</span>
+                        se produjo la firma del contrato de ejecución del proyecto
+                        <span t-out="object.solartree_lead_identification or ''">Identificación Oferta</span>.
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Cliente:</strong>
+                            <span t-out="object.partner_id.name or ''">Denominación social</span>
+                        </li>
+                        <li>
+                            <strong>Potencia:</strong>
+                            <span t-out="object.offer_kwp or ''">Oferta kWp</span>
+                            kWp
+                        </li>
+                        <!--                        <li>-->
+                        <!--                            <strong>Importe de Contrato:</strong>-->
+                        <!--                            <span t-out="object.offer_fv_price + object.offer_storage_price + object.offer_ve_price or ''">XXXX €</span>-->
+                        <!--                        </li>-->
+                        <li>
+                            <strong>Localización:</strong>
+                            <span t-out="object.state_id.name or ''">Término municipal</span>
+                            <span>,</span>
+                            <span t-out="object.city or ''">Provincia</span>
+                        </li>
+                        <li>
+                            <strong>Comentarios particulares:</strong>
+                            <span></span>
+                        </li>
+                    </ul>
+                    <p>Gracias a todos por vuestra implicación y enhorabuena por este nuevo hito.</p>
+                </div>
             </field>
             <field name="auto_delete" eval="True"/>
         </record>
-
-
     </data>
 </odoo>
 
 
-<!--                    <p>-->
-<!--                        La oportunidad <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>-->
-<!--                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal interno</span> va a ser quien se encargue de registrarlo-->
-<!--                        en la base de datos y de estudiar la oferta.-->
-<!--                    </p>-->
-<!--                    <p>Comentarios particulares:</p>-->
-<!--                    <p>Saludos.</p>-->
+

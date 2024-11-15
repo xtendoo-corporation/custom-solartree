@@ -5,12 +5,19 @@ class CrmLead(models.Model):
     _inherit = "crm.lead"
 
     all_users_emails = fields.Char(string="All Users Emails", compute="_compute_all_users_emails")
+    project_url = fields.Char(string="Project URL", compute="_compute_project_url")
 
     def _compute_all_users_emails(self):
         res = self.env['res.users'].search_read([], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
             record.all_users_emails = ','.join(emails)
+
+    def _compute_project_url(self):
+        """Compute the dynamic URL for the project."""
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for record in self:
+            record.project_url = f"{base_url}/web?debug=1#id={record.id}&menu_id=560&cids=1-24-28-29-32&action=832&model=crm.lead&view_type=form"
 
     def action_crm_lead_send_email_won(self):
         self.ensure_one()
