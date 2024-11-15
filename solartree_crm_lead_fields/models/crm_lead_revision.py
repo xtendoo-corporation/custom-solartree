@@ -331,6 +331,22 @@ class CrmLeadRevision(models.Model):
                 cost.price_sale for cost in record.revision_direct_costs_ids if
                 cost.type_direct_costs_id in include_types)
 
+    #EN PROCESO COMIENZO CAMPOS Y METODOS GRUPO SIMULACION ENERGIA
+    offer_autoconsumo = fields.Integer(
+        string="Autoconsumo",
+    )
+    offer_excedentes = fields.Integer(
+        string="Excedentes",
+        compute="_compute_offer_excedentes",
+    )
+
+    @api.depends('offer_kwh_year', 'offer_autoconsumo')
+    def _compute_offer_excedentes(self):
+        for record in self:
+            record.offer_excedentes = record.offer_kwh_year - record.offer_autoconsumo
+
+    # FIN GRUPO SIMULACION ENERGIA
+
     @api.depends('revision_price_ids.percentage')
     def _compute_total_revision_percentage(self):
         for record in self:

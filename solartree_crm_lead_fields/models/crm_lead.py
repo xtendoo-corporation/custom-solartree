@@ -199,6 +199,20 @@ class CrmLead(models.Model):
         readonly=True
     )
 
+    installation_sale_price = fields.Float(
+        string='Installation Sale Price',
+        related='selected_revision_id.installation_sale_price',
+        store=True,
+        readonly=True
+    )
+
+    installation_sale_price_wp = fields.Float(
+        string='Installation Sale Price €/Wp',
+        related='selected_revision_id.installation_sale_price_wp',
+        store=True,
+        readonly=True
+    )
+
     @api.depends('selected_revision_id.installation_sale_price')
     def _compute_expected_revenue(self):
         for lead in self:
