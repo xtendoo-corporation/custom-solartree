@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_crm_lead2opportunity_partner_inherit" model="ir.ui.view">
+        <field name="name">crm.lead2opportunity.partner.form.email.inherit</field>
+        <field name="model">crm.lead2opportunity.partner</field>
+        <field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_apply']" position="after">
+                <button name="action_crm_lead_send_email_create_lead"
+                        string="Send Email"
+                        type="object"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+
+    <!--        &lt;!&ndash;[WIP]Refactorizar y enviar el email cuando pulsamos el boton desde convertir en oportunidad&ndash;&gt;-->
+    <!--        <record id="mail_template_data_crm_lead_email_create_lead" model="mail.template">-->
+    <!--            <field name="name">Asignación de oferta a técnico de OT</field>-->
+    <!--            <field name="model_id" ref="model_crm_lead"/>-->
+    <!--            <field name="subject">Asignación de oferta a técnico de OT {{object.name}}</field>-->
+    <!--            <field name="email_to">{{object.all_users_emails}}</field>-->
+    <!--            <field name="description">Asignación de oferta a técnico de OT</field>-->
+    <!--            <field name="body_html" type="html">-->
+    <!--                <div style="margin: 0px; padding: 0px;">-->
+    <!--                    <p>Buenas,</p>-->
+    <!--                    <p>-->
+    <!--                        La oportunidad <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>-->
+    <!--                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal interno</span> va a ser quien se encargue de registrarlo-->
+    <!--                        en la base de datos y de estudiar la oferta.-->
+    <!--                    </p>-->
+    <!--                    <p>Comentarios particulares:</p>-->
+    <!--                    <p>Saludos.</p>-->
+    <!--                </div>-->
+    <!--            </field>-->
+    <!--            <field name="auto_delete" eval="True"/>-->
+    <!--        </record>-->

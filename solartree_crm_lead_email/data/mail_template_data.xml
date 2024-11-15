@@ -75,30 +75,14 @@
 
         <!--[WIP]Refactorizar y enviar el email cuando pulsamos el boton desde convertir en oportunidad-->
         <record id="mail_template_data_crm_lead_email_create_lead" model="mail.template">
-            <field name="name">Comunicación de Oportunidad Ganada</field>
+            <field name="name">Asignación de oferta a técnico de OT</field>
             <field name="model_id" ref="model_crm_lead"/>
-            <field name="subject">Firma de Contrato {{object.name}}</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Envia un email cuando se gana una oportunidad</field>
+            <field name="subject">Asignación de oferta a técnico de OT</field>
+            <field name="email_to">salvador.gon.jim@gmail.com</field>
+            <field name="description">Asignación de oferta a técnico de OT</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
-                    <p>Buenas,</p>
-                    <p>
-                        La oportunidad <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
-                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal interno</span> va a ser quien se encargue de registrarlo
-                        en la base de datos y de estudiar la oferta.
-                    </p>
-                    <!--La fecha acordada de entrega es: [Fecha de entrega requerida (solartree_date_required_delivery]-->
-
-                    <!-- -->
-
-                    <!--Comentarios particulares:-->
-
-                    <!--[Texto rellenable]-->
-
-                    <!-- -->
-
-                    <!--Saludos.-->
+                    <p>Buenas esto es un test</p>
                 </div>
             </field>
             <field name="auto_delete" eval="True"/>
@@ -123,3 +107,12 @@
 
     </data>
 </odoo>
+
+
+<!--                    <p>-->
+<!--                        La oportunidad <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>-->
+<!--                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal interno</span> va a ser quien se encargue de registrarlo-->
+<!--                        en la base de datos y de estudiar la oferta.-->
+<!--                    </p>-->
+<!--                    <p>Comentarios particulares:</p>-->
+<!--                    <p>Saludos.</p>-->

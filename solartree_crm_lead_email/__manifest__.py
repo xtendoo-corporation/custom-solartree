@@ -9,6 +9,7 @@
     "depends": ["stock", "mail", "crm"],
     "data": [
         "views/crm_lead_view.xml",
+        'wizard/crm_lead_to_opportunity_views.xml',
         "data/mail_template_data.xml"
     ],
     "installable": True,
