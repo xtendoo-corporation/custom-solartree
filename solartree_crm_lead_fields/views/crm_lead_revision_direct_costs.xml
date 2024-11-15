@@ -24,7 +24,7 @@
                     <group>
                         <field name="type_direct_costs_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
                                options="{'no_create': True,}" string="Type"/>
-                        <field name="price_cost" widget="monetary" readonly="0"/>
+                        <field name="price_cost" widget="monetary" readonly="0" default_focus="1"/>
                         <field name="price_cost_wp" digits="[16, 4]"/>
                         <field name="price_sale" widget="monetary" readonly="0"/>
                         <field name="price_sale_wp" digits="[16, 4]"/>

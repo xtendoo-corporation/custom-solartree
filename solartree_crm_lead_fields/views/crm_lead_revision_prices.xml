@@ -23,7 +23,7 @@
                     <group>
                         <field name="type_price_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'fee_and_margins')]"
                                options="{'no_create': True,}" string="Tipo"/>
-                        <field name="percentage" widget="percentage" readonly="0"/>
+                        <field name="percentage" widget="percentage" readonly="0" default_focus="1"/>
                         <field name="price" widget="monetary"/>
                         <field name="price_wp" digits="[16, 4]"/>
                         <field name="selected_type_price_ids" invisible="1"/>

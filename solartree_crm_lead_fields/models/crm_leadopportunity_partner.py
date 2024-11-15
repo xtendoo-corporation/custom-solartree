@@ -21,3 +21,4 @@ class CrmLead2OpportunityPartner(models.TransientModel):
         store=True,
         readonly=False,
     )
+

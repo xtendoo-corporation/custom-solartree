@@ -41,7 +41,6 @@ class CrmLead(models.Model):
         'res.users',
         string="Canal interno",
         help="Canal interno",
-        domain = "[('share', '=', False)]",
         check_company = True, index = True, tracking = True
     )
 
