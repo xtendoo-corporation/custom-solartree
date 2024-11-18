@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <!-- Nueva categoría para Desarrollo de Negocio -->
+        <record id="module_category_crm_business_development" model="ir.module.category">
+            <field name="name">Desarrollo de Negocio</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Nueva categoría para Oficina Técnica -->
+        <record id="module_category_crm_technical_office" model="ir.module.category">
+            <field name="name">Oficina Técnica</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Grupos para Desarrollo de Negocio -->
+        <record id="group_crm_business_user" model="res.groups">
+            <field name="name">Usuario de desarrollo de Negocio</field>
+            <field name="category_id" ref="module_category_crm_business_development"/>
+        </record>
+        <record id="group_crm_business_director" model="res.groups">
+            <field name="name">Director de desarrollo de Negocio</field>
+            <field name="category_id" ref="module_category_crm_business_development"/>
+        </record>
+
+
+
+        <!-- Grupos para Oficina Técnica -->
+        <record id="group_crm_technical_office_user" model="res.groups">
+            <field name="name">Usuario de oficina Técnica</field>
+            <field name="category_id" ref="module_category_crm_technical_office"/>
+        </record>
+        <record id="group_crm_technical_office_director" model="res.groups">
+            <field name="name">Director de oficina Técnica</field>
+            <field name="category_id" ref="module_category_crm_technical_office"/>
+        </record>
+
+    </data>
+</odoo>

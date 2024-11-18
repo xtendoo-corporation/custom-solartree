@@ -48,7 +48,7 @@ class CrmLead(models.Model):
     user_id = fields.Many2one(
         'res.users',
         string='Salesperson',
-        domain=lambda self: [('groups_id', 'in', self.env.ref('solartree_res_partner_fields.group_crm_business_development').id)],
+        domain=lambda self: [('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_business_user').id)],
         check_company=True,
         index=True,
         tracking=True

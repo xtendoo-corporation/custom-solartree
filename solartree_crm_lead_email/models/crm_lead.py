@@ -1,4 +1,5 @@
-from odoo import _, models, fields
+from odoo import _, models, fields, api
+from odoo.exceptions import AccessError
 
 
 class CrmLead(models.Model):
