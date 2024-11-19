@@ -29,46 +29,69 @@ class CrmLead(models.Model):
             # Restringe si el usuario no pertenece al grupo requerido y el nuevo estado es "Revisar"
             for record in self:
 
-                #Solo el director de negocio cualquier usuario de negocio pueden cambiar a Nuevo
+                # Solo pueden
+                # Director de desarrollo de negocio
+                # Usuarios de desarrollo de negocio
                 if not is_business_director and new_stage.name == "Nuevo" and not is_business_user:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Nuevo'."))
 
-                #Solo el director de negocio y el usuario asignado pueden cambiar a Leads KO
+                # Solo pueden
+                # Director de desarrollo de negocio
+                # Usuarios asignado de desarrollo de negocio (comercial/user_id)
                 if not is_business_director and new_stage.name == "Leads KO" and not actual_user_is_same_user_id:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Leads KO'."))
 
-                # Solo el director de negocio y el usuario asignado pueden cambiar a Solicitado Estudio
+                # Solo pueden
+                # Director de desarrollo de negocio
+                # Usuarios asignado de desarrollo de negocio (Comercial/user_id)
                 if not is_business_director and new_stage.name == "Solicitado Estudio" and not actual_user_is_same_user_id:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Solicitado Estudio'."))
 
-                # Solo el usuario asignado de Oficina Técnica y el director de oficina técnica pueden cambiar a Pte Datos
+                # Solo pueden
+                # Director de oficina técnica
+                # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
                 if not actual_user_is_same_solartree_intern_channel and new_stage.name == "Pte Datos" and not is_technical_office_director:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Pte Datos'."))
 
-                #Solo el director de oficina técnica
+                # Solo puede
+                # Director de oficina técnica
                 if not is_technical_office_director and new_stage.name == "Estudio":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Estudio'."))
 
-                if not is_technical_office_user and new_stage.name == "No ofertable":
+                # Solo pueden
+                # Director de oficina técnica
+                # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
+                if not is_technical_office_director and new_stage.name == "No ofertable" and not actual_user_is_same_solartree_intern_channel:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'No ofertable'."))
 
-                if not is_technical_office_user and new_stage.name == "Entregada":
+                # Solo puede
+                # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
+                if not actual_user_is_same_solartree_intern_channel and new_stage.name == "Entregada":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Entregada'."))
 
-                if not is_technical_office_user and new_stage.name == "Presentada":
+                # Solo puede
+                # Usuario asignado de desarrollo de negocio (Comercial/user_id)
+                if not actual_user_is_same_user_id and new_stage.name == "Presentada":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Presentada'."))
 
-                if not is_technical_office_user and new_stage.name == "Perdida":
+                # Solo puede
+                # Director de desarrollo de negocio
+                if not is_business_director and new_stage.name == "Perdida":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Perdida'."))
 
-                if not is_technical_office_user and new_stage.name == "Adjudicada":
+                # Solo puede
+                # Director de desarrollo de negocio
+                if not is_business_director and new_stage.name == "Adjudicada":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Adjudicada'."))
 
-                if not is_technical_office_user and new_stage.name == "Contratada":
+                # Solo puede
+                # Director de desarrollo de negocio
+                if not is_business_director and new_stage.name == "Contratada":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Contratada'."))
 
-                if not is_technical_office_user and new_stage.name == "Stand By":
+                # Solo puede
+                # Director de desarrollo de negocio
+                if not is_business_director and new_stage.name == "Stand By":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Stand By'."))
 
-        # Continúa con la lógica normal de escritura
         return super(CrmLead, self).write(vals)
