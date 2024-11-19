@@ -5,7 +5,7 @@
     "author": "Xtendoo",
     "license": "AGPL-3",
     "depends": [
-        "crm",
+        "crm", "mail",
     ],
     "data": [
         "data/lead_sequence.xml",
@@ -22,7 +22,6 @@
         "views/crm_lead_revision_global_type.xml",
         "views/crm_lead_revision_inverter_view.xml",
         "views/crm_lead_revision_battery_view.xml",
-        "views/crm_lead_tot_view.xml",
         "views/crm_leadopportunity_partner_form.xml",
         'security/ir.model.access.csv',
     ],

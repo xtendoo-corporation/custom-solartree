@@ -5,6 +5,7 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <!--Boton de oportunidad ganada-->
             <field name="stage_id" position="before">
                 <button
                     name="action_crm_lead_send_email_won"
@@ -13,6 +14,7 @@
                     groups="base.group_user"
                     invisible="not active or probability != 100 or type == 'lead'"/>
             </field>
+            <!--Boton de notificar peticion de oferta-->
             <field name="stage_id" position="before">
                 <button
                     name="action_crm_lead_send_email_request"

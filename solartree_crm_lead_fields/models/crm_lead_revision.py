@@ -6,6 +6,7 @@ from odoo import models, fields, api
 class CrmLeadRevision(models.Model):
     _name = 'crm.lead.revision'
     _description = 'Lead Revision'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(
         string="Revision Name",
@@ -112,7 +113,7 @@ class CrmLeadRevision(models.Model):
         digits=(16, 1)
     )
     offer_tot = fields.Many2one(
-        comodel_name="crm.lead.tot",
+        comodel_name="res.users",
         string="TOT revisions field",
     )
     offer_HT = fields.Float(

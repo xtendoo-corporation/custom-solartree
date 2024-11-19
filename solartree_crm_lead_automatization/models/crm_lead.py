@@ -37,12 +37,6 @@ class CrmLead(models.Model):
 
                 # Solo pueden
                 # Director de desarrollo de negocio
-                # Usuarios asignado de desarrollo de negocio (comercial/user_id)
-                if not is_business_director and new_stage.name == "Leads KO" and not actual_user_is_same_user_id:
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'Leads KO'."))
-
-                # Solo pueden
-                # Director de desarrollo de negocio
                 # Usuarios asignado de desarrollo de negocio (Comercial/user_id)
                 if not is_business_director and new_stage.name == "Solicitado Estudio" and not actual_user_is_same_user_id:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Solicitado Estudio'."))
@@ -88,10 +82,5 @@ class CrmLead(models.Model):
                 # Director de desarrollo de negocio
                 if not is_business_director and new_stage.name == "Contratada":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'Contratada'."))
-
-                # Solo puede
-                # Director de desarrollo de negocio
-                if not is_business_director and new_stage.name == "Stand By":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'Stand By'."))
 
         return super(CrmLead, self).write(vals)

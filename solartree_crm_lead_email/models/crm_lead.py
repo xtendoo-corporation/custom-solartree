@@ -1,18 +1,49 @@
 from odoo import _, models, fields, api
-from odoo.exceptions import AccessError
-
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
 
     all_users_emails = fields.Char(string="All Users Emails", compute="_compute_all_users_emails")
+    business_director_email = fields.Char(string="Business Director Email", compute="_compute_email_business_director")
+    business_user_email = fields.Char(string="Business User Email", compute="_compute_email_business_user")
+    technical_office_director_email = fields.Char(string="Technical Office Director Email", compute="_compute_email_technical_office_director")
+    technical_office_user_email = fields.Char(string="Technical Office User Email", compute="_compute_email_technical_office_user")
     project_url = fields.Char(string="Project URL", compute="_compute_project_url")
+    user_id_email = fields.Char(string="User Email", related="user_id.email", store=True)
 
     def _compute_all_users_emails(self):
         res = self.env['res.users'].search_read([], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
             record.all_users_emails = ','.join(emails)
+
+    # emails to group solartree_crm_lead_automatization.group_crm_business_director
+    def _compute_email_business_director(self):
+        res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_business_director').id)], ['email'])
+        emails = set(r['email'] for r in res if r.get('email'))
+        for record in self:
+            record.email_to = ','.join(emails)
+
+    # emails to group solartree_crm_lead_automatization.group_crm_business_user
+    def _compute_email_business_user(self):
+        res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_business_user').id)], ['email'])
+        emails = set(r['email'] for r in res if r.get('email'))
+        for record in self:
+            record.email_to = ','.join(emails)
+
+    #solartree_crm_lead_automatization.group_crm_technical_office_director
+    def _compute_email_technical_office_director(self):
+        res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_technical_office_director').id)], ['email'])
+        emails = set(r['email'] for r in res if r.get('email'))
+        for record in self:
+            record.email_to = ','.join(emails)
+
+    #solartree_crm_lead_automatization.group_crm_technical_office_user
+    def _compute_email_technical_office_user(self):
+        res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_technical_office_user').id)], ['email'])
+        emails = set(r['email'] for r in res if r.get('email'))
+        for record in self:
+            record.email_to = ','.join(emails)
 
     def _compute_project_url(self):
         """Compute the dynamic URL for the project."""
