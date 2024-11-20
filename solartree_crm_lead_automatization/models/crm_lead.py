@@ -54,6 +54,16 @@ class CrmLead(models.Model):
                 if not is_technical_office_director and new_stage.name == "ESTUDIO":
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'ESTUDIO'."))
 
+
+                #no se puede cambiar el estado a "ENTREGADA" si el campo
+                # con selected_revision_id.revision_price_ids.type_price_id.name == "Gastos de estructura"
+                for record in self.selected_revision_id.revision_price_ids:
+                    if record.type_price_id.name == "Gastos de estructura":
+                        print(f"Percentage: {record.percentage}")
+
+
+
+                #
                 # Solo puede
                 # Usuario asignado como Técnico OT en la Revision(Técnico OT/selected_revision_id.offer_tot)
                 if not actual_user_is_same_offer_tot and new_stage.name == "ENTREGADA":

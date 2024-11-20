@@ -422,7 +422,7 @@
         <field name="name">Inversor 2</field>
         <field name="behavior">inverter</field>
     </record>
-     <record id="crm_lead_revision_global_type_27" model="crm.lead.revision.global.type">
+    <record id="crm_lead_revision_global_type_27" model="crm.lead.revision.global.type">
         <field name="name">Batería 1</field>
         <field name="behavior">battery</field>
     </record>
@@ -432,13 +432,19 @@
     </record>
 
 
-        <!-- OFFER CLASS MARGINS -->
+    <!-- OFFER CLASS MARGINS -->
     <record id="offer_class_small_installation_1" model="offer.class">
         <field name="name">PEQUEÑA INSTALACIÓN</field>
         <field name="min_value">0</field>
         <field name="max_value">10</field>
         <field name="structure_expenses">7.2</field>
         <field name="industrial_profit">37.8</field>
+        <field name="res_group_mail_ids"
+               eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_solartree_director'),
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
     </record>
     <record id="offer_class_small_installation_2" model="offer.class">
         <field name="name">COMERCIAL</field>
@@ -446,6 +452,12 @@
         <field name="max_value">100</field>
         <field name="structure_expenses">7.2</field>
         <field name="industrial_profit">22.8</field>
+        <field name="res_group_mail_ids"
+               eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_solartree_director'),
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
     </record>
     <record id="offer_class_small_installation_3" model="offer.class">
         <field name="name">INDUSTRIAL</field>
@@ -453,12 +465,34 @@
         <field name="max_value">1000</field>
         <field name="structure_expenses">7.2</field>
         <field name="industrial_profit">12.8</field>
+        <field name="res_group_mail_ids"
+               eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_solartree_director'),
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
+        <field name="res_group_meet_ids"
+               eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
     </record>
     <record id="offer_class_small_installation_4" model="offer.class">
-        <field name="name">Mayor 1 MW</field>
-        <field name="min_value">1000</field>
-        <field name="max_value">9999999</field>
-        <field name="structure_expenses">7.2</field>
-        <field name="industrial_profit">12.8</field>
-    </record>
+    <field name="name">Mayor 1 MW</field>
+    <field name="min_value">1000</field>
+    <field name="max_value">9999999</field>
+    <field name="structure_expenses">7.2</field>
+    <field name="industrial_profit">12.8</field>
+    <field name="res_group_mail_ids"
+           eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_solartree_director'),
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
+    <field name="res_group_meet_ids"
+           eval="[(6, 0, [
+               ref('solartree_crm_lead_automatization.group_solartree_director'),
+               ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
+               ref('solartree_crm_lead_automatization.group_crm_business_director')
+               ])]"/>
 </odoo>

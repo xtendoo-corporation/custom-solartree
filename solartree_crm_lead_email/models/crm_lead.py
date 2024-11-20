@@ -4,19 +4,40 @@ class CrmLead(models.Model):
     _inherit = "crm.lead"
 
     all_users_emails = fields.Char(string="All Users Emails", compute="_compute_all_users_emails")
+    #Grupos de desarrollo de negocio
     business_director_email = fields.Char(string="Business Director Email", compute="_compute_email_business_director")
     business_user_email = fields.Char(string="Business User Email", compute="_compute_email_business_user")
+    #Grupos de oficina técnica
     technical_office_director_email = fields.Char(string="Technical Office Director Email", compute="_compute_email_technical_office_director")
     technical_office_user_email = fields.Char(string="Technical Office User Email", compute="_compute_email_technical_office_user")
-    project_url = fields.Char(string="Project URL", compute="_compute_project_url")
+    #Comercial de la oferta
     user_id_email = fields.Char(string="User Email", related="user_id.email", store=True)
+    #Tecnico de la revisión seleccionada
+    assigned_revision_tecnical = fields.Char(string="Assigned Revision Tecnical", related="selected_revision_id.offer_tot.email", store=True)
+    #condiciones
+    users_closest_offer = fields.Char(string="Users Closest Offert", compute="_compute_users_emails_closest_offert")
+    users_closest_offer_meeting = fields.Char(string="Users Closest Offert Meeting", compute="_compute_users_emails_closest_offert_meeting")
+    #URL del proyecto
+    project_url = fields.Char(string="Project URL", compute="_compute_project_url")
 
-
-
-    # Dependemos del campo offer_kwp de crm.lead.revision
-    def _compute_users_closest_offert(self):
+    def _compute_users_emails_closest_offert(self):
         for record in self:
-            record.user_closest_offert = record.user_id.offer_tot
+            emails = set()
+            for group in record.selected_revision_id.offer_class_id.res_group_mail_ids:
+                users = self.env['res.users'].search([('groups_id', 'in', group.id)])
+                emails.update(user.email for user in users if user.email)
+                #pequeña instalacion o instalacion de autoconsumo
+            if record.selected_revision_id.max_value < 100:
+                emails.add(self.assigned_revision_tecnical)
+            record.users_closest_offer = ','.join(emails)
+
+    def _compute_users_emails_closest_offert_meeting(self):
+        for record in self:
+            emails = set()
+            for group in record.selected_revision_id.offer_class_id.res_group_meet_ids:
+                users = self.env['res.users'].search([('groups_id', 'in', group.id)])
+                emails.update(user.email for user in users if user.email)
+            record.users_closest_offer_meeting = ','.join(emails)
 
     def _compute_all_users_emails(self):
         res = self.env['res.users'].search_read([], ['email'])

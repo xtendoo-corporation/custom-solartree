@@ -9,6 +9,8 @@
                 <field name="max_value"/>
                 <field name="structure_expenses"/>
                 <field name="industrial_profit"/>
+                <field name="res_group_mail_ids" widget="many2many_tags"/>
+                <field name="res_group_meet_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -25,6 +27,8 @@
                         <field name="max_value"/>
                         <field name="structure_expenses"/>
                         <field name="industrial_profit"/>
+                        <field name="res_group_mail_ids" widget="many2many_tags"/>
+                        <field name="res_group_meet_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
             </form>
