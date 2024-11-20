@@ -4,6 +4,8 @@
         <field name="model">crm.lead.revision.direct.costs</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="lead_id"/>
+                <field name="revision_id"/>
                 <field name="type_direct_costs_id"
                        domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
                        options="{'no_create': True,}" string=""/>
@@ -58,4 +60,16 @@
         <field name="view_id" ref="view_crm_lead_revision_direct_costs_graph"/>
         <field name="domain">[('revision_id', '=', active_id)]</field>
     </record>
+
+    <record id="action_crm_lead_revision_direct_costs" model="ir.actions.act_window">
+        <field name="name">Direct Costs</field>
+        <field name="res_model">crm.lead.revision.direct.costs</field>
+        <field name="view_mode">tree,form,graph</field>
+    </record>
+
+    <menuitem id="menu_crm_lead_revision_direct_costs"
+              name="Direct Costs"
+              parent="crm.crm_menu_sales"
+              action="action_crm_lead_revision_direct_costs"
+              sequence="11"/>
 </odoo>

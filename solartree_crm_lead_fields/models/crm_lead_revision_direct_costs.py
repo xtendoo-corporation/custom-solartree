@@ -10,6 +10,13 @@ class CrmLeadRevisionDirectCosts(models.Model):
         required=True,
     )
 
+    lead_id = fields.Many2one(
+        related="revision_id.lead_id",
+        string="Opportunity",
+        store=True,
+        readonly=True
+    )
+
     type_direct_costs_id = fields.Many2one(
         "crm.lead.revision.global.type",
         string = "Type",

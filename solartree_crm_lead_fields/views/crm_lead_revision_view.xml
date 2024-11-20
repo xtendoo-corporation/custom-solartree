@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <tree string="Revisions">
                 <field name="offer_selected" widget="boolean_toggle"/>
+                <field name="lead_id"/>
                 <field name="name"/>
                 <field name="offer_kwp"/>
                 <field name="offer_kwn"/>
@@ -256,4 +257,17 @@
             </xpath>
         </field>
     </record>
+
+      <record id="action_crm_lead_revision" model="ir.actions.act_window">
+        <field name="name">Revisions</field>
+        <field name="res_model">crm.lead.revision</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Add the menu item under crm.crm_menu_sales -->
+    <menuitem id="menu_crm_lead_revision"
+              name="Revisions"
+              parent="crm.crm_menu_sales"
+              action="action_crm_lead_revision"
+              sequence="10"/>
 </odoo>
