@@ -4,6 +4,7 @@
         <field name="model">crm.lead.revision</field>
         <field name="arch" type="xml">
             <tree string="Revisions">
+                <field name="offer_selected" widget="boolean_toggle"/>
                 <field name="name"/>
                 <field name="offer_kwp"/>
                 <field name="offer_kwn"/>
@@ -61,7 +62,7 @@
                         <group name="invertes" string="Inverters">
                             <field name="offer_inverter_manufacturer" widget="text"/>
                             <field name="revision_inverter_ids" string="">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="offer_inverter_model"/>
                                     <field name="offer_inverter_unit_power"/>
                                     <field name="offer_inverter_quantity"/>
@@ -72,7 +73,7 @@
                         <group name="battery" string="Battery" invisible="not solartree_lead_storage">
                             <field name="offer_battery_manufacturer" widget="text"/>
                             <field name="revision_battery_ids" string="">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="offer_battery_model"/>
                                     <field name="offer_battery_capacity"/>
                                     <field name="offer_battery_power"/>
@@ -96,7 +97,7 @@
                         </group>
                         <group name="fees_and_margins" string="FEEs y Márgenes">
                             <field name="revision_price_ids" string="">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="type_price_id" options="{'no_create': True,}" string=""/>
                                     <field name="percentage" widget="percentage" readonly="0"/>
                                     <field name="price" widget="monetary" string="€"/>
@@ -106,7 +107,7 @@
                         </group>
                         <group name="direct_costs" string="Direct Costs">
                             <field name="revision_direct_costs_ids" string="">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="type_direct_costs_id" options="{'no_create': True,}" string=""/>
                                     <field name="price_cost" widget="monetary" readonly="0"/>
                                     <field name="price_cost_wp" digits="[16, 4]"/>

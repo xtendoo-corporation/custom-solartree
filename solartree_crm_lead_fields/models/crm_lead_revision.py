@@ -376,17 +376,22 @@ class CrmLeadRevision(models.Model):
                 record.lead_id.revision_ids.filtered(lambda r: r.id != record.id).write({'offer_selected': False})
         return result
 
+    offer_class_id = fields.Many2one(
+        'offer.class',
+        string='Offer Class relation',
+    )
+
     @api.depends('offer_kwn')
     def _compute_offer_class(self):
         for record in self:
-            if record.offer_kwn > 1000:
-                record.offer_class = "Mayor 1 MW"
-            if 1000 >= record.offer_kwn > 100:
-                record.offer_class = "INDUSTRIAL"
-            if 100 >= record.offer_kwn > 10:
-                record.offer_class = "COMERCIAL"
-            if record.offer_kwn <= 10:
-                record.offer_class = "PEQUEÑA INSTALACIÓN"
+            offer_class = self.env['offer.class'].search([
+                ('min_value', '<=', record.offer_kwn),
+                ('max_value', '>=', record.offer_kwn)
+            ], limit=1)
+            if offer_class:
+                record.offer_class = offer_class.name
+            else:
+                record.offer_class = ""
 
 
     @api.depends('lead_id.company_id')

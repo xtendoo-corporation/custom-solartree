@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_offer_class_tree" model="ir.ui.view">
+        <field name="name">offer.class.tree</field>
+        <field name="model">offer.class</field>
+        <field name="arch" type="xml">
+            <tree string="Offer Classes">
+                <field name="name"/>
+                <field name="min_value"/>
+                <field name="max_value"/>
+                <field name="structure_expenses"/>
+                <field name="industrial_profit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_offer_class_form" model="ir.ui.view">
+        <field name="name">offer.class.form</field>
+        <field name="model">offer.class</field>
+        <field name="arch" type="xml">
+            <form string="Offer Class">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="min_value"/>
+                        <field name="max_value"/>
+                        <field name="structure_expenses"/>
+                        <field name="industrial_profit"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_offer_class" model="ir.actions.act_window">
+        <field name="name">Lead Offer Class</field>
+        <field name="res_model">offer.class</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="submenu_crm_lead_offer_class"
+              name="Lead Offer Class"
+              parent="menu_crm_solartree_group"
+              action="action_crm_lead_offer_class"
+              sequence="32"/>
+</odoo>

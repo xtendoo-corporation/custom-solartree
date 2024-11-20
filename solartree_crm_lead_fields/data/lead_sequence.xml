@@ -431,4 +431,34 @@
         <field name="behavior">battery</field>
     </record>
 
+
+        <!-- OFFER CLASS MARGINS -->
+    <record id="offer_class_small_installation_1" model="offer.class">
+        <field name="name">PEQUEÑA INSTALACIÓN</field>
+        <field name="min_value">0</field>
+        <field name="max_value">10</field>
+        <field name="structure_expenses">7.2</field>
+        <field name="industrial_profit">37.8</field>
+    </record>
+    <record id="offer_class_small_installation_2" model="offer.class">
+        <field name="name">COMERCIAL</field>
+        <field name="min_value">10</field>
+        <field name="max_value">100</field>
+        <field name="structure_expenses">7.2</field>
+        <field name="industrial_profit">22.8</field>
+    </record>
+    <record id="offer_class_small_installation_3" model="offer.class">
+        <field name="name">INDUSTRIAL</field>
+        <field name="min_value">100</field>
+        <field name="max_value">1000</field>
+        <field name="structure_expenses">7.2</field>
+        <field name="industrial_profit">12.8</field>
+    </record>
+    <record id="offer_class_small_installation_4" model="offer.class">
+        <field name="name">Mayor 1 MW</field>
+        <field name="min_value">1000</field>
+        <field name="max_value">9999999</field>
+        <field name="structure_expenses">7.2</field>
+        <field name="industrial_profit">12.8</field>
+    </record>
 </odoo>

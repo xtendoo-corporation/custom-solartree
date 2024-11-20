@@ -139,7 +139,8 @@
             </xpath>
             <xpath expr="//div[field[@name='lead_properties']]" position="replace">
             </xpath>
-            <xpath expr="//div[@class='o_kanban_record_subtitle']" position="replace">
+            <xpath expr="//div[@class='o_kanban_record_subtitle']" position="attributes">
+                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//div[@class='o_kanban_record_bottom']/div[@class='oe_kanban_bottom_left']" position="replace">
                 <div class="oe_kanban_bottom_left"/>
