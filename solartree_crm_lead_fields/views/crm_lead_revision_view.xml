@@ -35,7 +35,7 @@
                             <field name="solartree_lead_storage"/>
                             <field name="solartree_lead_structure_type"/>
                             <field name="solartree_lead_structure_model"/>
-<!--                            <field name="offer_class"/>-->
+                            <!--                            <field name="offer_class"/>-->
                             <field name="offer_class_id" widget="selection" readonly="1"/>
                         </group>
                         <group name="Revision fields" string="Revision fields">
@@ -44,7 +44,6 @@
                             <field name="offer_storage_kwh"/>
                             <field name="offer_storage_kwn"/>
                             <field name="offer_ve_kwn"/>
-                            <field name="offer_kwh_year"/>
                             <field name="offer_tot" widget="selection"/>
                             <field name="offer_HT"/>
                             <field name="offer_date_deliver"/>
@@ -107,6 +106,7 @@
                             </field>
                         </group>
                         <group name="direct_costs" string="Direct Costs">
+                             <button name="action_view_direct_costs_graph" type="object" string="View Direct Costs Graph" class="btn-primary"/>
                             <field name="revision_direct_costs_ids" string="">
                                 <tree editable="bottom">
                                     <field name="type_direct_costs_id" options="{'no_create': True,}" string=""/>
@@ -125,6 +125,89 @@
                             <field name="installation_sale_price" string="Venta de instalación (€)" readonly="0"/>
                             <field name="installation_sale_price_wp" string="(€/Wp)" readonly="0"/>
                             <field name="offer_fv" string="Precio de venta FV"/>
+                            <field name="tax_id"/>
+                            <field name="installation_sale_price_with_tax" string="Venta de instalación con iva (€)"
+                                   readonly="0"/>
+                        </group>
+                        <group name="energy_simulation" string="Simulación Energía">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th/>
+                                        <th>Total</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Producción</strong>
+                                        </td>
+                                        <td>
+                                            <field name="offer_kwh_year"/>
+                                        </td>
+                                        <td/>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Autoconsumo (Prod.)</span>
+                                        </td>
+                                        <td>
+                                            <field name="offer_self_consumption"/>
+                                        </td>
+                                        <td>
+                                            <field name="offer_ratio_self_consumation_vs_production" widget="percentage"
+                                                   digits="[16, 0]"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Excedentes (Prod.)</span>
+                                        </td>
+                                        <td>
+                                            <field name="offer_surplus"/>
+                                        </td>
+                                        <td>
+                                            <field name="offer_ratio_surplus_vs_production" widget="percentage"
+                                                   digits="[16, 0]"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Demanda</strong>
+                                        </td>
+                                        <td>
+                                            <field name="customer_consumption_mwh"/>
+                                        </td>
+                                        <td/>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Autoconsumo (Dem.)</span>
+                                        </td>
+                                        <td>
+                                            <field name="offer_self_consumption"/>
+                                        </td>
+                                        <td>
+                                            <field name="offer_ratio_self_consumation_vs_demand" widget="percentage"
+                                                   digits="[16, 0]"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Red (Dem.)</span>
+                                        </td>
+                                        <td>
+                                            <field name="offer_grid"/>
+                                        </td>
+                                        <td>
+                                            <field name="offer_ratio_grid_vs_demand" widget="percentage"
+                                                   digits="[16, 0]"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </group>
                     </group>
                 </sheet>
@@ -134,6 +217,24 @@
                     <field name="message_ids"/>
                 </div>
             </form>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_pivot" model="ir.ui.view">
+        <field name="name">crm.lead.revision.pivot</field>
+        <field name="model">crm.lead.revision</field>
+        <field name="arch" type="xml">
+            <pivot string="Revisions">
+                <field name="offer_kwp" type="measure"/>
+                <field name="offer_kwn" type="measure"/>
+                <field name="offer_storage_kwh" type="measure"/>
+                <field name="offer_storage_kwn" type="measure"/>
+                <field name="offer_self_consumption" type="measure"/>
+                <field name="offer_self_consumption" type="measure"/>
+                <field name="customer_consumption_mwh" type="measure"/>
+                <field name="name" type="row"/>
+                <field name="solartree_lead_type_id" type="col"/>
+            </pivot>
         </field>
     </record>
 

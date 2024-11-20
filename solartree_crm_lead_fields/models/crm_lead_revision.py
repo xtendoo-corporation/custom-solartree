@@ -149,6 +149,95 @@ class CrmLeadRevision(models.Model):
     offer_kwh_year = fields.Integer(
         string='Offer kWh/year',
     )
+    offer_self_consumption = fields.Integer(
+        string='Autoconsumo (kWh/año)',
+    )
+    offer_surplus = fields.Integer(
+        string='Excedentes (kWh/año)',
+        compute='_compute_offer_surplus',
+    )
+
+    @api.depends('offer_kwh_year', 'offer_self_consumption', 'solartree_lead_modality_id')
+    def _compute_offer_surplus(self):
+        for record in self:
+            if record.solartree_lead_modality_id.name == 'AUTOCONSUMO SIN VERTIDO':
+                record.offer_surplus = 0
+            else:
+                record.offer_surplus = record.offer_kwh_year - record.offer_self_consumption
+
+    offer_grid = fields.Integer(
+        string='Red (kWh/año)',
+        compute='_compute_offer_grid',
+    )
+
+    @api.depends('lead_id.customer_consumption_mwh', 'offer_self_consumption')
+    def _compute_offer_grid(self):
+        for record in self:
+            if record.lead_id and record.lead_id.customer_consumption_mwh:
+                record.offer_grid = record.lead_id.customer_consumption_mwh - record.offer_self_consumption
+            else:
+                record.offer_grid = 0
+
+    offer_ratio_self_consumation_vs_production = fields.Float(
+        string='Ratio Autoconsumo vs Producción (%)',
+        compute='_compute_offer_ratio_self_consumation_vs_production',
+    )
+
+    @api.depends('offer_kwh_year', 'offer_self_consumption')
+    def _compute_offer_ratio_self_consumation_vs_production(self):
+        for record in self:
+            if record.offer_kwh_year:
+                record.offer_ratio_self_consumation_vs_production = record.offer_self_consumption / record.offer_kwh_year
+            else:
+                record.offer_ratio_self_consumation_vs_production = 0
+
+
+    offer_ratio_surplus_vs_production = fields.Float(
+        string='Ratio Excedentes vs Producción (%)',
+        compute='_compute_offer_ratio_surplus_vs_production',
+    )
+
+    @api.depends('offer_kwh_year', 'offer_surplus')
+    def _compute_offer_ratio_surplus_vs_production(self):
+        for record in self:
+            if record.offer_kwh_year:
+                record.offer_ratio_surplus_vs_production = record.offer_surplus / record.offer_kwh_year
+            else:
+                record.offer_ratio_surplus_vs_production = 0
+
+    offer_ratio_self_consumation_vs_demand = fields.Float(
+        string='Ratio Autoconsumo vs Demanda (%)',
+        compute='_compute_offer_ratio_self_consumation_vs_demand',
+    )
+
+    @api.depends('lead_id.customer_consumption_mwh', 'offer_self_consumption')
+    def _compute_offer_ratio_self_consumation_vs_demand(self):
+        for record in self:
+            if record.lead_id and record.lead_id.customer_consumption_mwh:
+                record.offer_ratio_self_consumation_vs_demand = record.offer_self_consumption / record.lead_id.customer_consumption_mwh
+            else:
+                record.offer_ratio_self_consumation_vs_demand = 0
+
+    offer_ratio_grid_vs_demand = fields.Float(
+        string='Ratio Excedentes vs Demanda (%)',
+        compute='_compute_offer_ratio_grid_vs_demand',
+    )
+
+    @api.depends('lead_id.customer_consumption_mwh', 'offer_grid')
+    def _compute_offer_ratio_grid_vs_demand(self):
+        for record in self:
+            if record.lead_id and record.lead_id.customer_consumption_mwh:
+                record.offer_ratio_grid_vs_demand = record.offer_grid / record.lead_id.customer_consumption_mwh
+            else:
+                record.offer_ratio_grid_vs_demand = 0
+
+    customer_consumption_mwh = fields.Float(
+        string='Customer Consumption (MWh)',
+        related='lead_id.customer_consumption_mwh',
+        store=True,
+        readonly=True,
+    )
+
     company_currency = fields.Many2one(
         "res.currency",
         string='Currency',
@@ -181,6 +270,18 @@ class CrmLeadRevision(models.Model):
         string="",
         ondelete='cascade'
     )
+
+    def action_view_direct_costs_graph(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Direct Costs Graph',
+            'res_model': 'crm.lead.revision.direct.costs',
+            'view_mode': 'graph',
+            'view_id': self.env.ref('solartree_crm_lead_fields.view_crm_lead_revision_direct_costs_graph').id,
+            'domain': [('revision_id', '=', self.id)],
+            'context': dict(self.env.context, create=False)
+        }
 
     revision_inverter_ids = fields.One2many(
         "crm.lead.revision.inverter",
@@ -302,6 +403,29 @@ class CrmLeadRevision(models.Model):
                 cost.price_sale for cost in record.revision_direct_costs_ids
                 if cost.type_direct_costs_id
             )
+
+    tax_id = fields.Many2one(
+        'account.tax',
+        string='Tax',
+        required=True,
+    )
+
+    installation_sale_price_with_tax = fields.Float(
+        string="Installation Sale Price with 21% Tax",
+        digits=(16, 2),
+        compute="_compute_total_sale_price_with_tax",
+        readonly=True,
+    )
+
+    @api.depends('installation_sale_price', 'tax_id')
+    def _compute_total_sale_price_with_tax(self):
+        for record in self:
+            if record.tax_id:
+                print("Tax ID", record.tax_id.name)
+                tax_amount = record.installation_sale_price * (record.tax_id.amount / 100)
+                record.installation_sale_price_with_tax = record.installation_sale_price + tax_amount
+            else:
+                record.installation_sale_price_with_tax = record.installation_sale_price
 
     installation_sale_price_wp = fields.Float(
         string="Installation Sale Price €/Wp",
@@ -527,3 +651,12 @@ class CrmLeadRevision(models.Model):
         }) for line in self.revision_battery_ids]
 
         return super(CrmLeadRevision, self).copy(default)
+
+    def unlink(self):
+        for record in self:
+            # Ejecutar consultas SQL para eliminar datos relacionados
+            self._cr.execute("DELETE FROM crm_lead_revision_prices WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_direct_costs WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_inverter WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_battery WHERE revision_id = %s", (record.id,))
+        return super(CrmLeadRevision, self).unlink()

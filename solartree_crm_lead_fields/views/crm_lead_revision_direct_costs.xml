@@ -4,11 +4,12 @@
         <field name="model">crm.lead.revision.direct.costs</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="type_direct_costs_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
+                <field name="type_direct_costs_id"
+                       domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
                        options="{'no_create': True,}" string=""/>
                 <field name="price_cost" widget="monetary"/>
                 <field name="price_cost_wp" digits="[16, 4]"/>
-                <field name="price_sale" widget="monetary" />
+                <field name="price_sale" widget="monetary"/>
                 <field name="price_sale_wp" digits="[16, 4]"/>
                 <field name="selected_type_price_ids" invisible="1"/>
             </tree>
@@ -22,7 +23,8 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="type_direct_costs_id" domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
+                        <field name="type_direct_costs_id"
+                               domain="[('id', 'not in', selected_type_price_ids), ('behavior', '=', 'direct_costs')]"
                                options="{'no_create': True,}" string="Type"/>
                         <field name="price_cost" widget="monetary" readonly="0" default_focus="1"/>
                         <field name="price_cost_wp" digits="[16, 4]"/>
@@ -33,5 +35,27 @@
                 </sheet>
             </form>
         </field>
+    </record>
+
+    <record id="view_crm_lead_revision_direct_costs_graph" model="ir.ui.view">
+        <field name="name">crm.lead.revision.direct.costs.graph</field>
+        <field name="model">crm.lead.revision.direct.costs</field>
+        <field name="arch" type="xml">
+            <graph string="Direct Costs">
+                <field name="price_cost" type="measure"/>
+                <field name="price_sale" type="measure"/>
+                 <field name="price_cost_wp" type="measure" invisible="1"/>
+                <field name="price_sale_wp" type="measure" invisible="1"/>
+                <field name="type_direct_costs_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_revision_direct_costs_graph" model="ir.actions.act_window">
+        <field name="name">Direct Costs Graph</field>
+        <field name="res_model">crm.lead.revision.direct.costs</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_crm_lead_revision_direct_costs_graph"/>
+        <field name="domain">[('revision_id', '=', active_id)]</field>
     </record>
 </odoo>
