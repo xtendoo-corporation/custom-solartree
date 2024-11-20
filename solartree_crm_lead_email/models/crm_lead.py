@@ -11,6 +11,13 @@ class CrmLead(models.Model):
     project_url = fields.Char(string="Project URL", compute="_compute_project_url")
     user_id_email = fields.Char(string="User Email", related="user_id.email", store=True)
 
+
+
+    # Dependemos del campo offer_kwp de crm.lead.revision
+    def _compute_users_closest_offert(self):
+        for record in self:
+            record.user_closest_offert = record.user_id.offer_tot
+
     def _compute_all_users_emails(self):
         res = self.env['res.users'].search_read([], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))

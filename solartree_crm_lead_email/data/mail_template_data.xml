@@ -200,6 +200,32 @@
             </field>
             <field name="auto_delete" eval="True"/>
         </record>
+
+        <record id="mail_template_data_crm_lead_revision_email_test" model="mail.template">
+            <field name="name">Envia un email desde revision</field>
+            <field name="model_id" ref="model_crm_lead_revision"/>
+            <field name="subject">Envia un email desde revision {{object.name}}</field>
+            <field name="email_to">{{object.all_users_emails}}</field>
+<!--            <field name="email_cc" groups="base.group_no_one"/>-->
+            <field name="description">Envia un email desde revision</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Buenas,</p>
+                    <p>
+                        La oportunidad
+                        <span t-out="object.lead_id.solartree_lead_identification or ''">ID de la Oferta</span>
+                        ha entrado en la cola de trabajo. <span t-out="object.offer_tot.name or ''">Tecnico de OT
+                    </span> va a ser quien se encargue de registrarlo
+                        en la base de datos y de estudiar la oferta.
+                    </p>
+                    <p>Comentarios particulares:</p>
+                    <p>Saludos.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
     </data>
 </odoo>
 
