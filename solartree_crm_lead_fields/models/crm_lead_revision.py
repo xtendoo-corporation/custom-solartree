@@ -277,8 +277,7 @@ class CrmLeadRevision(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Direct Costs Graph',
             'res_model': 'crm.lead.revision.direct.costs',
-            'view_mode': 'graph',
-            'view_id': self.env.ref('solartree_crm_lead_fields.view_crm_lead_revision_direct_costs_graph').id,
+            'view_mode': 'graph,tree,form',
             'domain': [('revision_id', '=', self.id)],
             'context': dict(self.env.context, create=False)
         }
@@ -407,7 +406,6 @@ class CrmLeadRevision(models.Model):
     tax_id = fields.Many2one(
         'account.tax',
         string='Tax',
-        required=True,
     )
 
     installation_sale_price_with_tax = fields.Float(

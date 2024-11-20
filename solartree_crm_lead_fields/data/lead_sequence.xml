@@ -495,4 +495,5 @@
                ref('solartree_crm_lead_automatization.group_crm_technical_office_director'),
                ref('solartree_crm_lead_automatization.group_crm_business_director')
                ])]"/>
+    </record>
 </odoo>
