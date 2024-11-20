@@ -35,7 +35,8 @@
                             <field name="solartree_lead_storage"/>
                             <field name="solartree_lead_structure_type"/>
                             <field name="solartree_lead_structure_model"/>
-                            <field name="offer_class"/>
+<!--                            <field name="offer_class"/>-->
+                            <field name="offer_class_id" widget="selection" readonly="1"/>
                         </group>
                         <group name="Revision fields" string="Revision fields">
                             <field name="offer_kwp" readonly="0"/>

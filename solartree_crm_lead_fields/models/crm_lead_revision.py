@@ -155,11 +155,9 @@ class CrmLeadRevision(models.Model):
         compute="_compute_company_currency",
         compute_sudo=True
     )
-
     offer_class = fields.Char(
         string='Offer Class',
         readonly=True,
-        compute='_compute_offer_class',
     )
     offer_selected = fields.Boolean(
         string='Selected',
@@ -174,24 +172,28 @@ class CrmLeadRevision(models.Model):
         "crm.lead.revision.prices",
         "revision_id",
         string="",
+        ondelete='cascade'
     )
 
     revision_direct_costs_ids = fields.One2many(
         "crm.lead.revision.direct.costs",
         "revision_id",
         string="",
+        ondelete='cascade'
     )
 
     revision_inverter_ids = fields.One2many(
         "crm.lead.revision.inverter",
         "revision_id",
         string="",
+        ondelete='cascade'
     )
 
     revision_battery_ids = fields.One2many(
         "crm.lead.revision.battery",
         "revision_id",
         string="",
+        ondelete='cascade'
     )
 
     total_revision_percentage = fields.Monetary(
@@ -248,6 +250,7 @@ class CrmLeadRevision(models.Model):
         "crm.lead.revision.inverter",
         "revision_id",
         string="",
+        ondelete='cascade'
     )
     offer_structure_manufacturer = fields.Char(
         string="Structure Manufacturer",
@@ -379,6 +382,7 @@ class CrmLeadRevision(models.Model):
     offer_class_id = fields.Many2one(
         'offer.class',
         string='Offer Class relation',
+        compute='_compute_offer_class',
     )
 
     @api.depends('offer_kwn')
@@ -389,9 +393,9 @@ class CrmLeadRevision(models.Model):
                 ('max_value', '>=', record.offer_kwn)
             ], limit=1)
             if offer_class:
-                record.offer_class = offer_class.name
+                record.offer_class_id = offer_class
             else:
-                record.offer_class = ""
+                record.offer_class_id = False
 
 
     @api.depends('lead_id.company_id')
