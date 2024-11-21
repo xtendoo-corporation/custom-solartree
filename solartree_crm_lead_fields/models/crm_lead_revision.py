@@ -541,6 +541,11 @@ class CrmLeadRevision(models.Model):
             print(f"Nombre de la revisión asignado: {defaults['name']}")
         else:
             print("LEAD ID no encontrado en el contexto")
+
+        sale_tax_id = self.env.company.account_sale_tax_id
+        if sale_tax_id:
+            defaults['tax_id'] = sale_tax_id.id
+
         price_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'fee_and_margins')])
         revision_prices = []
         for price_type in price_types:
