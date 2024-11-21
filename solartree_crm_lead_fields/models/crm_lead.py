@@ -108,6 +108,9 @@ class CrmLead(models.Model):
     solartree_date_visit = fields.Date(
         string="Date Visit",
     )
+    solartree_date_visit_tecnic = fields.Date(
+        string="Fecha informe Visita Técnica",
+    )
     solartree_date_deliverables = fields.Date(
         string="Date Deliverables",
     )

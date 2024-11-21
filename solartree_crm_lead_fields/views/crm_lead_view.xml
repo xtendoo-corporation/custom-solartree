@@ -42,6 +42,7 @@
                         <field name="solartree_date_proposed_signature"/>
                         <field name="solartree_date_kom"/>
                         <field name="solartree_date_visit"/>
+                        <field name="solartree_date_visit_tecnic"/>
                         <field name="solartree_date_deliverables"/>
                         <field name="solartree_date_sign_contract"/>
                         <field name="solartree_offer_ht"/>
