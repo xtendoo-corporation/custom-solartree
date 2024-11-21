@@ -208,7 +208,7 @@
 
         <record id="mail_template_data_crm_lead_revision_email_test" model="mail.template">
             <field name="name">Asignación de oferta a técnico de OT</field>
-            <field name="model_id" ref="model_crm_lead_revision"/>
+            <field name="model_id" ref="solartree_crm_lead_fields.model_crm_lead_revision"/>
             <field name="subject">Oferta {{object.lead_id.name}} en ESTUDIO</field>
 <!--            comprobar destinatario-->
             <field name="email_to">{{object.lead_id.assigned_revision_tecnical_email}}, {{object.lead_id.user_id_email}}, {{object.lead_id.business_director_email}}</field>
