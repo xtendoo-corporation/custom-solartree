@@ -35,29 +35,31 @@ class CrmLead(models.Model):
             new_stage = self.env['crm.stage'].browse(vals['stage_id'])
             # Obtiene el usuario actual
             current_user = self.env.user
+
+            #prohibir el salto de mas de una etapa
+            if self.stage_id.sequence + 1 < new_stage.sequence or self.stage_id.sequence - 1 > new_stage.sequence:
+                raise AccessError(_("No puedes saltar más de una etapa."))
+
             # Verifica si el usuario pertenece al grupo específico
-            print("*" * 50)
             is_business_director = current_user.has_group(
                 'solartree_crm_lead_automatization.group_crm_business_director')
-            # print('is_business_director', is_business_director)
+            print('is_business_director', is_business_director)
             is_business_user = current_user.has_group('solartree_crm_lead_automatization.group_crm_business_user')
-            # print('is_business_user', is_business_user)
+            print('is_business_user', is_business_user)
             is_technical_office_director = current_user.has_group(
                 'solartree_crm_lead_automatization.group_crm_technical_office_director')
-            # print('is_technical_office_director', is_technical_office_director)
+            print('is_technical_office_director', is_technical_office_director)
             is_technical_office_user = current_user.has_group(
                 'solartree_crm_lead_automatization.group_crm_technical_office_user')
-            # print('is_technical_office_user', is_technical_office_user)
+            print('is_technical_office_user', is_technical_office_user)
             actual_user_is_same_user_id = self.user_id.id == current_user.id
-            # print('actual_user_is_same_user_id', actual_user_is_same_user_id)
-            actual_user_is_same_solartree_intern_channel = self.solartree_intern_channel.id == current_user.id
+            print('actual_user_is_same_user_id', actual_user_is_same_user_id)
+            # actual_user_is_same_solartree_intern_channel = self.solartree_intern_channel.id == current_user.id
             # print('actual_user_is_same_solartree_intern_channel', actual_user_is_same_solartree_intern_channel)
             actual_user_is_same_offer_tot = self.selected_revision_id.offer_tot.id == current_user.id
-            # print('actual_user_is_same_offer_tot', actual_user_is_same_offer_tot)
+            print('actual_user_is_same_offer_tot', actual_user_is_same_offer_tot)
 
             for record in self:
-                print(f"compare_expenses_and_percentage: {record.compare_expenses_and_percentage()}")
-                print(f"compare_profit_and_percentage: {record.compare_profit_and_percentage()}")
                 # Solo pueden
                 # Director de desarrollo de negocio
                 # Usuarios de desarrollo de negocio
@@ -73,7 +75,7 @@ class CrmLead(models.Model):
                 # Solo pueden
                 # Director de oficina técnica
                 # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
-                if not actual_user_is_same_solartree_intern_channel and new_stage.name == "PTE DATOS" and not is_technical_office_director:
+                if not actual_user_is_same_offer_tot and new_stage.name == "PTE DATOS" and not is_technical_office_director:
                     raise AccessError(_("No tienes permiso para cambiar el estado a 'PTE DATOS'."))
 
                 # Solo puede

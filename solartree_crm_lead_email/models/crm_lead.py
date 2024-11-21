@@ -4,6 +4,7 @@ class CrmLead(models.Model):
     _inherit = "crm.lead"
 
     all_users_emails = fields.Char(string="All Users Emails", compute="_compute_all_users_emails")
+    solar_tree_director_email = fields.Char(string="Solar Tree Director Email", compute="_compute_email_solartree_director")
     #Grupos de desarrollo de negocio
     business_director_email = fields.Char(string="Business Director Email", compute="_compute_email_business_director")
     business_user_email = fields.Char(string="Business User Email", compute="_compute_email_business_user")
@@ -13,7 +14,7 @@ class CrmLead(models.Model):
     #Comercial de la oferta
     user_id_email = fields.Char(string="User Email", related="user_id.email", store=True)
     #Tecnico de la revisión seleccionada
-    assigned_revision_tecnical = fields.Char(string="Assigned Revision Tecnical", related="selected_revision_id.offer_tot.email", store=True)
+    assigned_revision_tecnical_email = fields.Char(string="Assigned Revision Tecnical", related="selected_revision_id.offer_tot.email", store=True)
     #condiciones
     users_closest_offer = fields.Char(string="Users Closest Offert", compute="_compute_users_emails_closest_offert")
     users_closest_offer_meeting = fields.Char(string="Users Closest Offert Meeting", compute="_compute_users_emails_closest_offert_meeting")
@@ -26,9 +27,6 @@ class CrmLead(models.Model):
             for group in record.selected_revision_id.offer_class_id.res_group_mail_ids:
                 users = self.env['res.users'].search([('groups_id', 'in', group.id)])
                 emails.update(user.email for user in users if user.email)
-                #pequeña instalacion o instalacion de autoconsumo
-            if record.selected_revision_id.max_value < 100:
-                emails.add(self.assigned_revision_tecnical)
             record.users_closest_offer = ','.join(emails)
 
     def _compute_users_emails_closest_offert_meeting(self):
@@ -45,33 +43,40 @@ class CrmLead(models.Model):
         for record in self:
             record.all_users_emails = ','.join(emails)
 
+    def _compute_email_solartree_director(self):
+        res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_solartree_director').id)], ['email'])
+        emails = set(r['email'] for r in res if r.get('email'))
+        for record in self:
+            record.solar_tree_director_email = ','.join(emails)
+
+
     # emails to group solartree_crm_lead_automatization.group_crm_business_director
     def _compute_email_business_director(self):
         res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_business_director').id)], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
-            record.email_to = ','.join(emails)
+            record.business_director_email = ','.join(emails)
 
     # emails to group solartree_crm_lead_automatization.group_crm_business_user
     def _compute_email_business_user(self):
         res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_business_user').id)], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
-            record.email_to = ','.join(emails)
+            record.business_user_email = ','.join(emails)
 
     #solartree_crm_lead_automatization.group_crm_technical_office_director
     def _compute_email_technical_office_director(self):
         res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_technical_office_director').id)], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
-            record.email_to = ','.join(emails)
+            record.technical_office_director_email = ','.join(emails)
 
     #solartree_crm_lead_automatization.group_crm_technical_office_user
     def _compute_email_technical_office_user(self):
         res = self.env['res.users'].search_read([('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_technical_office_user').id)], ['email'])
         emails = set(r['email'] for r in res if r.get('email'))
         for record in self:
-            record.email_to = ','.join(emails)
+            record.technical_office_user_email = ','.join(emails)
 
     def _compute_project_url(self):
         """Compute the dynamic URL for the project."""

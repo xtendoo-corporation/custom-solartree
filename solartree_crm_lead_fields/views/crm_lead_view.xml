@@ -25,30 +25,37 @@
                                groups="solartree_crm_lead_automatization.group_solartree_director"/>
                         <field name="solartree_code" required="0"/>
                         <field name="solartree_lead_identification" invisible="type != 'opportunity'"/>
+                        <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
+                        <field name="proyect_class" widget="selection"/>
                         <!--                        <field name="solartree_lead_type_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_collective"/>-->
                         <!--                        <field name="solartree_lead_storage"/>-->
                         <field name="solartree_num_proyect" invisible="type != 'opportunity'"/>
                     </group>
-                    <group string="Channels"><!--invisible="type != 'opportunity'"-->
+                    <group string="Channels">
                         <!--                        <field name="solartree_lead_scope" widget="selection"/>-->
                         <field name="solartree_lead_channel" widget="selection"/>
+                        <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
+                        <field name="solartree_lead_channel_fee"/>
                         <field name="solartree_intern_channel" options="{'no_create': True}"/>
-                        <!--                        <field name="solartree_lead_structure_type" widget="selection"/>-->
-                        <!--                        <field name="solartree_lead_structure_model" widget="selection"/>-->
+                        <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
+                        <field name="solartree_intern_channel_fee"/>
+                        <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
+                        <field name="solartree_lead_structure_type" widget="selection"/>
+                        <field name="solartree_lead_structure_model" widget="selection"/>
                     </group>
-                    <group string="Dates and Deliverables" invisible="type != 'opportunity'">
-                        <field name="solartree_date_request"/>
+                    <group string="Dates and Deliverables">
+                        <field name="solartree_date_request" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_required_delivery"/>
-                        <field name="solartree_date_proposed_signature"/>
-                        <field name="solartree_date_kom"/>
-                        <field name="solartree_date_visit"/>
-                        <field name="solartree_date_visit_tecnic"/>
-                        <field name="solartree_date_deliverables"/>
-                        <field name="solartree_date_sign_contract"/>
-                        <field name="solartree_offer_ht"/>
-                        <field name="design_notes" widget="text"/>
+                        <field name="solartree_date_proposed_signature" invisible="type != 'opportunity'"/>
+                        <field name="solartree_date_kom" invisible="type != 'opportunity'"/>
+                        <field name="solartree_date_visit" invisible="type != 'opportunity'"/>
+                        <field name="solartree_date_visit_tecnic" invisible="type != 'opportunity'"/>
+                        <field name="solartree_date_deliverables" invisible="type != 'opportunity'"/>
+                        <field name="solartree_date_sign_contract" invisible="type != 'opportunity'"/>
+                        <field name="solartree_offer_ht" invisible="type != 'opportunity'"/>
+                        <field name="design_notes" widget="text" invisible="type != 'opportunity'"/>
                     </group>
                     <group string="Power and Consumption" invisible="type != 'opportunity'">
                         <field name="customer_consumption_mwh"/>

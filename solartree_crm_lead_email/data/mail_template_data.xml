@@ -2,11 +2,11 @@
 <odoo>
     <data noupdate="0">
         <record id="mail_template_data_crm_lead_email_request" model="mail.template">
-            <field name="name">Petición de oferta</field>
+            <field name="name">Petición oferta a OT</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
-            <field name="subject">Petición de oferta {{object.name}} {{object.solartree_date_request}}</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Petición de oferta {{object.name}} {{object.solartree_date_request}}</field>
+            <field name="subject">Solicitud Oferta: {{object.name}}</field>
+            <field name="email_to">{{object.technical_office_director_email}}</field>
+            <field name="description">Petición oferta a OT</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Se remite una nueva solicitud:</p>
@@ -21,31 +21,31 @@
                         </li>
                         <li>
                             <strong>Canal externo:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_lead_channel.name or ''">Canal Externo</span>
                         </li>
                         <li>
                             <strong>Fee canal externo (%):</strong>
-                            <span></span>
+                            <span t-out="object.solartree_lead_channel_fee or ''">Fee Canal Externo</span>
                         </li>
                         <li>
                             <strong>Canal interno:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_intern_channel.name or ''">Canal Interno</span>
                         </li>
                         <li>
                             <strong>Fee canal interno (%):</strong>
-                            <span></span>
+                            <span t-out="object.solartree_intern_channel_fee or ''">Fee Canal Interno</span>
                         </li>
                         <li>
                             <strong>Localización:</strong>
-                            <span></span>
+                            <a t-att-href="object.map_url" target="_blank">Ver en el mapa</a>
                         </li>
                         <li>
                             <strong>Clase de proyecto:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_lead_structure_model.name or ''">Clase de Proyecto</span>
                         </li>
                         <li>
                             <strong>Ubicación instalación:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_lead_structure_type.name or ''">Ubicación Instalación</span>
                         </li>
                         <li>
                             <strong>Tipo de estudio:</strong>
@@ -65,7 +65,7 @@
                         </li>
                         <li>
                             <strong>Fecha de entrega requerida:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_date_required_delivery or ''">Fecha de Entrega Requerida</span>
                         </li>
                     </ul>
                 </div>
@@ -73,35 +73,12 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <record id="mail_template_data_crm_lead_email_create_lead" model="mail.template">
-            <field name="name">Asignación de oferta a técnico de OT</field>
-            <field name="model_id" ref="model_crm_lead"/>
-            <field name="subject">Asignación de oferta a técnico de OT</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Asignación de oferta a técnico de OT</field>
-            <field name="body_html" type="html">
-                <div style="margin: 0px; padding: 0px;">
-                    <p>
-                        La oportunidad
-                        <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
-                        ha entrado en la cola de trabajo. <span t-out="object.solartree_intern_channel.name or ''">Canal
-                        interno
-                    </span> va a ser quien se encargue de registrarlo
-                        en la base de datos y de estudiar la oferta.
-                    </p>
-                    <p>Comentarios particulares:</p>
-                    <p>Saludos.</p>
-                </div>
-            </field>
-            <field name="auto_delete" eval="True"/>
-        </record>
-
         <record id="mail_template_data_crm_lead_email_close_offer" model="mail.template">
-            <field name="name">Cierre de Oferta</field>
+            <field name="name">Mail de cierre</field>
             <field name="model_id" ref="model_crm_lead"/>
-            <field name="subject">Solartree - CRM - Política Cierre de Ofertas</field>
+            <field name="subject">Cierre de {{object.name}} {{object.selected_revision_id.name}}</field>
             <field name="email_to">{{object.users_closest_offer}}</field>
-            <field name="description">Notificación de cierre de oferta</field>
+            <field name="description">Mail de cierre</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Buenas,</p>
@@ -125,11 +102,13 @@
 
 
         <record id="mail_template_data_crm_lead_email_awarded_offer" model="mail.template">
-            <field name="name">Oferta Adjudicada</field>
+            <field name="name">Autorizacion de firma de contrato</field>
             <field name="model_id" ref="model_crm_lead"/>
-            <field name="subject">Oferta Adjudicada {{object.name}}</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Envia un email cuando se adjudica una oferta</field>
+            <field name="subject">Autorización de firma de contrato para {{object.name}}
+                {{object.selected_revision_id.name}}
+            </field>
+            <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}}, {{object.business_director_email}}</field>
+            <field name="description">Autorizacion de firma de contrato</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>
@@ -154,13 +133,39 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
+        <record id="mail_template_data_crm_lead_email_awarded" model="mail.template">
+            <field name="name">Comunicación de adjudicación</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="subject">Oferta Adjudicada {{object.name}}</field>
+             <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}}, {{object.business_director_email}}</field>
+            <field name="description">Comunicación de adjudicación</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>
+                        Por el presente comunicamos la <strong>adjudicación del Contrato</strong> del
+                        proyecto en el asunto de referencia:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Documentos:</strong>
+                            <a t-att-href="object.project_url">Ver proyecto</a>
+                        </li>
+                    </ul>
+                    <p>
+                        Cualquier duda, a tu disposición.
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
 
         <record id="mail_template_data_crm_lead_email_won" model="mail.template">
-            <field name="name">Comunicación de Oportunidad Ganada</field>
+            <field name="name">Firma de Contrato</field>
             <field name="model_id" ref="model_crm_lead"/>
-            <field name="subject">Firma de Contrato {{object.name}}</field>
+            <field name="subject">Firma de contrato para {{object.name}}</field>
             <field name="email_to">{{object.all_users_emails}}</field>
-            <field name="description">Envia un email cuando se gana una oportunidad</field>
+            <field name="description">Firma de Contrato</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Estimados,</p>
@@ -202,12 +207,13 @@
         </record>
 
         <record id="mail_template_data_crm_lead_revision_email_test" model="mail.template">
-            <field name="name">Envia un email desde revision</field>
+            <field name="name">Asignación de oferta a técnico de OT</field>
             <field name="model_id" ref="model_crm_lead_revision"/>
-            <field name="subject">Envia un email desde revision {{object.name}}</field>
-            <field name="email_to">{{object.all_users_emails}}</field>
-<!--            <field name="email_cc" groups="base.group_no_one"/>-->
-            <field name="description">Envia un email desde revision</field>
+            <field name="subject">Oferta {{object.lead_id.name}} en ESTUDIO</field>
+<!--            comprobar destinatario-->
+            <field name="email_to">{{object.lead_id.assigned_revision_tecnical_email}}, {{object.lead_id.user_id_email}}, {{object.lead_id.business_director_email}}</field>
+            <!--            <field name="email_cc" groups="base.group_no_one"/>-->
+            <field name="description">Asignación de oferta a técnico de OT</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p>Buenas,</p>

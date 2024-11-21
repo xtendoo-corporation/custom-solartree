@@ -9,6 +9,7 @@
     "depends": ["crm"],
     "data": [
         "data/res_group_data.xml",
+        "data/crm_stage_data.xml",
     ],
     "installable": True,
 }

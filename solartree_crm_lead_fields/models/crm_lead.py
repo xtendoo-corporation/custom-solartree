@@ -364,3 +364,27 @@ class CrmLead(models.Model):
                 if not record.solartree_lead_channel or not record.solartree_lead_identification:
                     raise ValidationError(
                         _("The fields 'Lead Channel', 'Lead Identification' must be filled when the type is 'opportunity'."))
+
+
+    #################CAMPOS PARA RECOGER EN EL EMAIL#################
+    solartree_lead_channel_fee = fields.Char(
+        string="Lead Channel Fee",
+    )
+    solartree_intern_channel_fee = fields.Char(
+        string="Intern Channel Fee",
+    )
+    proyect_class = fields.Many2one(
+        'offer.class',
+        string="Proyect Class",
+    )
+    map_url = fields.Char(string="Map URL", compute="_compute_map_url")
+
+    def _compute_map_url(self):
+        for record in self:
+            map_action = record.open_map()  # Obtén el diccionario de la acción
+            if map_action and 'url' in map_action:
+                record.map_url = map_action['url']  # Extrae solo la URL
+            else:
+                record.map_url = ''  # Si no hay URL, asigna una cadena vacía
+
+
