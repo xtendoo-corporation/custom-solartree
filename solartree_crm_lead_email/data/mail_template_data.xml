@@ -75,7 +75,7 @@
 
         <record id="mail_template_data_crm_lead_email_close_offer" model="mail.template">
             <field name="name">Mail de cierre</field>
-            <field name="model_id" ref="solartree_crm_lead_email.model_crm_lead"/>
+            <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Cierre de {{object.name}} {{object.selected_revision_id.name}}</field>
             <field name="email_to">{{object.users_closest_offer}}</field>
             <field name="description">Mail de cierre</field>
@@ -103,7 +103,7 @@
 
         <record id="mail_template_data_crm_lead_email_awarded_offer" model="mail.template">
             <field name="name">Autorizacion de firma de contrato</field>
-            <field name="model_id" ref="solartree_crm_lead_email.model_crm_lead"/>
+            <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Autorización de firma de contrato para {{object.name}}
                 {{object.selected_revision_id.name}}
             </field>
@@ -135,7 +135,7 @@
 
         <record id="mail_template_data_crm_lead_email_awarded" model="mail.template">
             <field name="name">Comunicación de adjudicación</field>
-            <field name="model_id" ref="solartree_crm_lead_email.model_crm_lead"/>
+            <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Oferta Adjudicada {{object.name}}</field>
              <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}}, {{object.business_director_email}}</field>
             <field name="description">Comunicación de adjudicación</field>
@@ -162,7 +162,7 @@
 
         <record id="mail_template_data_crm_lead_email_won" model="mail.template">
             <field name="name">Firma de Contrato</field>
-            <field name="model_id" ref="solartree_crm_lead_email.model_crm_lead"/>
+            <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Firma de contrato para {{object.name}}</field>
             <field name="email_to">{{object.all_users_emails}}</field>
             <field name="description">Firma de Contrato</field>
@@ -208,7 +208,7 @@
 
         <record id="mail_template_data_crm_lead_revision_email_test" model="mail.template">
             <field name="name">Asignación de oferta a técnico de OT</field>
-            <field name="model_id" ref="solartree_crm_lead_email.model_crm_lead_revision"/>
+            <field name="model_id" ref="model_crm_lead_revision"/>
             <field name="subject">Oferta {{object.lead_id.name}} en ESTUDIO</field>
 <!--            comprobar destinatario-->
             <field name="email_to">{{object.lead_id.assigned_revision_tecnical_email}}, {{object.lead_id.user_id_email}}, {{object.lead_id.business_director_email}}</field>
