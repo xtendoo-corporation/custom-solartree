@@ -91,7 +91,7 @@
                         <strong>revisión:</strong>
                         <span t-out="object.selected_revision_id.name or ''">Revisión</span>
                         de <span
-                        t-out="object.offer_kwp or ''">Oferta kWp
+                        t-out="object.selected_revision_id.offer_kwp or ''">Oferta kWp
                     </span> kWp.
                     </p>
                     <p>Saludos,</p>
