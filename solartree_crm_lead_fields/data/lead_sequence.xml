@@ -437,8 +437,8 @@
         <field name="name">PEQUEÑA INSTALACIÓN</field>
         <field name="min_value">0</field>
         <field name="max_value">10</field>
-        <field name="structure_expenses">7.2</field>
-        <field name="industrial_profit">37.8</field>
+        <field name="structure_expenses">00.072</field>
+        <field name="industrial_profit">00.378</field>
         <field name="res_group_mail_ids"
                eval="[(6, 0, [
                ref('solartree_crm_lead_automatization.group_solartree_director'),
@@ -450,8 +450,8 @@
         <field name="name">COMERCIAL</field>
         <field name="min_value">10</field>
         <field name="max_value">100</field>
-        <field name="structure_expenses">7.2</field>
-        <field name="industrial_profit">22.8</field>
+        <field name="structure_expenses">00.072</field>
+        <field name="industrial_profit">00.228</field>
         <field name="res_group_mail_ids"
                eval="[(6, 0, [
                ref('solartree_crm_lead_automatization.group_solartree_director'),
@@ -463,8 +463,8 @@
         <field name="name">INDUSTRIAL</field>
         <field name="min_value">100</field>
         <field name="max_value">1000</field>
-        <field name="structure_expenses">7.2</field>
-        <field name="industrial_profit">12.8</field>
+        <field name="structure_expenses">00.072</field>
+        <field name="industrial_profit">00.128</field>
         <field name="res_group_mail_ids"
                eval="[(6, 0, [
                ref('solartree_crm_lead_automatization.group_solartree_director'),
@@ -481,8 +481,8 @@
     <field name="name">Mayor 1 MW</field>
     <field name="min_value">1000</field>
     <field name="max_value">9999999</field>
-    <field name="structure_expenses">7.2</field>
-    <field name="industrial_profit">12.8</field>
+    <field name="structure_expenses">00.072</field>
+    <field name="industrial_profit">00.128</field>
     <field name="res_group_mail_ids"
            eval="[(6, 0, [
                ref('solartree_crm_lead_automatization.group_solartree_director'),

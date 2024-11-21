@@ -21,6 +21,8 @@
             <xpath expr="//notebook" position="before">
                 <group>
                     <group string="Solar Tree Information">
+                        <field name="approval_margin"
+                               groups="solartree_crm_lead_automatization.group_solartree_director"/>
                         <field name="solartree_code" required="0"/>
                         <field name="solartree_lead_identification" invisible="type != 'opportunity'"/>
                         <!--                        <field name="solartree_lead_type_id" widget="selection"/>-->

@@ -5,6 +5,9 @@ from odoo.exceptions import ValidationError, UserError
 class CrmLead(models.Model):
     _inherit = ["crm.lead"]
 
+    approval_margin = fields.Boolean(
+        string="Approval Margin",
+    )
     solartree_code = fields.Char(
         string="Lead Code",
         required=True,
