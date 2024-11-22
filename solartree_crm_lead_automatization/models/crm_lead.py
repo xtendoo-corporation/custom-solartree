@@ -29,95 +29,117 @@ class CrmLead(models.Model):
                     return False
         return True
 
+    def _obtain_allowed_users(self, stage):
+        """Devuelve los IDs de los usuarios permitidos para la etapa proporcionada."""
+        allowed_users = set()
+        current_user = self.env.user
+        error_messages = []  # Lista para almacenar los mensajes de error
+
+        # Obtener usuarios permitidos por grupos
+        for group in stage.allowed_groups:
+            users = self.env['res.users'].search([('groups_id', 'in', group.id)])
+            allowed_users.update(users.ids)  # Agregar IDs de usuarios al conjunto
+            if current_user.id not in users.ids:
+                error_messages.append(_("El usuario actual no tiene privilegios del grupo: '%s'" % group.name))
+
+        # Comprobar si el usuario actual cumple con user_offer_tot_required
+        if stage.user_offer_tot_required:
+            for record in self:
+                if record.selected_revision_id.offer_tot.id == current_user.id:
+                    allowed_users.add(current_user.id)
+            if current_user.id not in allowed_users:
+                error_messages.append(
+                    _("El usuario actual no es 'Tecnico OT' de la revisión."))
+
+        # Comprobar si el usuario actual cumple con user_id_required
+        if stage.user_id_required:
+            for record in self:
+                if record.user_id.id == current_user.id:
+                    allowed_users.add(current_user.id)
+            if current_user.id not in allowed_users:
+                error_messages.append(_("El usuario actual no es comercial de esta oferta."))
+
+        return allowed_users, error_messages
+
     def write(self, vals):
         if 'stage_id' in vals:
             # Obtiene la nueva etapa
             new_stage = self.env['crm.stage'].browse(vals['stage_id'])
-            # Obtiene el usuario actual
-            current_user = self.env.user
 
-            #prohibir el salto de mas de una etapa
-            if self.stage_id.sequence + 1 < new_stage.sequence or self.stage_id.sequence - 1 > new_stage.sequence:
-                raise AccessError(_("No puedes saltar más de una etapa."))
+            ###################EL CLIENTE INDICA QUE NO SE DEBE PROHIBIR EL SALTO DE MAS DE UNA ETAPA###################
+            # Prohibir el salto de mas de una etapa
+            # if self.stage_id.sequence + 1 < new_stage.sequence or self.stage_id.sequence - 1 > new_stage.sequence:
+            #     raise AccessError(_("No puedes saltar más de una etapa."))
+            ############################################################################################################
 
-            # Verifica si el usuario pertenece al grupo específico
-            is_business_director = current_user.has_group(
-                'solartree_crm_lead_automatization.group_crm_business_director')
-            print('is_business_director', is_business_director)
-            is_business_user = current_user.has_group('solartree_crm_lead_automatization.group_crm_business_user')
-            print('is_business_user', is_business_user)
-            is_technical_office_director = current_user.has_group(
-                'solartree_crm_lead_automatization.group_crm_technical_office_director')
-            print('is_technical_office_director', is_technical_office_director)
-            is_technical_office_user = current_user.has_group(
-                'solartree_crm_lead_automatization.group_crm_technical_office_user')
-            print('is_technical_office_user', is_technical_office_user)
-            actual_user_is_same_user_id = self.user_id.id == current_user.id
-            print('actual_user_is_same_user_id', actual_user_is_same_user_id)
-            # actual_user_is_same_solartree_intern_channel = self.solartree_intern_channel.id == current_user.id
-            # print('actual_user_is_same_solartree_intern_channel', actual_user_is_same_solartree_intern_channel)
-            actual_user_is_same_offer_tot = self.selected_revision_id.offer_tot.id == current_user.id
-            print('actual_user_is_same_offer_tot', actual_user_is_same_offer_tot)
+            # Obtener los usuarios permitidos y los mensajes de error
+            allowed_users, error_messages = self._obtain_allowed_users(new_stage)
+            if self.env.user.id not in allowed_users:
+                # Si el usuario actual no está permitido, lanzar un error con los detalles
+                error_msg = _(
+                    "No tienes permiso para cambiar a la etapa '%s'. Los siguientes errores ocurrieron: " % new_stage.name)
+                error_msg += "\n".join(error_messages)
+                raise AccessError(error_msg)
 
-            for record in self:
-                # Solo pueden
-                # Director de desarrollo de negocio
-                # Usuarios de desarrollo de negocio
-                if not is_business_director and new_stage.name == "Nuevo" and not is_business_user:
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'Nuevo'."))
-
-                # Solo pueden
-                # Director de desarrollo de negocio
-                # Usuarios asignado de desarrollo de negocio (Comercial/user_id)
-                if not is_business_director and new_stage.name == "SOLICITADA" and not actual_user_is_same_user_id:
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'SOLICITADA'."))
-
-                # Solo pueden
-                # Director de oficina técnica
-                # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
-                if not actual_user_is_same_offer_tot and new_stage.name == "PTE DATOS" and not is_technical_office_director:
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'PTE DATOS'."))
-
-                # Solo puede
-                # Director de oficina técnica
-                if not is_technical_office_director and new_stage.name == "ESTUDIO":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'ESTUDIO'."))
+            # Comprobar si la etapa requiere aprobación de margen
+            if self.stage_id.margin_approval_required:
+                if not self.approval_margin:
+                    if self.compare_expenses_and_percentage():
+                        raise AccessError(
+                            _("No tienes permiso para cambiar a la etapa '%s': Gastos de estructura no cumplen con los márgenes aprobados." % new_stage.name))
+                    if self.compare_profit_and_percentage():
+                        raise AccessError(
+                            _("No tienes permiso para cambiar a la etapa '%s': Beneficio Industrial no cumple con los márgenes aprobados." % new_stage.name))
 
                 # Solo puede
                 # Usuario asignado como Técnico OT en la Revision(Técnico OT/selected_revision_id.offer_tot)
-                if new_stage.name == "ENTREGADA":
+                # if new_stage.name == "ENTREGADA":
                     # Verifica si el usuario tiene el permiso adecuado
-                    if not actual_user_is_same_offer_tot:
-                        raise AccessError(
-                            _("No tienes permiso para cambiar el estado a 'ENTREGADA': Usuario no autorizado."))
-                    # Si el usuario tiene permiso, verificamos si approval_margin es False
-                    if not record.approval_margin:
-                        # Si approval_margin es False, las comparaciones deben cumplirse
-                        if record.compare_expenses_and_percentage():
-                            raise AccessError(
-                                _("No tienes permiso para cambiar el estado a 'ENTREGADA': Gastos de estructura no cumplen con los márgenes aprobados."))
-                        if record.compare_profit_and_percentage():
-                            raise AccessError(
-                                _("No tienes permiso para cambiar el estado a 'ENTREGADA': Beneficio Industrial no cumple con los márgenes aprobados."))
+                    # if not actual_user_is_same_offer_tot:
+                    #     raise AccessError(
+                    #         _("No tienes permiso para cambiar el estado a 'ENTREGADA': Usuario no autorizado."))
 
-                # Solo puede
-                # Usuario asignado de desarrollo de negocio (Comercial/user_id)
-                if not actual_user_is_same_user_id and new_stage.name == "PRESENTADA":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'PRESENTADA'."))
+                # # Solo pueden
+                # # Director de desarrollo de negocio
+                # # Usuarios de desarrollo de negocio
+                # if not is_business_director and new_stage.name == "Nuevo" and not is_business_user:
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'Nuevo'."))
+                #
+                # # Solo pueden
+                # # Director de desarrollo de negocio
+                # # Usuarios asignado de desarrollo de negocio (Comercial/user_id)
+                # if not is_business_director and new_stage.name == "SOLICITADA" and not actual_user_is_same_user_id:
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'SOLICITADA'."))
+                #
+                # # Solo pueden
+                # # Director de oficina técnica
+                # # Usuario asignado como canal interno (Canal interno/solartree_intern_channel)
+                # if not actual_user_is_same_offer_tot and new_stage.name == "PTE DATOS" and not is_technical_office_director:
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'PTE DATOS'."))
+                #
+                # # Solo puede
+                # # Director de oficina técnica
+                # if not is_technical_office_director and new_stage.name == "ESTUDIO":
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'ESTUDIO'."))
 
-                # Solo puede
-                # Director de desarrollo de negocio
-                if not is_business_director and new_stage.name == "PERDIDA":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'PERDIDA'."))
-
-                # Solo puede
-                # Director de desarrollo de negocio
-                if not is_business_director and new_stage.name == "ADJUDICADA":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'ADJUDICADA'."))
-
-                # Solo puede
-                # Director de desarrollo de negocio
-                if not is_business_director and new_stage.name == "CONTRATADA":
-                    raise AccessError(_("No tienes permiso para cambiar el estado a 'CONTRATADA'."))
+                # # Solo puede
+                # # Usuario asignado de desarrollo de negocio (Comercial/user_id)
+                # if not actual_user_is_same_user_id and new_stage.name == "PRESENTADA":
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'PRESENTADA'."))
+                #
+                # # Solo puede
+                # # Director de desarrollo de negocio
+                # if not is_business_director and new_stage.name == "PERDIDA":
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'PERDIDA'."))
+                #
+                # # Solo puede
+                # # Director de desarrollo de negocio
+                # if not is_business_director and new_stage.name == "ADJUDICADA":
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'ADJUDICADA'."))
+                #
+                # # Solo puede
+                # # Director de desarrollo de negocio
+                # if not is_business_director and new_stage.name == "CONTRATADA":
+                #     raise AccessError(_("No tienes permiso para cambiar el estado a 'CONTRATADA'."))
 
         return super(CrmLead, self).write(vals)

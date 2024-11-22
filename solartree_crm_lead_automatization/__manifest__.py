@@ -10,6 +10,7 @@
     "data": [
         "data/res_group_data.xml",
         "data/crm_stage_data.xml",
+        'views/crm_stage_views.xml',
     ],
     "installable": True,
 }

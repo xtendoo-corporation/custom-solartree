@@ -5,6 +5,10 @@
         <record model="crm.stage" id="solartree_stage_lead1">
             <field name="name">SOLICITADA</field>
             <field name="sequence">1</field>
+            <field name="allowed_groups" eval="[(6, 0, [ref('base.group_sale_salesman')])]"/>
+<!--            <field name="user_offer_tot_required">True</field>-->
+<!--            <field name="user_id_required">True</field>-->
+<!--            <field name="margin_approval_required">True</field>-->
         </record>
         <!--PTE DATOS-->
         <record model="crm.stage" id="solartree_stage_lead2">
