@@ -10,12 +10,12 @@
                 <field name="partner_address_city" invisible="not partner_address_id"/>
                 <field name="partner_address_state_id" invisible="not partner_address_id"/>
                 <button
-                    class="btn btn-primary"
-                    name="open_map"
-                    type="object"
-                    string="Enlace a la Geolocalización"
-                    icon="fa-map-marker"
-                    invisible="not partner_address_id"/>
+                        class="btn btn-primary"
+                        name="open_map"
+                        type="object"
+                        string="Enlace a la Geolocalización"
+                        icon="fa-map-marker"
+                        invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//field[@name='partner_name']" position="before">
@@ -24,12 +24,12 @@
                 <field name="partner_address_city" invisible="not partner_address_id"/>
                 <field name="partner_address_state_id" invisible="not partner_address_id"/>
                 <button
-                    class="btn btn-primary"
-                    name="open_map"
-                    type="object"
-                    string="Enlace a la Geolocalización"
-                    icon="fa-map-marker"
-                    invisible="not partner_address_id"/>
+                        class="btn btn-primary"
+                        name="open_map"
+                        type="object"
+                        string="Enlace a la Geolocalización"
+                        icon="fa-map-marker"
+                        invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//notebook" position="before">
@@ -39,7 +39,7 @@
                                groups="solartree_crm_lead_automatization.group_solartree_director"/>
                         <field name="solartree_code" required="0"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="proyect_class" widget="selection" invisible="type != 'opportunity'"/>
+                        <field name="proyect_class" widget="selection" invisible="type == 'opportunity'"/>
                         <!--                        <field name="solartree_lead_type_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_collective"/>-->
@@ -50,13 +50,16 @@
                         <!--                        <field name="solartree_lead_scope" widget="selection"/>-->
                         <field name="solartree_lead_channel" widget="selection"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="solartree_lead_channel_fee" invisible="type != 'opportunity'"/>
+                        <field name="solartree_lead_channel_fee" invisible="type == 'opportunity'"/>
                         <field name="solartree_intern_channel" options="{'no_create': True}"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="solartree_intern_channel_fee" invisible="type != 'opportunity'"/>
+                        <field name="solartree_intern_channel_fee" invisible="type == 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="solartree_lead_structure_type" widget="selection" invisible="type != 'opportunity'"/>
-                        <field name="solartree_lead_structure_model" widget="selection" invisible="type != 'opportunity'"/>
+                        <field name="solartree_lead_structure_type" widget="selection"
+                               invisible="type == 'opportunity'"/>
+                        <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
+                        <field name="solartree_lead_structure_model" widget="selection"
+                               invisible="type == 'opportunity'"/>
                     </group>
                     <group string="Dates and Deliverables">
                         <field name="solartree_date_request" invisible="type != 'opportunity'"/>
@@ -108,7 +111,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                    name="filter_domain"
+                        name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -122,11 +125,19 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                    name="filter_domain"
+                        name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
         </field>
+    </record>
+
+    <record id="action_open_crm_lead_view_form_inherit" model="ir.actions.act_window">
+        <field name="name">Open CRM Lead Form Inherit</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="crm_lead_view_form_inherit"/>
+        <field name="target">current</field>
     </record>
 
     <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
@@ -134,6 +145,9 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="on_create">solartree_crm_lead_fields.action_open_crm_lead_view_form_inherit</attribute>
+            </xpath>
             <xpath expr="//div[@class='oe_kanban_details']" position="after">
                 <hr/>
                 <div>
@@ -163,7 +177,7 @@
             <xpath expr="//div[field[@name='lead_properties']]" position="replace">
             </xpath>
             <xpath expr="//div[@class='o_kanban_record_subtitle']" position="attributes">
-                 <attribute name="invisible">1</attribute>
+                <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//div[@class='o_kanban_record_bottom']/div[@class='oe_kanban_bottom_left']" position="replace">
                 <div class="oe_kanban_bottom_left"/>

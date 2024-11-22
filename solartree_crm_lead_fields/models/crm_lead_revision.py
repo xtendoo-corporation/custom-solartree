@@ -191,7 +191,6 @@ class CrmLeadRevision(models.Model):
             else:
                 record.offer_ratio_self_consumation_vs_production = 0
 
-
     offer_ratio_surplus_vs_production = fields.Float(
         string='Ratio Excedentes vs Producción (%)',
         compute='_compute_offer_ratio_surplus_vs_production',
@@ -365,13 +364,19 @@ class CrmLeadRevision(models.Model):
         readonly=False,
     )
 
-    @api.depends('revision_direct_costs_ids.price_cost')
+    @api.depends('revision_direct_costs_ids.price_cost', 'revision_price_ids.price')
     def _compute_total_direct_costs(self):
         for record in self:
-            record.installation_cost_price = sum(
+            direct_costs_total = sum(
                 cost.price_cost for cost in record.revision_direct_costs_ids
                 if cost.type_direct_costs_id
             )
+            fee_prices_total = sum(
+                price.price for price in record.revision_price_ids
+                if price.type_price_id.behavior == 'fee_and_margins' and price.type_price_id.name in ['Fee Externo',
+                                                                                                      'Fee Interno']
+            )
+            record.installation_cost_price = direct_costs_total + fee_prices_total
 
     installation_cost_price_wp = fields.Float(
         string="Installation Cost €/Wp",
@@ -457,7 +462,7 @@ class CrmLeadRevision(models.Model):
                 cost.price_sale for cost in record.revision_direct_costs_ids if
                 cost.type_direct_costs_id in include_types)
 
-    #EN PROCESO COMIENZO CAMPOS Y METODOS GRUPO SIMULACION ENERGIA
+    # EN PROCESO COMIENZO CAMPOS Y METODOS GRUPO SIMULACION ENERGIA
     offer_autoconsumo = fields.Integer(
         string="Autoconsumo",
     )
@@ -518,7 +523,6 @@ class CrmLeadRevision(models.Model):
                 record.offer_class_id = offer_class
             else:
                 record.offer_class_id = False
-
 
     @api.depends('lead_id.company_id')
     def _compute_company_currency(self):

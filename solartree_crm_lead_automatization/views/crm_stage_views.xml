@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="crm.crm_lead_stage_search"/>
         <field name="arch" type="xml">
             <field name="team_id" position="after">
-                <separator string="Requirements to change stage"/>
+                <separator string="Requerimientos para cambiar de etapa"/>
                 <field name="allowed_groups" widget="many2many_tags"/>
                 <field name="user_offer_tot_required"/>
                 <field name="user_id_required"/>
@@ -37,7 +37,7 @@
         <field name="inherit_id" ref="crm.crm_stage_form"/>
         <field name="arch" type="xml">
             <field name="team_id" position="after">
-                <separator string="Requirements to change stage"/>
+                <separator string="Requerimientos para cambiar de etapa"/>
                 <field name="allowed_groups" widget="many2many_tags"/>
                 <field name="user_offer_tot_required"/>
                 <field name="user_id_required"/>

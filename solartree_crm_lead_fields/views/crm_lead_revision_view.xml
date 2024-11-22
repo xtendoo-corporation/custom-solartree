@@ -107,7 +107,6 @@
                             </field>
                         </group>
                         <group name="direct_costs" string="Direct Costs">
-                             <button name="action_view_direct_costs_graph" type="object" string="View Direct Costs Graph" class="btn-primary"/>
                             <field name="revision_direct_costs_ids" string="">
                                 <tree editable="bottom">
                                     <field name="type_direct_costs_id" options="{'no_create': True,}" string=""/>

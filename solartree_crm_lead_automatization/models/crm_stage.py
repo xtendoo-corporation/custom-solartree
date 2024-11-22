@@ -5,21 +5,21 @@ class Stage(models.Model):
 
     allowed_groups = fields.Many2many(
         'res.groups',
-        string='Allowed Groups',
+        string='Grupos permitidos',
         domain=lambda self: [('category_id', '=', self.env.ref('solartree_crm_lead_automatization.module_category_solartree').id)]
     )
 
     user_offer_tot_required = fields.Boolean(
-        string='User tot required',
+        string='Usuario OT requerido',
         default=False
-    )#crm.lead.revision
+    )
 
     user_id_required = fields.Boolean(
-        string='User required',
+        string='Comercial requerido',
         default=False
-    )#crm.lead
+    )
 
     margin_approval_required = fields.Boolean(
-        string='Margin approval required',
+        string='Autorización de margen requerida',
         default=False
-    )#crm.lead
+    )

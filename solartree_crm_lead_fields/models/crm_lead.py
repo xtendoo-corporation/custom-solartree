@@ -5,9 +5,7 @@ from odoo.exceptions import ValidationError, UserError
 class CrmLead(models.Model):
     _inherit = ["crm.lead"]
 
-    approval_margin = fields.Boolean(
-        string="Approval Margin",
-    )
+
     solartree_code = fields.Char(
         string="Lead Code",
         required=True,
@@ -372,16 +370,20 @@ class CrmLead(models.Model):
                 lead.revision_ids.unlink()
         return super(CrmLead, self).unlink()
 
+    #################CAMPOS DE AUTOMATIZACIÓN#################
+    approval_margin = fields.Boolean(
+        string="Aprobación de Bajada de Margen",
+    )
     #################CAMPOS PARA RECOGER EN EL EMAIL#################
     solartree_lead_channel_fee = fields.Char(
-        string="Lead Channel Fee",
+        string="Fee Externo (%)",
     )
     solartree_intern_channel_fee = fields.Char(
-        string="Intern Channel Fee",
+        string="Fee Interno (%)",
     )
     proyect_class = fields.Many2one(
         'offer.class',
-        string="Proyect Class",
+        string="Clase de Proyecto",
     )
     map_url = fields.Char(string="Map URL", compute="_compute_map_url")
 
