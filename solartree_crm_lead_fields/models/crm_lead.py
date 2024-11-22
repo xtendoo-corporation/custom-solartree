@@ -73,9 +73,9 @@ class CrmLead(models.Model):
     revision_count = fields.Integer(
         compute='_compute_revision_count'
     )
-    solartree_lead_identification = fields.Char(
-        string="Lead Identification",
-    )
+    # solartree_lead_identification = fields.Char(
+    #     string="Lead Identification",
+    # )
     solartree_date_request = fields.Date(
         string="Date Request",
         default=fields.Date.context_today,
@@ -357,11 +357,11 @@ class CrmLead(models.Model):
             "target": "new",
         }
 
-    @api.constrains('type', 'solartree_lead_channel', 'solartree_lead_identification')
+    @api.constrains('type', 'solartree_lead_channel', 'name')
     def _check_required_fields_for_opportunity(self):
         for record in self:
             if record.type == 'opportunity':
-                if not record.solartree_lead_channel or not record.solartree_lead_identification:
+                if not record.solartree_lead_channel or not record.name:
                     raise ValidationError(
                         _("The fields 'Lead Channel', 'Lead Identification' must be filled when the type is 'opportunity'."))
 

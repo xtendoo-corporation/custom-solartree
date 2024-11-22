@@ -17,7 +17,7 @@
                         </li>
                         <li>
                             <strong>Identificación Oferta:</strong>
-                            <span t-out="object.solartree_lead_identification or ''">ID de la Oferta</span>
+                            <span t-out="object.name or ''">ID de la Oferta</span>
                         </li>
                         <li>
                             <strong>Canal externo:</strong>
@@ -87,7 +87,7 @@
                         <strong>Código de Oferta:</strong>, <span t-out="object.solartree_code or ''">Código de
                         Oferta</span>,
                         <strong>Identificación Oferta:</strong>
-                        <span t-out="object.solartree_lead_identification or ''">Identificación Oferta</span>,
+                        <span t-out="object.name or ''">Identificación Oferta</span>,
                         <strong>revisión:</strong>
                         <span t-out="object.selected_revision_id.name or ''">Revisión</span>
                         de <span
@@ -173,7 +173,7 @@
                         Tengo el placer de comunicaros que el
                         <span t-out="object.solartree_date_sign_contract or ''">Fecha de firma de contrato</span>
                         se produjo la firma del contrato de ejecución del proyecto
-                        <span t-out="object.solartree_lead_identification or ''">Identificación Oferta</span>.
+                        <span t-out="object.name or ''">Identificación Oferta</span>.
                     </p>
                     <ul>
                         <li>
@@ -219,7 +219,7 @@
                     <p>Buenas,</p>
                     <p>
                         La oportunidad
-                        <span t-out="object.lead_id.solartree_lead_identification or ''">ID de la Oferta</span>
+                        <span t-out="object.lead_id.name or ''">ID de la Oferta</span>
                         ha entrado en la cola de trabajo. <span t-out="object.offer_tot.name or ''">Tecnico de OT
                     </span> va a ser quien se encargue de registrarlo
                         en la base de datos y de estudiar la oferta.

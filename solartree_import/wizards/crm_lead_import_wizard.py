@@ -50,7 +50,6 @@ class ImportCrmLead(models.TransientModel):
             'name': row_values[header_indexes['Codigo_Oferta']] + ' - ' + row_values[header_indexes['Identificacion']],
             'type': 'opportunity',
             'solartree_code': row_values[header_indexes['Codigo_Oferta']],
-            'solartree_lead_identification': row_values[header_indexes['Identificacion']],
             'solartree_date_request': self.get_date_formatted(row_values[header_indexes['Fecha_Solicitud_Oferta']],
                                                               book),
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
