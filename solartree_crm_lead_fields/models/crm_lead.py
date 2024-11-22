@@ -365,6 +365,12 @@ class CrmLead(models.Model):
                     raise ValidationError(
                         _("The fields 'Lead Channel', 'Lead Identification' must be filled when the type is 'opportunity'."))
 
+    def unlink(self):
+        for lead in self:
+            # Delete related revisions
+            if lead.revision_ids:
+                lead.revision_ids.unlink()
+        return super(CrmLead, self).unlink()
 
     #################CAMPOS PARA RECOGER EN EL EMAIL#################
     solartree_lead_channel_fee = fields.Char(
