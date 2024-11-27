@@ -496,4 +496,31 @@
                ref('solartree_crm_lead_automatization.group_crm_business_director')
                ])]"/>
     </record>
+
+
+    <!-- CRM LEAD REVISION ENERGY SIMULATION -->
+     <record id="crm_lead_revision_global_type_29" model="crm.lead.revision.global.type">
+        <field name="name">Producción</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
+    <record id="crm_lead_revision_global_type_30" model="crm.lead.revision.global.type">
+        <field name="name">Autoconsumo (Prod.)</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
+    <record id="crm_lead_revision_global_type_31" model="crm.lead.revision.global.type">
+        <field name="name">Excedentes (Prod.)</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
+    <record id="crm_lead_revision_global_type_32" model="crm.lead.revision.global.type">
+        <field name="name">Demanda</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
+    <record id="crm_lead_revision_global_type_33" model="crm.lead.revision.global.type">
+        <field name="name">Autoconsumo (Dem.)</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
+    <record id="crm_lead_revision_global_type_34" model="crm.lead.revision.global.type">
+        <field name="name">Red (Dem.)</field>
+        <field name="behavior">energy_simulation</field>
+    </record>
 </odoo>

@@ -16,6 +16,7 @@ class CrmLeadRevisionPrices(models.Model):
             ('direct_costs', 'Direct Costs'),
             ('inverter', 'Inverter'),
             ('battery', 'Battery'),
+            ('energy_simulation', 'Energy Simulation'),
         ],
         string="Behavior",
         required=True

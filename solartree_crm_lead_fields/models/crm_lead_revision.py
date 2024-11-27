@@ -295,6 +295,13 @@ class CrmLeadRevision(models.Model):
         ondelete='cascade'
     )
 
+    revision_energy_simulation_ids = fields.One2many(
+        "crm.lead.revision.energy.simulation",
+        "revision_id",
+        string="",
+        ondelete='cascade'
+    )
+
     total_revision_percentage = fields.Monetary(
         string="Total Revision Price",
         currency_field="company_currency",
@@ -598,6 +605,17 @@ class CrmLeadRevision(models.Model):
             }))
 
         defaults['revision_battery_ids'] = revision_battery
+
+        energy_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'energy_simulation')])
+        revision_energy_simulation = []
+        for energy_type in energy_types:
+            revision_energy_simulation.append((0, 0, {
+                'type_energy_simulation_id': energy_type.id,
+                'total': 0,
+                'percentage': 0.0,
+            }))
+
+        defaults['revision_energy_simulation_ids'] = revision_energy_simulation
 
         return defaults
 

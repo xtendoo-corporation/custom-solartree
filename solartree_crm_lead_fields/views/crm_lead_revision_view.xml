@@ -209,6 +209,16 @@
                                 </tbody>
                             </table>
                         </group>
+                        <group name="energy" string="Energy Simulation">
+                            <field name="revision_energy_simulation_ids" string="">
+                                <tree editable="bottom">
+                                    <field name="type_energy_simulation_id" options="{'no_create': True,}" string=""/>
+                                    <field name="total" readonly="0"/>
+                                    <field name="total_calculation" readonly="0"/>
+                                    <field name="percentage" readonly="0" widget="percentage"/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
@@ -257,7 +267,7 @@
         </field>
     </record>
 
-      <record id="action_crm_lead_revision" model="ir.actions.act_window">
+    <record id="action_crm_lead_revision" model="ir.actions.act_window">
         <field name="name">Revisions</field>
         <field name="res_model">crm.lead.revision</field>
         <field name="view_mode">tree,form</field>
