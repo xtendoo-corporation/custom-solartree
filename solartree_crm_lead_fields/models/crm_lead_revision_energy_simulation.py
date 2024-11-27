@@ -112,11 +112,11 @@ class CrmLeadRevisionEnergySimulation(models.Model):
                         record.percentage = 0
                 elif record.type_energy_simulation_id.name == "Excedentes (Prod.)":
                     produccion = self._get_produccion(record.revision_id.revision_energy_simulation_ids)
-                    autoconsumo = self._get_autoconsumo_prod(record.revision_id.revision_energy_simulation_ids)
-                    print(f"Producción: {produccion}, Autoconsumo (Prod.): {autoconsumo}")
+                    exced = self._get_exced_prod(record.revision_id.revision_energy_simulation_ids)
+                    print(f"Producción: {produccion}, Excedentes: {exced}")
                     if produccion:
-                        record.percentage = 100 / (produccion - autoconsumo)
-                        print(f"Porcentaje: {record.percentage}")
+                        record.percentage = exced / produccion
+                        print(f"Porcentaje de excedentes: {record.percentage}")
                     else:
                         record.percentage = 0
                 elif record.type_energy_simulation_id.name == "Autoconsumo (Dem.)":
@@ -130,7 +130,9 @@ class CrmLeadRevisionEnergySimulation(models.Model):
                     if record.revision_id.lead_id and record.revision_id.lead_id.customer_consumption_mwh:
                         demanda = self._get_demanda(record.revision_id.revision_energy_simulation_ids)
                         red = self._get_red_dem(record.revision_id.revision_energy_simulation_ids)
+                        print(f"Demanda: {demanda}, Red: {red}")
                         record.percentage = red / demanda
+                        print(f"Porcentaje de red: {record.percentage}")
                     else:
                         record.percentage = 0
                 else:
@@ -147,7 +149,7 @@ class CrmLeadRevisionEnergySimulation(models.Model):
 
     def _get_exced_prod(self, revision_energy_simulation_ids):
         for sim in revision_energy_simulation_ids:
-            if sim.type_energy_simulation_id.name == "Excendentes (Prod.)":
+            if sim.type_energy_simulation_id.name == "Excedentes (Prod.)":
                 return sim.total_calculation
         return 0
 

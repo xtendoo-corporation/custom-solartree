@@ -15,12 +15,44 @@
         </field>
     </record>
 
+    <record id="view_crm_lead_revision_graph" model="ir.ui.view">
+        <field name="name">crm.lead.revision.graph</field>
+        <field name="model">crm.lead.revision</field>
+        <field name="arch" type="xml">
+            <graph string="Revisions Graph">
+                <field name="revision_inverter_ids"/>
+                <field name="revision_battery_ids"/>
+                <field name="revision_price_ids"/>
+                <field name="revision_direct_costs_ids"/>
+                <field name="revision_energy_simulation_ids"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="action_crm_lead_revision_graph" model="ir.actions.act_window">
+        <field name="name">Revisions Graph</field>
+        <field name="res_model">crm.lead.revision</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_crm_lead_revision_graph"/>
+    </record>
+
     <record id="view_crm_lead_revision_form" model="ir.ui.view">
         <field name="name">crm.lead.revision.form</field>
         <field name="model">crm.lead.revision</field>
         <field name="arch" type="xml">
             <form string="Revision">
                 <sheet>
+                     <div class="oe_button_box" name="button_box">
+                    <button name="%(action_crm_lead_revision_graph)d" string="View Graph" type="action"
+                            class="oe_stat_button" icon="fa-bar-chart"/>
+                    <button name="%(action_crm_lead_revision_direct_costs_graph)d" string="Costes Directos"
+                            type="action"
+                            class="oe_stat_button" icon="fa-bar-chart"/>
+                    <button name="%(action_crm_lead_revision_energy_simulation_graph)d" string="Simulación Energía"
+                            type="action"
+                            class="oe_stat_button" icon="fa-bar-chart"/>
+                </div>
                     <group>
                         <field name="name" readonly="0"/>
                     </group>
@@ -129,93 +161,16 @@
                             <field name="installation_sale_price_with_tax" string="Venta de instalación con iva (€)"
                                    readonly="0"/>
                         </group>
-                        <group name="energy_simulation" string="Simulación Energía">
 
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th/>
-                                        <th>Total</th>
-                                        <th>%</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong>Producción</strong>
-                                        </td>
-                                        <td>
-                                            <field name="offer_kwh_year"/>
-                                        </td>
-                                        <td/>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Autoconsumo (Prod.)</span>
-                                        </td>
-                                        <td>
-                                            <field name="offer_self_consumption"/>
-                                        </td>
-                                        <td>
-                                            <field name="offer_ratio_self_consumation_vs_production" widget="percentage"
-                                                   digits="[16, 0]"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Excedentes (Prod.)</span>
-                                        </td>
-                                        <td>
-                                            <field name="offer_surplus"/>
-                                        </td>
-                                        <td>
-                                            <field name="offer_ratio_surplus_vs_production" widget="percentage"
-                                                   digits="[16, 0]"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <strong>Demanda</strong>
-                                        </td>
-                                        <td>
-                                            <field name="customer_consumption_mwh"/>
-                                        </td>
-                                        <td/>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Autoconsumo (Dem.)</span>
-                                        </td>
-                                        <td>
-                                            <field name="offer_self_consumption"/>
-                                        </td>
-                                        <td>
-                                            <field name="offer_ratio_self_consumation_vs_demand" widget="percentage"
-                                                   digits="[16, 0]"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Red (Dem.)</span>
-                                        </td>
-                                        <td>
-                                            <field name="offer_grid"/>
-                                        </td>
-                                        <td>
-                                            <field name="offer_ratio_grid_vs_demand" widget="percentage"
-                                                   digits="[16, 0]"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </group>
-                        <group name="energy" string="Energy Simulation">
+                        <group name="energy" string="Simulación Energía">
                             <field name="revision_energy_simulation_ids" string="">
                                 <tree editable="bottom">
                                     <field name="type_energy_simulation_id" options="{'no_create': True,}" string=""/>
-                                    <field name="total" readonly="0"/>
-                                    <field name="total_calculation" readonly="0"/>
-                                    <field name="percentage" readonly="0" widget="percentage"/>
+                                    <field name="total" readonly="0" invisible="not total"/>
+                                    <field name="total_calculation" string="Calculados" readonly="0"
+                                           invisible="not total_calculation"/>
+                                    <field name="percentage" readonly="1" widget="percentage"
+                                           invisible="not percentage"/>
                                 </tree>
                             </field>
                         </group>

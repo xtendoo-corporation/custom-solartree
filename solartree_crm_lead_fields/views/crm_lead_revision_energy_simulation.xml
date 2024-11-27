@@ -5,9 +5,9 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="revision_id" invisible="1"/>
-                <field name="total" readonly="0"/>
-                <field name="total_calculation" readonly="0"/>
-                <field name="percentage" readonly="0" widget="percentage"/>
+                <field name="total" readonly="0" invisible="not total"/>
+                <field name="total_calculation" readonly="0" invisible="not total_calculation"/>
+                <field name="percentage" readonly="1" widget="percentage" invisible="not percentage"/>
             </tree>
         </field>
     </record>
@@ -18,12 +18,34 @@
             <form string="Energy Simulation">
                 <group>
                     <field name="revision_id" invisible="1"/>
-                    <field name="total" readonly="0"/>
-                    <field name="total_calculation" readonly="0"/>
-                    <field name="percentage" readonly="0" widget="percentage"/>
+                    <field name="total" readonly="0" invisible="not total"/>
+                    <field name="total_calculation" readonly="0" invisible="not total_calculation"/>
+                    <field name="percentage" readonly="1" widget="percentage" invisible="not percentage"/>
                 </group>
             </form>
         </field>
+    </record>
+
+    <record id="view_crm_lead_revision_energy_simulation_graph" model="ir.ui.view">
+        <field name="name">crm.lead.revision.energy.simulation.graph</field>
+        <field name="model">crm.lead.revision.energy.simulation</field>
+        <field name="arch" type="xml">
+            <graph string="Energy Simulation">
+                <field name="revision_id"/>
+                <field name="total" type="measure"/>
+                <field name="total_calculation" type="measure"/>
+                <field name="percentage" type="measure"/>
+                <field name="type_energy_simulation_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_revision_energy_simulation_graph" model="ir.actions.act_window">
+        <field name="name">Energy Simulation Graph</field>
+        <field name="res_model">crm.lead.revision.energy.simulation</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_crm_lead_revision_energy_simulation_graph"/>
+        <field name="domain">[('revision_id', '=', active_id)]</field>
     </record>
 
     <record id="action_crm_lead_energy_simulation" model="ir.actions.act_window">
