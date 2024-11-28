@@ -44,7 +44,7 @@
             <form string="Revision">
                 <sheet>
                      <div class="oe_button_box" name="button_box">
-                    <button name="%(action_crm_lead_revision_graph)d" string="View Graph" type="action"
+                    <button name="%(action_crm_lead_revision_graph)d" string="Revisión" type="action"
                             class="oe_stat_button" icon="fa-bar-chart"/>
                     <button name="%(action_crm_lead_revision_direct_costs_graph)d" string="Costes Directos"
                             type="action"
@@ -225,7 +225,7 @@
     <record id="action_crm_lead_revision" model="ir.actions.act_window">
         <field name="name">Revisions</field>
         <field name="res_model">crm.lead.revision</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph</field>
     </record>
 
     <!-- Add the menu item under crm.crm_menu_sales -->

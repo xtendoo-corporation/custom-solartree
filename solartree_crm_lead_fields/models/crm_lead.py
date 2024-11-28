@@ -268,7 +268,7 @@ class CrmLead(models.Model):
             'name': 'Revisions',
             'type': 'ir.actions.act_window',
             'res_model': 'crm.lead.revision',
-            'view_mode': 'tree,form,pivot',
+            'view_mode': 'tree,form,pivot,graph',
             'domain': [('lead_id', '=', self.id)],
             'context': {'default_lead_id': self.id},
             'target': 'current',
