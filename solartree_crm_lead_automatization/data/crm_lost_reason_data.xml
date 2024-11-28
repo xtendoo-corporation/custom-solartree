@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason1">
+            <field name="name">Pérdida por Precio: el cliente adjudica a otra empresa por Precio</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason2">
+            <field name="name">Pérdida por Garantías: el cliente adjudica a otra empresa por condiciones de garantías</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason3">
+            <field name="name">Pérdida por condiciones contractuales: El Cliente adjudica a otra empresa por desalineamiento en el contrato</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason4">
+            <field name="name">Pérdida por Vinculación: el Cliente adjudica a otra empresa por tener vinculación con esta</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason5">
+            <field name="name">Pérdida por Bancabilidad: El Cliente adjudica a otra empresa por falta de bancabilidad en Solartree</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason6">
+            <field name="name">Pérdida por Financiación: El Cliente no es financiable</field>
+        </record>
+        <record model="crm.lost.reason" id="solartree_crm_lost_reason7">
+            <field name="name">Pérdida por falta de interés: El Cliente desaparece – falta de respuesta durante 2 meses</field>
+        </record>
+
+    </data>
+</odoo>

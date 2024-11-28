@@ -4,6 +4,11 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <!--atributos oculto team_id-->
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='partner_phone_update']" position="after">
                 <field name="partner_address_id" domain="[('parent_id', '=', partner_id)]"
                        options="{'no_create': True}"/>
@@ -37,9 +42,9 @@
                     <group string="Solar Tree Information">
                         <field name="approval_margin"
                                groups="solartree_crm_lead_automatization.group_solartree_director"/>
-                        <field name="solartree_code" required="0"/>
+                        <field name="solartree_code" required="0" invisible="type != 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="proyect_class" widget="selection" invisible="type == 'opportunity'"/>
+                        <field name="solartree_lead_type_id_email" invisible="type == 'opportunity'"/>
                         <!--                        <field name="solartree_lead_type_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_collective"/>-->
@@ -50,10 +55,10 @@
                         <!--                        <field name="solartree_lead_scope" widget="selection"/>-->
                         <field name="solartree_lead_channel" widget="selection"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="solartree_lead_channel_fee" invisible="type == 'opportunity'"/>
+                        <field name="solartree_lead_channel_fee_email" invisible="type == 'opportunity'"/>
                         <field name="solartree_intern_channel" options="{'no_create': True}"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
-                        <field name="solartree_intern_channel_fee" invisible="type == 'opportunity'"/>
+                        <field name="solartree_intern_channel_fee_email" invisible="type == 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_lead_structure_type" widget="selection"
                                invisible="type == 'opportunity'"/>

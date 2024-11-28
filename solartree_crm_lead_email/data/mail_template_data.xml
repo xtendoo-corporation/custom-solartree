@@ -25,7 +25,7 @@
                         </li>
                         <li>
                             <strong>Fee canal externo (%):</strong>
-                            <span t-out="object.solartree_lead_channel_fee or ''">Fee Canal Externo</span>
+                            <span t-out="object.solartree_lead_channel_fee_email or ''">Fee Canal Externo</span>
                         </li>
                         <li>
                             <strong>Canal interno:</strong>
@@ -33,11 +33,16 @@
                         </li>
                         <li>
                             <strong>Fee canal interno (%):</strong>
-                            <span t-out="object.solartree_intern_channel_fee or ''">Fee Canal Interno</span>
+                            <span t-out="object.solartree_intern_channel_fee_email or ''">Fee Canal Interno</span>
                         </li>
                         <li>
                             <strong>Localización:</strong>
-                            <a t-att-href="object.map_url" target="_blank">Ver en el mapa</a>
+                            <t t-if="object.map_url_email">
+                                <a t-att-href="object.map_url_email" target="_blank">Ver en el mapa</a>
+                            </t>
+                            <t t-else="">
+                                <span>No disponible</span>
+                            </t>
                         </li>
                         <li>
                             <strong>Clase de proyecto:</strong>
@@ -65,7 +70,8 @@
                         </li>
                         <li>
                             <strong>Fecha de entrega requerida:</strong>
-                            <span t-out="object.solartree_date_required_delivery or ''">Fecha de Entrega Requerida</span>
+                            <span t-out="object.solartree_date_required_delivery or ''">Fecha de Entrega Requerida
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -107,7 +113,9 @@
             <field name="subject">Autorización de firma de contrato para {{object.name}}
                 {{object.selected_revision_id.name}}
             </field>
-            <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}}, {{object.business_director_email}}</field>
+            <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}},
+                {{object.business_director_email}}
+            </field>
             <field name="description">Autorizacion de firma de contrato</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
@@ -137,7 +145,9 @@
             <field name="name">Comunicación de adjudicación</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="subject">Oferta Adjudicada {{object.name}}</field>
-             <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}}, {{object.business_director_email}}</field>
+            <field name="email_to">{{object.solar_tree_director_email}}, {{object.technical_office_director_email}},
+                {{object.business_director_email}}
+            </field>
             <field name="description">Comunicación de adjudicación</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
@@ -185,10 +195,16 @@
                             <span t-out="object.offer_kwp or ''">Oferta kWp</span>
                             kWp
                         </li>
-                        <!--                        <li>-->
-                        <!--                            <strong>Importe de Contrato:</strong>-->
-                        <!--                            <span t-out="object.offer_fv_price + object.offer_storage_price + object.offer_ve_price or ''">XXXX €</span>-->
-                        <!--                        </li>-->
+                        <li>
+                            <strong>Potencia Nominal:</strong>
+                            <span t-out="object.selected_revision_id.offer_kwn or ''">Oferta kWn</span>
+                            kWn
+                        </li>
+                        <li>
+                            <strong>Importe de venta:</strong>
+                            <span t-out="object.selected_revision_id.offer_fv or ''">Importe de venta</span>
+                            €
+                        </li>
                         <li>
                             <strong>Localización:</strong>
                             <span t-out="object.state_id.name or ''">Término municipal</span>
@@ -206,12 +222,14 @@
             <field name="auto_delete" eval="True"/>
         </record>
 
-        <record id="mail_template_data_crm_lead_revision_email_test" model="mail.template">
+        <record id="mail_template_data_crm_lead_email_test" model="mail.template">
             <field name="name">Asignación de oferta a técnico de OT</field>
-            <field name="model_id" ref="solartree_crm_lead_fields.model_crm_lead_revision"/>
-            <field name="subject">Oferta {{object.lead_id.name}} en ESTUDIO</field>
-<!--            comprobar destinatario-->
-            <field name="email_to">{{object.lead_id.assigned_revision_tecnical_email}}, {{object.lead_id.user_id_email}}, {{object.lead_id.business_director_email}}</field>
+            <field name="model_id" ref="solartree_crm_lead_fields.model_crm_lead"/>
+            <field name="subject">Oferta {{object.name}} en ESTUDIO</field>
+            <!--            comprobar destinatario-->
+            <field name="email_to">{{object.assigned_revision_tecnical_email}},
+                {{object.user_id_email}}, {{object.business_director_email}}
+            </field>
             <!--            <field name="email_cc" groups="base.group_no_one"/>-->
             <field name="description">Asignación de oferta a técnico de OT</field>
             <field name="body_html" type="html">
@@ -219,8 +237,8 @@
                     <p>Buenas,</p>
                     <p>
                         La oportunidad
-                        <span t-out="object.lead_id.name or ''">ID de la Oferta</span>
-                        ha entrado en la cola de trabajo. <span t-out="object.offer_tot.name or ''">Tecnico de OT
+                        <span t-out="object.name or ''">ID de la Oferta</span>
+                        ha entrado en la cola de trabajo. <span t-out="object.selected_revision_id.offer_tot.name or ''">Tecnico de OT
                     </span> va a ser quien se encargue de registrarlo
                         en la base de datos y de estudiar la oferta.
                     </p>

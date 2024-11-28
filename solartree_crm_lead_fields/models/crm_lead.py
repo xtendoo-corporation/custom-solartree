@@ -375,24 +375,28 @@ class CrmLead(models.Model):
         string="Aprobación de Bajada de Margen",
     )
     #################CAMPOS PARA RECOGER EN EL EMAIL#################
-    solartree_lead_channel_fee = fields.Char(
+    solartree_lead_channel_fee_email = fields.Char(
         string="Fee Externo (%)",
     )
-    solartree_intern_channel_fee = fields.Char(
+    solartree_intern_channel_fee_email = fields.Char(
         string="Fee Interno (%)",
     )
-    proyect_class = fields.Many2one(
-        'offer.class',
-        string="Clase de Proyecto",
+    solartree_lead_type_id_email = fields.Many2one(
+        comodel_name="crm.lead.type",
+        string="Tipo de Oferta",
     )
-    map_url = fields.Char(string="Map URL", compute="_compute_map_url")
+
+    map_url_email = fields.Char(string="Map URL", compute="_compute_map_url")
 
     def _compute_map_url(self):
         for record in self:
-            map_action = record.open_map()  # Obtén el diccionario de la acción
-            if map_action and 'url' in map_action:
-                record.map_url = map_action['url']  # Extrae solo la URL
-            else:
-                record.map_url = ''  # Si no hay URL, asigna una cadena vacía
+            try:
+                map_action = record.open_map()  # Obtén el diccionario de la acción
+                if map_action and 'url' in map_action:
+                    record.map_url_email = map_action['url']  # Extrae solo la URL
+                else:
+                    record.map_url_email = ''  # Si no hay URL, asigna una cadena vacía
+            except UserError:
+                record.map_url_email = ''
 
 

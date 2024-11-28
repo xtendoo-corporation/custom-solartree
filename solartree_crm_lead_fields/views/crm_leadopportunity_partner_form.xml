@@ -6,10 +6,14 @@
         <field name="arch" type="xml">
             <xpath expr="//form/group[@name='name']" position="after">
                 <group string="Additional Information">
-<!--                    <field name="solartree_lead_channel" options="{'no_create': True}"/>-->
                     <field name="solartree_date_request"/>
                 </group>
             </xpath>
+            <!--atributos oculto team_id-->
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
         </field>
     </record>
 </odoo>
