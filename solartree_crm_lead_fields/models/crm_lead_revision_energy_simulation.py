@@ -34,14 +34,12 @@ class CrmLeadRevisionEnergySimulation(models.Model):
 
     total = fields.Integer(
         string="Total",
-        compute='_compute_total',
         store=True,
     )
 
-    @api.depends('revision_id.revision_energy_simulation_ids', 'revision_id.solartree_lead_modality_id',
-                 'revision_id.lead_id.customer_consumption_mwh')
-    def _compute_total(self):
-        print("HOLAAAAAAAAAAAAAAAAAAAAAA")
+    # @api.depends('revision_id.revision_energy_simulation_ids', 'revision_id.solartree_lead_modality_id',
+    #              'revision_id.lead_id.customer_consumption_mwh')
+    # def _compute_total(self):
         # for record in self:
         #     # if record.type_energy_simulation_id.name == "Excedentes (Prod.)":
         #     #     if record.revision_id.solartree_lead_modality_id.name == 'AUTOCONSUMO SIN VERTIDO':
@@ -99,7 +97,6 @@ class CrmLeadRevisionEnergySimulation(models.Model):
     @api.depends('revision_id.revision_energy_simulation_ids',
                  'revision_id.lead_id.customer_consumption_mwh')
     def _compute_percentage(self):
-        print("EYYYYYYYYYYYYYYYYYYY")
         for record in self:
             if record.total or record.total_calculation:
                 if record.type_energy_simulation_id.name == "Autoconsumo (Prod.)":
