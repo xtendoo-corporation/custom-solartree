@@ -389,6 +389,7 @@ class CrmLead(models.Model):
     map_url_email = fields.Char(string="Map URL", compute="_compute_map_url")
 
     def _compute_map_url(self):
+        print("*")
         for record in self:
             try:
                 map_action = record.open_map()  # Obtén el diccionario de la acción
