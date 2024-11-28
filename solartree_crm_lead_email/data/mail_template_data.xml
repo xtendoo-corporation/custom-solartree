@@ -46,7 +46,7 @@
                         </li>
                         <li>
                             <strong>Clase de proyecto:</strong>
-                            <span t-out="object.solartree_lead_structure_model.name or ''">Clase de Proyecto</span>
+                            <span t-out="object.solartree_lead_type_id_email.name or ''">Clase de Proyecto</span>
                         </li>
                         <li>
                             <strong>Ubicación instalación:</strong>
