@@ -4,10 +4,16 @@
         <field name="model">crm.lead.revision.energy.simulation</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="is_excedentes_prod_or_red_dem" invisible="1" column_invisible="1"/>
+                <field name="is_produccion_or_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>
+                <field name="is_produccion_or_demanda" invisible="1" column_invisible="1"/>
                 <field name="revision_id" invisible="1"/>
-                <field name="total" readonly="0" invisible="not total"/>
-                <field name="total_calculation" readonly="0" invisible="not total_calculation"/>
-                <field name="percentage" readonly="1" widget="percentage" invisible="not percentage"/>
+                <field name="total" readonly="0"
+                       invisible="is_excedentes_prod_or_red_dem"/>
+                <field name="total_calculation" string="Calculados" readonly="0"
+                       invisible="is_produccion_or_autoconsumo_or_demanda"/>
+                <field name="percentage" readonly="1" widget="percentage"
+                       invisible="is_produccion_or_demanda"/>
             </tree>
         </field>
     </record>
@@ -18,9 +24,12 @@
             <form string="Energy Simulation">
                 <group>
                     <field name="revision_id" invisible="1"/>
-                    <field name="total" readonly="0" invisible="not total"/>
-                    <field name="total_calculation" readonly="0" invisible="not total_calculation"/>
-                    <field name="percentage" readonly="1" widget="percentage" invisible="not percentage"/>
+                    <field name="total" readonly="0"
+                           modifiers="{'invisible': [('type_energy_simulation_id.name', 'in', ['Excedentes (Prod.)', 'Red (Dem.)'])]}"/>
+                    <field name="total_calculation" string="Calculados" readonly="0"
+                           modifiers="{'invisible': [('type_energy_simulation_id.name', 'in', ['Producción', 'Autoconsumo (Prod.)', 'Demanda', 'Autoconsumo (Dem.)'])]}"/>
+                    <field name="percentage" readonly="1" widget="percentage"
+                           modifiers="{'invisible': [('type_energy_simulation_id.name', 'in', ['Producción', 'Demanda'])]}"/>
                 </group>
             </form>
         </field>

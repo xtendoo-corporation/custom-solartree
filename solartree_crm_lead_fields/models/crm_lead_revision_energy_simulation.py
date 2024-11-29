@@ -37,31 +37,6 @@ class CrmLeadRevisionEnergySimulation(models.Model):
         store=True,
     )
 
-    # @api.depends('revision_id.revision_energy_simulation_ids', 'revision_id.solartree_lead_modality_id',
-    #              'revision_id.lead_id.customer_consumption_mwh')
-    # def _compute_total(self):
-        # for record in self:
-        #     # if record.type_energy_simulation_id.name == "Excedentes (Prod.)":
-        #     #     if record.revision_id.solartree_lead_modality_id.name == 'AUTOCONSUMO SIN VERTIDO':
-        #     #         record.total = 0
-        #     #     else:
-        #     #         # recorre la tabla de este modelo con este revision id hazlo aqui debajo
-        #     #         autoconsumo_prod = self._get_autoconsumo_prod(record.revision_id.revision_energy_simulation_ids)
-        #     #         produccion = self._get_produccion(record.revision_id.revision_energy_simulation_ids)
-        #     #         record.total = produccion - autoconsumo_prod
-        #     #         print(f"Producción: {produccion}, Autoconsumo (Prod.): {autoconsumo_prod}, Excedentes Total: {record.total}")
-        #     if record.type_energy_simulation_id.name == "Demanda":
-        #         record.total = record.revision_id.lead_id.customer_consumption_mwh
-        #     elif record.type_energy_simulation_id.name == "Red (Dem.)":
-        #         if record.revision_id.lead_id and record.revision_id.lead_id.customer_consumption_mwh:
-        #             autoconsumo_prod = self._get_autoconsumo_prod(record.revision_id.revision_energy_simulation_ids)
-        #
-        #             record.total = record.revision_id.lead_id.customer_consumption_mwh - autoconsumo_prod
-        #         else:
-        #             record.total = 0
-        #     else:
-        #         record.total = 0
-
     total_calculation = fields.Integer(
         string="Total Calculation",
         compute='_compute_total_calculation',
@@ -174,3 +149,37 @@ class CrmLeadRevisionEnergySimulation(models.Model):
                 return sim.total
         return 0
 
+    is_excedentes_prod_or_red_dem = fields.Boolean(
+        string="Is Excedentes (Prod.) or Red (Dem.)",
+        compute='_compute_is_excedentes_prod_or_red_dem',
+        store=True
+    )
+    is_produccion_or_autoconsumo_or_demanda = fields.Boolean(
+        string="Is Producción or Autoconsumo (Prod.) or Demanda or Autoconsumo (Dem.)",
+        compute='_compute_is_produccion_or_autoconsumo_or_demanda',
+        store=True
+    )
+    is_produccion_or_demanda = fields.Boolean(
+        string="Is Producción or Demanda",
+        compute='_compute_is_produccion_or_demanda',
+        store=True
+    )
+
+    @api.depends('type_energy_simulation_id.name')
+    def _compute_is_excedentes_prod_or_red_dem(self):
+        for record in self:
+            record.is_excedentes_prod_or_red_dem = record.type_energy_simulation_id.name in ['Excedentes (Prod.)',
+                                                                                             'Red (Dem.)']
+
+    @api.depends('type_energy_simulation_id.name')
+    def _compute_is_produccion_or_autoconsumo_or_demanda(self):
+        for record in self:
+            record.is_produccion_or_autoconsumo_or_demanda = record.type_energy_simulation_id.name in ['Producción',
+                                                                                                       'Autoconsumo (Prod.)',
+                                                                                                       'Demanda',
+                                                                                                       'Autoconsumo (Dem.)']
+
+    @api.depends('type_energy_simulation_id.name')
+    def _compute_is_produccion_or_demanda(self):
+        for record in self:
+            record.is_produccion_or_demanda = record.type_energy_simulation_id.name in ['Producción', 'Demanda']

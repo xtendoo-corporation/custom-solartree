@@ -43,16 +43,16 @@
         <field name="arch" type="xml">
             <form string="Revision">
                 <sheet>
-                     <div class="oe_button_box" name="button_box">
-                    <button name="%(action_crm_lead_revision_graph)d" string="Revisión" type="action"
-                            class="oe_stat_button" icon="fa-bar-chart"/>
-                    <button name="%(action_crm_lead_revision_direct_costs_graph)d" string="Costes Directos"
-                            type="action"
-                            class="oe_stat_button" icon="fa-bar-chart"/>
-                    <button name="%(action_crm_lead_revision_energy_simulation_graph)d" string="Simulación Energía"
-                            type="action"
-                            class="oe_stat_button" icon="fa-bar-chart"/>
-                </div>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_crm_lead_revision_graph)d" string="Revisión" type="action"
+                                class="oe_stat_button" icon="fa-bar-chart"/>
+                        <button name="%(action_crm_lead_revision_direct_costs_graph)d" string="Costes Directos"
+                                type="action"
+                                class="oe_stat_button" icon="fa-bar-chart"/>
+                        <button name="%(action_crm_lead_revision_energy_simulation_graph)d" string="Simulación Energía"
+                                type="action"
+                                class="oe_stat_button" icon="fa-bar-chart"/>
+                    </div>
                     <group>
                         <field name="name" readonly="0"/>
                     </group>
@@ -164,17 +164,22 @@
 
                         <group name="energy" string="Simulación Energía">
                             <field name="revision_energy_simulation_ids" string="">
-                                <tree editable="bottom">
+                                <tree editable="bottom" >
+                                    <field name="is_excedentes_prod_or_red_dem" invisible="1" column_invisible="1"/>
+                                    <field name="is_produccion_or_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>
+                                    <field name="is_produccion_or_demanda" invisible="1" column_invisible="1"/>
                                     <field name="type_energy_simulation_id" options="{'no_create': True,}" string=""/>
-                                    <field name="total" readonly="0" invisible="not total"/>
+                                    <field name="total" readonly="0"
+                                           invisible="is_excedentes_prod_or_red_dem"/>
                                     <field name="total_calculation" string="Calculados" readonly="0"
-                                           invisible="not total_calculation"/>
+                                           invisible="is_produccion_or_autoconsumo_or_demanda"/>
                                     <field name="percentage" readonly="1" widget="percentage"
-                                           invisible="not percentage"/>
+                                           invisible="is_produccion_or_demanda"/>
                                 </tree>
                             </field>
                         </group>
                     </group>
+
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
