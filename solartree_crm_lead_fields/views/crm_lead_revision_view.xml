@@ -44,8 +44,6 @@
             <form string="Revision">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="%(action_crm_lead_revision_graph)d" string="Revisión" type="action"
-                                class="oe_stat_button" icon="fa-bar-chart"/>
                         <button name="%(action_crm_lead_revision_direct_costs_graph)d" string="Costes Directos"
                                 type="action"
                                 class="oe_stat_button" icon="fa-bar-chart"/>

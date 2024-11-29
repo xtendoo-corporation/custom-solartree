@@ -54,6 +54,7 @@
         <field name="res_model">crm.lead.revision.energy.simulation</field>
         <field name="view_mode">graph</field>
         <field name="view_id" ref="view_crm_lead_revision_energy_simulation_graph"/>
+        <field name="context">{'graph_mode': 'pie'}</field>
         <field name="domain">[('revision_id', '=', active_id)]</field>
     </record>
 
