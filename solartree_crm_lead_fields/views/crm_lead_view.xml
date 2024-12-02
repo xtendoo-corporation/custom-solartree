@@ -162,13 +162,13 @@
                 </div>
                 <div>
                     <field name="offer_kwp"/>
-                    <span>kWp</span>
+                    <span> kWp</span>
                     <br/>
                     <field name="installation_sale_price"/>
-                    <span>€</span>
+                    <span> €</span>
                     <br/>
                     <field name="installation_sale_price_wp"/>
-                    <span>€/Wp</span>
+                    <span> €/Wp</span>
                     <br/>
                     <field name="solartree_lead_type_id"/>
                     <br/>
