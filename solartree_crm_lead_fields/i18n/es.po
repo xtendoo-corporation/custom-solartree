@@ -285,13 +285,13 @@ msgstr "Moneda"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__customer_consumption_mwh
-msgid "Customer Consumption (MWh)"
-msgstr "Consumo del cliente (MWh)"
+msgid "Customer Consumption (kWh)"
+msgstr "Consumo del cliente (kWh)"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__customer_consumption_mwh
-msgid "Customer Consumption (MWh/year)"
-msgstr "Consumo del cliente (MWh/año)"
+msgid "Customer Consumption (kWh/year)"
+msgstr "Consumo del cliente (kWh/año)"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_date_deliverables

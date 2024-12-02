@@ -285,12 +285,12 @@ msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision__customer_consumption_mwh
-msgid "Customer Consumption (MWh)"
+msgid "Customer Consumption (kWh)"
 msgstr ""
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__customer_consumption_mwh
-msgid "Customer Consumption (MWh/year)"
+msgid "Customer Consumption (kWh/year)"
 msgstr ""
 
 #. module: solartree_crm_lead_fields

@@ -132,7 +132,7 @@ class CrmLead(models.Model):
         help="Notas relacionadas con el diseño."
     )
     customer_consumption_mwh = fields.Float(
-        string="Customer Consumption (MWh/year)",
+        string="Customer Consumption (kWh/year)",
         digits=(16, 0),
         help="Annual customer energy consumption in MWh."
     )
