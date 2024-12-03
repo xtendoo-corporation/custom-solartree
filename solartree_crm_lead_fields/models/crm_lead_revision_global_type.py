@@ -26,6 +26,8 @@ class CrmLeadRevisionPrices(models.Model):
         selection=[
             ('project', 'Proyecto'),
             ('solartree', 'Solartree'),
+            ('demand', 'Demanda'),
+            ('production', 'Producción'),
         ],
         string="Behavior Extra",
     )

@@ -295,8 +295,15 @@ class CrmLeadRevision(models.Model):
         ondelete='cascade'
     )
 
-    revision_energy_simulation_ids = fields.One2many(
-        "crm.lead.revision.energy.simulation",
+    revision_energy_simulation_production_ids = fields.One2many(
+        "crm.lead.revision.energy.simulation.production",
+        "revision_id",
+        string="",
+        ondelete='cascade'
+    )
+
+    revision_energy_simulation_demand_ids = fields.One2many(
+        "crm.lead.revision.energy.simulation.demand",
         "revision_id",
         string="",
         ondelete='cascade'
@@ -615,14 +622,6 @@ class CrmLeadRevision(models.Model):
             'target': 'current',
         }
 
-    # def copy(self, default=None):
-    #     if default is None:
-    #         default = {}
-    #     lead_id = self.lead_id.id
-    #     existing_revisions_count = self.search_count([('lead_id', '=', lead_id)])
-    #     default['name'] = f'R{existing_revisions_count}'
-    #     return super(CrmLeadRevision, self).copy(default)
-
     def copy(self, default=None):
         if default is None:
             default = {}
@@ -660,6 +659,12 @@ class CrmLeadRevision(models.Model):
             'offer_battery_power': line.offer_battery_power,
         }) for line in self.revision_battery_ids]
 
+        default['revision_energy_simulation_ids'] = [(0, 0, {
+            'type_energy_simulation_id': line.type_energy_simulation_id.id,
+            'total': line.total,
+            'percentage': line.percentage,
+        }) for line in self.revision_energy_simulation_ids]
+
         return super(CrmLeadRevision, self).copy(default)
 
     def unlink(self):
@@ -668,5 +673,6 @@ class CrmLeadRevision(models.Model):
             self._cr.execute("DELETE FROM crm_lead_revision_prices WHERE revision_id = %s", (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_direct_costs WHERE revision_id = %s", (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_inverter WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_energy_simulation WHERE revision_id = %s", (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_battery WHERE revision_id = %s", (record.id,))
         return super(CrmLeadRevision, self).unlink()

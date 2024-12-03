@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_project_revision_inverter_tree" model="ir.ui.view">
+        <field name="name">project.revision.inverter.tree</field>
+        <field name="model">project.revision.inverter</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="revision_id" invisible="1"/>
+                <field name="offer_inverter_model"/>
+                <field name="offer_inverter_unit_power"/>
+                <field name="offer_inverter_quantity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_revision_inverter_form" model="ir.ui.view">
+        <field name="name">project.revision.inverter.form</field>
+        <field name="model">project.revision.inverter</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="revision_id" invisible="1"/>
+                        <field name="offer_inverter_model"/>
+                        <field name="offer_inverter_unit_power"/>
+                        <field name="offer_inverter_quantity"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

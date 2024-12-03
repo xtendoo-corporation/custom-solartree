@@ -1,0 +1,137 @@
+<odoo>
+    <record id="view_project_form_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']/button[@name='action_view_tasks']" position="after">
+                <button class="oe_stat_button" type="object" name="action_open_project_revision_form" icon="fa-folder-open">
+                    <field name="open_revision_count" string="Project Revisions" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <odoo>
+    <!-- Tree View -->
+    <record id="view_project_revision_tree" model="ir.ui.view">
+        <field name="name">project.revision.tree</field>
+        <field name="model">project.revision</field>
+        <field name="arch" type="xml">
+            <tree string="Project Revisions">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="offer_kwp"/>
+                <field name="offer_kwn"/>
+                <field name="offer_storage_kwh"/>
+                <field name="offer_storage_kwn"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_project_revision_form" model="ir.ui.view">
+        <field name="name">project.revision.form</field>
+        <field name="model">project.revision</field>
+        <field name="arch" type="xml">
+            <form string="Project Revision">
+                <sheet>
+                     <group colspan="4">
+                        <group name="Offer Data" string="Offer Data">
+                            <field name="solartree_lead_type_id"/>
+                            <field name="solartree_lead_scope"/>
+                            <field name="solartree_lead_modality_id"/>
+                            <field name="solartree_lead_collective"/>
+                        </group>
+                        <group string="">
+                            <field name="solartree_lead_storage"/>
+                            <field name="solartree_lead_structure_type"/>
+                            <field name="solartree_lead_structure_model"/>
+                            <!--                            <field name="offer_class"/>-->
+                            <field name="offer_class_id" widget="selection" readonly="1"/>
+                        </group>
+                        <group name="Revision fields" string="Revision fields">
+                            <field name="offer_kwp" readonly="0"/>
+                            <field name="offer_kwn" readonly="0"/>
+                            <field name="offer_storage_kwh"/>
+                            <field name="offer_storage_kwn"/>
+                            <field name="offer_ve_kwn"/>
+                            <field name="offer_tot" widget="selection"/>
+                            <field name="offer_HT"/>
+                            <field name="offer_date_deliver"/>
+                            <field name="offer_evacuation" widget="selection"/>
+                        </group>
+                        <group name="Revision fields 2" string="">
+                            <field name="avg_price" string="Precio medio (€/kWh)"/>
+                            <field name="surplus_price" string="Precio excedente (€/kWh)"/>
+                            <field name="offer_fabricant_modules" widget="text"/>
+                            <field name="offer_modules_model" widget="text"/>
+                            <field name="offer_modules_unit_power" string="Potencia unitaria (Wp)"/>
+                            <field name="offer_modules_quantity"/>
+                            <field name="offer_structure_manufacturer" widget="text"/>
+                            <field name="offer_structure_description" widget="text"/>
+                        </group>
+                        <group name="invertes" string="Inverters">
+                            <field name="offer_inverter_manufacturer" widget="text"/>
+                            <field name="revision_inverter_ids" string="">
+                                <tree editable="bottom">
+                                    <field name="offer_inverter_model"/>
+                                    <field name="offer_inverter_unit_power"/>
+                                    <field name="offer_inverter_quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group invisible="solartree_lead_storage"/>
+                        <group name="battery" string="Battery" invisible="not solartree_lead_storage">
+                            <field name="offer_battery_manufacturer" widget="text"/>
+                            <field name="revision_battery_ids" string="">
+                                <tree editable="bottom">
+                                    <field name="offer_battery_model"/>
+                                    <field name="offer_battery_capacity"/>
+                                    <field name="offer_battery_power"/>
+                                    <field name="offer_battery_quantity"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group name="rentability" string="Rentability">
+                            <field name="offer_pb_actual"/>
+                            <field name="offer_pb_omip"/>
+                            <field name="offer_pb_proyection"/>
+                            <field name="pb_exced_min"/>
+                            <field name="pb_battery" string="PB Batería" invisible="not solartree_lead_storage"/>
+                        </group>
+                        <group name="rentability2" string="">
+                            <field name="offer_tir_actual" digits="[16, 1]"/>
+                            <field name="offer_tir_omip" digits="[16, 1]"/>
+                            <field name="offer_tir_proyection" digits="[16, 1]"/>
+                            <field name="tir_exced_min" digits="[16, 1]"/>
+                            <field name="tir_battery" string="TIR Batería %" invisible="not solartree_lead_storage"/>
+                        </group>
+                     <group name="energy" string="Simulación Energía">
+<!--                            <field name="revision_energy_simulation_ids" string="">-->
+<!--                                <tree editable="bottom" >-->
+<!--                                    <field name="is_excedentes_prod_or_red_dem" invisible="1" column_invisible="1"/>-->
+<!--                                    <field name="is_produccion_or_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>-->
+<!--                                    <field name="is_produccion_or_demanda" invisible="1" column_invisible="1"/>-->
+<!--                                    <field name="type_energy_simulation_id" options="{'no_create': True,}" string=""/>-->
+<!--                                    <field name="total" readonly="0"-->
+<!--                                           invisible="is_excedentes_prod_or_red_dem"/>-->
+<!--                                    <field name="total_calculation" string="Calculados" readonly="0"-->
+<!--                                           invisible="is_produccion_or_autoconsumo_or_demanda"/>-->
+<!--                                    <field name="percentage" readonly="1" widget="percentage"-->
+<!--                                           invisible="is_produccion_or_demanda"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </group>
+                     </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>
+</odoo>

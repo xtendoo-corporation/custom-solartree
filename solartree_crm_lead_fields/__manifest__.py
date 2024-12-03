@@ -5,7 +5,7 @@
     "author": "Xtendoo",
     "license": "AGPL-3",
     "depends": [
-        "crm", "mail",
+        "crm", "mail", "project",
     ],
     "data": [
         "data/lead_sequence.xml",
@@ -21,11 +21,12 @@
         "views/crm_lead_revision_global_type.xml",
         "views/crm_lead_revision_inverter_view.xml",
         "views/crm_lead_revision_battery_view.xml",
-        "views/crm_lead_revision_energy_simulation.xml",
         "views/crm_lead_revision_view.xml",
         "views/crm_leadopportunity_partner_form.xml",
         "views/offer_class_view.xml",
         'security/ir.model.access.csv',
+        "views/crm_lead_revision_energy_simulation_production.xml",
+        "views/crm_lead_revision_energy_simulation_demand.xml",
     ],
     "installable": True,
     "pre_init_hook": "create_code_equal_to_id",
