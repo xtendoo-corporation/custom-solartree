@@ -151,8 +151,31 @@ class ProjectRevision(models.Model):
     )
     offer_class = fields.Char(
         string='Offer Class',
+        compute='_compute_offer_class',
+        store=True,
         readonly=True,
     )
+
+    offer_class_id = fields.Many2one(
+        'offer.class',
+        string='Offer Class relation',
+        compute='_compute_offer_class',
+    )
+
+    @api.depends('offer_kwn')
+    def _compute_offer_class(self):
+        for record in self:
+            offer_class = self.env['offer.class'].search([
+                ('min_value', '<=', record.offer_kwn),
+                ('max_value', '>=', record.offer_kwn)
+            ], limit=1)
+            if offer_class:
+                record.offer_class_id = offer_class
+                record.offer_class = offer_class.name
+            else:
+                record.offer_class_id = False
+                record.offer_class = ''
+
     offer_evacuation = fields.Many2one(
         comodel_name="crm.lead.evacuation",
         string="Evacuation revisions field",
@@ -252,6 +275,34 @@ class ProjectRevision(models.Model):
                 record.offer_class_id = offer_class
             else:
                 record.offer_class_id = False
+
+    offer_selected = fields.Boolean(
+        string='Selected',
+        compute='_compute_offer_selected',
+    )
+
+    @api.onchange('offer_selected')
+    def _onchange_offer_selected(self):
+        for record in self:
+            print("*" * 80)
+            print("Onchange Offer Selected", record.id)
+            if record.offer_selected:
+                # Deseleccionar otras revisiones
+                record.lead_id.revision_ids.filtered(lambda r: r.id != record.id).write({'offer_selected': False})
+                record.project_id.lead_id.selected_revision_id = record
+
+    def _compute_offer_selected(self):
+        for record in self:
+            record.offer_selected = record.id == record.project_id.lead_id.selected_revision_id.id
+
+    @api.model
+    def write(self, vals):
+        result = super(ProjectRevision, self).write(vals)
+        if 'offer_selected' in vals and vals['offer_selected']:
+            for record in self:
+                # Deseleccionar otras revisiones del mismo lead_id
+                record.lead_id.revision_ids.filtered(lambda r: r.id != record.id).write({'offer_selected': False})
+        return result
 
     def copy(self, default=None):
         if default is None:

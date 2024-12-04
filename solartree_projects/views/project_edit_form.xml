@@ -7,6 +7,35 @@
             <xpath expr="//field[@name='date_start']" position="after">
                 <field name="lead_id" readonly="1"/>
                 <field name="partner_id_lead" readonly="1"/>
+                <field name="selected_revision_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">project.project.kanban.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_primary_left']" position="replace">
+                <div class="o_kanban_primary_left">
+                <div class="o_primary me-5">
+                    <span class="o_text_overflow" t-att-title="record.display_name.value">
+                        <t t-esc="record.display_name.value"/>
+                    </span>
+                    <div t-if="record.partner_id_lead and record.partner_id_lead.value" class="text-muted">
+                        <span class="fa fa-user me-2" aria-label="Partner" title="Partner"/>
+                        <field name="partner_id_lead" readonly="1"/>
+                    </div>
+                    <span class="fa fa-bolt me-2" aria-label="Lightning Bolt" title="Lightning Bolt"/>
+                        <field name="offer_kwp" readonly="1"/>
+                    <br/>
+                    <span class="fa fa-bolt me-2" aria-label="Lightning Bolt" title="Lightning Bolt"/>
+                        <field name="offer_kwn" readonly="1"/>
+                    <br/>
+                        <field name="offer_class" readonly="1"/>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>
