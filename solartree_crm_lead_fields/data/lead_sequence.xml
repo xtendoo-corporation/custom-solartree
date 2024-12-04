@@ -414,22 +414,6 @@
         <field name="name">Operación y Mantenimiento</field>
         <field name="behavior">direct_costs</field>
     </record>
-    <record id="crm_lead_revision_global_type_25" model="crm.lead.revision.global.type">
-        <field name="name">Inversor 1</field>
-        <field name="behavior">inverter</field>
-    </record>
-    <record id="crm_lead_revision_global_type_26" model="crm.lead.revision.global.type">
-        <field name="name">Inversor 2</field>
-        <field name="behavior">inverter</field>
-    </record>
-    <record id="crm_lead_revision_global_type_27" model="crm.lead.revision.global.type">
-        <field name="name">Batería 1</field>
-        <field name="behavior">battery</field>
-    </record>
-    <record id="crm_lead_revision_global_type_28" model="crm.lead.revision.global.type">
-        <field name="name">Batería 2</field>
-        <field name="behavior">battery</field>
-    </record>
 
 
     <!-- OFFER CLASS MARGINS -->
