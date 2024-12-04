@@ -51,7 +51,7 @@
                         <button name="%(action_crm_lead_revision_energy_simulation_production_graph)d" string="Simulación Energía Producción"
                                 type="action"
                                 class="oe_stat_button" icon="fa-bar-chart"/>
-                        <button name="%(action_crm_lead_revision_energy_simulation_demand_graph)d" string="Simulación Energía Producción"
+                        <button name="%(action_crm_lead_revision_energy_simulation_demand_graph)d" string="Simulación Energía Demanda"
                                 type="action"
                                 class="oe_stat_button" icon="fa-bar-chart"/>
                     </div>
