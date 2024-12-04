@@ -41,7 +41,7 @@ class CrmLeadRevisionEnergySimulationDemand(models.Model):
         readonly=False,
     )
 
-    @api.depends('revision_id.lead_id.customer_consumption_mwh')
+    @api.depends('revision_id.lead_id.customer_consumption_mwh', 'revision_id.revision_energy_simulation_production_ids',)
     def _compute_total(self):
         for record in self:
             if record.type_energy_simulation_demand_id.name == "Demanda":
@@ -124,7 +124,7 @@ class CrmLeadRevisionEnergySimulationDemand(models.Model):
         compute='_compute_is_red_dem',
         store=True
     )
-    is_autoconsumo_demanda = fields.Boolean(
+    is_autoconsumo_or_demanda = fields.Boolean(
         string="Is Demanda or Autoconsumo (Dem.)",
         compute='_compute_is_autoconsumo_or_demanda',
         store=True

@@ -39,7 +39,7 @@
         <field name="name">crm.lead.revision.energy.simulation.production.graph</field>
         <field name="model">crm.lead.revision.energy.simulation.production</field>
         <field name="arch" type="xml">
-            <graph string="Energy Simulation Production">
+            <graph string="Energy Simulation Production" disable_linking="1">
                 <field name="revision_id"/>
                 <field name="total" type="measure"/>
                 <field name="total_calculation" type="measure"/>

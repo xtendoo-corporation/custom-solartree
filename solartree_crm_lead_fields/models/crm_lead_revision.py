@@ -476,7 +476,6 @@ class CrmLeadRevision(models.Model):
                 cost.price_sale for cost in record.revision_direct_costs_ids if
                 cost.type_direct_costs_id in include_types)
 
-
     @api.depends('revision_price_ids.percentage')
     def _compute_total_revision_percentage(self):
         for record in self:
@@ -598,16 +597,30 @@ class CrmLeadRevision(models.Model):
 
         defaults['revision_battery_ids'] = revision_battery
 
-        energy_types = self.env['crm.lead.revision.global.type'].search([('behavior', '=', 'energy_simulation')])
-        revision_energy_simulation = []
-        for energy_type in energy_types:
-            revision_energy_simulation.append((0, 0, {
-                'type_energy_simulation_id': energy_type.id,
+        energy_types_production = self.env['crm.lead.revision.global.type'].search(
+            [('behavior', '=', 'energy_simulation'), ('behavior_extra', '=', 'production')])
+        revision_energy_simulation_production = []
+        for energy_type in energy_types_production:
+            revision_energy_simulation_production.append((0, 0, {
+                'type_energy_simulation_production_id': energy_type.id,
                 'total': 0,
                 'percentage': 0.0,
             }))
 
-        defaults['revision_energy_simulation_ids'] = revision_energy_simulation
+        defaults['revision_energy_simulation_production_ids'] = revision_energy_simulation_production
+
+        energy_types_demand = self.env['crm.lead.revision.global.type'].search(
+            [('behavior', '=', 'energy_simulation'),
+             ('behavior_extra', '=', 'demand')])
+        revision_energy_simulation_demand = []
+        for energy_type in energy_types_demand:
+            revision_energy_simulation_demand.append((0, 0, {
+                'type_energy_simulation_demand_id': energy_type.id,
+                'total': 0,
+                'percentage': 0.0,
+            }))
+
+        defaults['revision_energy_simulation_demand_ids'] = revision_energy_simulation_demand
 
         return defaults
 
@@ -659,11 +672,17 @@ class CrmLeadRevision(models.Model):
             'offer_battery_power': line.offer_battery_power,
         }) for line in self.revision_battery_ids]
 
-        default['revision_energy_simulation_ids'] = [(0, 0, {
-            'type_energy_simulation_id': line.type_energy_simulation_id.id,
+        default['revision_energy_simulation_production_ids'] = [(0, 0, {
+            'type_energy_simulation_production_id': line.type_energy_simulation_production_id.id,
             'total': line.total,
             'percentage': line.percentage,
-        }) for line in self.revision_energy_simulation_ids]
+        }) for line in self.revision_energy_simulation_production_ids]
+
+        default['revision_energy_simulation_demand_ids'] = [(0, 0, {
+            'type_energy_simulation_demand_id': line.type_energy_simulation_demand_id.id,
+            'total': line.total,
+            'percentage': line.percentage,
+        }) for line in self.revision_energy_simulation_demand_ids]
 
         return super(CrmLeadRevision, self).copy(default)
 

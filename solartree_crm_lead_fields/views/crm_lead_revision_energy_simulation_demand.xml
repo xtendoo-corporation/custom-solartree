@@ -5,13 +5,13 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="is_red_dem" invisible="1" column_invisible="1"/>
-                <field name="is_autoconsumo_demanda" invisible="1" column_invisible="1"/>
+                <field name="is_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>
                 <field name="is_demanda" invisible="1" column_invisible="1"/>
                 <field name="revision_id" invisible="1"/>
                 <field name="total" readonly="0"
                        invisible="is_red_dem"/>
                 <field name="total_calculation" string="Calculados" readonly="0"
-                       invisible="is_autoconsumo_demanda"/>
+                       invisible="is_autoconsumo_or_demanda"/>
                 <field name="percentage" readonly="1" widget="percentage"
                        invisible="is_demanda"/>
             </tree>
@@ -39,7 +39,7 @@
         <field name="name">crm.lead.revision.energy.simulation.demand.graph</field>
         <field name="model">crm.lead.revision.energy.simulation.demand</field>
         <field name="arch" type="xml">
-            <graph string="Energy Simulation Demand">
+            <graph string="Energy Simulation Demand" disable_linking="1">
                 <field name="revision_id"/>
                 <field name="total" type="measure"/>
                 <field name="total_calculation" type="measure"/>
