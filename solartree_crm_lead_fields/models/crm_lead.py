@@ -11,12 +11,6 @@ class CrmLead(models.Model):
         required=True,
         copy=False
     )
-    # solartree_lead_type_id = fields.Many2one(
-    #     comodel_name="crm.lead.type",
-    #     string="Lead Type",
-    #     required=True,
-    #     help="Type of the lead"
-    # )
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
         string="Lead Modality",
@@ -409,6 +403,7 @@ class CrmLead(models.Model):
             # Create the project
             project = self.env['project.project'].create({
                 'name': lead.solartree_num_proyect,
+                'partner_id_lead': lead.partner_id.id,
                 'lead_id': lead.id,
             })
 
@@ -427,6 +422,8 @@ class CrmLead(models.Model):
                 'offer_kwn': lead.selected_revision_id.offer_kwn,
                 'offer_storage_kwh': lead.selected_revision_id.offer_storage_kwh,
                 'offer_storage_kwn': lead.selected_revision_id.offer_storage_kwn,
+                'offer_ve_kwn': lead.selected_revision_id.offer_ve_kwn,
+                'offer_tot': lead.selected_revision_id.offer_tot.id,
                 'offer_date_deliver': lead.selected_revision_id.offer_date_deliver,
                 'offer_HT': lead.selected_revision_id.offer_HT,
                 'offer_pb_actual': lead.selected_revision_id.offer_pb_actual,
@@ -467,12 +464,18 @@ class CrmLead(models.Model):
                     'offer_battery_model': battery.offer_battery_model,
                     'offer_battery_capacity': battery.offer_battery_capacity,
                     'offer_battery_power': battery.offer_battery_power,
+                    'offer_battery_quantity': battery.offer_battery_quantity,
                 }) for battery in lead.selected_revision_id.revision_battery_ids],
-                'revision_energy_simulation_ids': [(0, 0, {
-                    'type_energy_simulation_id': energy.type_energy_simulation_id.id,
+                'revision_energy_simulation_project_production_ids': [(0, 0, {
+                    'type_energy_simulation_project_production_id': energy.type_energy_simulation_production_id.id,
                     'total': energy.total,
                     'percentage': energy.percentage,
-                }) for energy in lead.selected_revision_id.revision_energy_simulation_ids],
+                }) for energy in lead.selected_revision_id.revision_energy_simulation_production_ids],
+                'revision_energy_simulation_project_demand_ids': [(0, 0, {
+                    'type_energy_simulation_project_demand_id': energy.type_energy_simulation_demand_id.id,
+                    'total': energy.total,
+                    'percentage': energy.percentage,
+                }) for energy in lead.selected_revision_id.revision_energy_simulation_demand_ids],
             })
 
             return {

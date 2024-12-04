@@ -36,6 +36,14 @@
         <field name="arch" type="xml">
             <form string="Project Revision">
                 <sheet>
+                      <div class="oe_button_box" name="button_box">
+                        <button name="%(action_crm_lead_revision_energy_simulation_project_production_graph)d" string="Simulación Energía Producción"
+                                type="action"
+                                class="oe_stat_button" icon="fa-bar-chart"/>
+                        <button name="%(action_crm_lead_revision_energy_simulation_project_demand_graph)d" string="Simulación Energía Producción"
+                                type="action"
+                                class="oe_stat_button" icon="fa-bar-chart"/>
+                    </div>
                      <group colspan="4">
                         <group name="Offer Data" string="Offer Data">
                             <field name="solartree_lead_type_id"/>
@@ -108,20 +116,34 @@
                             <field name="tir_battery" string="TIR Batería %" invisible="not solartree_lead_storage"/>
                         </group>
                      <group name="energy" string="Simulación Energía">
-<!--                            <field name="revision_energy_simulation_ids" string="">-->
-<!--                                <tree editable="bottom" >-->
-<!--                                    <field name="is_excedentes_prod_or_red_dem" invisible="1" column_invisible="1"/>-->
-<!--                                    <field name="is_produccion_or_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>-->
-<!--                                    <field name="is_produccion_or_demanda" invisible="1" column_invisible="1"/>-->
-<!--                                    <field name="type_energy_simulation_id" options="{'no_create': True,}" string=""/>-->
-<!--                                    <field name="total" readonly="0"-->
-<!--                                           invisible="is_excedentes_prod_or_red_dem"/>-->
-<!--                                    <field name="total_calculation" string="Calculados" readonly="0"-->
-<!--                                           invisible="is_produccion_or_autoconsumo_or_demanda"/>-->
-<!--                                    <field name="percentage" readonly="1" widget="percentage"-->
-<!--                                           invisible="is_produccion_or_demanda"/>-->
-<!--                                </tree>-->
-<!--                            </field>-->
+                            <field name="revision_energy_simulation_project_production_ids" string="">
+                                <tree editable="bottom" >
+                                    <field name="is_excedentes_prod" invisible="1" column_invisible="1"/>
+                                    <field name="is_produccion_or_autoconsumo" invisible="1" column_invisible="1"/>
+                                    <field name="is_produccion" invisible="1" column_invisible="1"/>
+                                    <field name="type_energy_simulation_project_production_id" options="{'no_create': True,}" string=""/>
+                                    <field name="total" readonly="0"
+                                           invisible="is_excedentes_prod"/>
+                                    <field name="total_calculation" string="Calculados" readonly="0"
+                                           invisible="is_produccion_or_autoconsumo"/>
+                                    <field name="percentage" readonly="1" widget="percentage"
+                                           invisible="is_produccion"/>
+                                </tree>
+                            </field>
+                             <field name="revision_energy_simulation_project_demand_ids" string="">
+                                <tree editable="bottom" >
+                                    <field name="is_red_dem" invisible="1" column_invisible="1"/>
+                                    <field name="is_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>
+                                    <field name="is_demanda" invisible="1" column_invisible="1"/>
+                                    <field name="type_energy_simulation_project_demand_id" options="{'no_create': True,}" string=""/>
+                                    <field name="total" readonly="0"
+                                           invisible="is_red_dem"/>
+                                    <field name="total_calculation" string="Calculados" readonly="0"
+                                           invisible="is_autoconsumo_or_demanda"/>
+                                    <field name="percentage" readonly="1" widget="percentage"
+                                           invisible="is_demanda"/>
+                                </tree>
+                            </field>
                         </group>
                      </group>
                 </sheet>

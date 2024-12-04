@@ -8,10 +8,14 @@
         "crm", "project", "solartree_crm_lead_fields",
     ],
     "data": [
-        "views/project_revision_view.xml",
         "security/ir.model.access.csv",
         "views/project_revision_battery.xml",
         "views/project_revision_inverter.xml",
+        "views/project_revision_energy_simulation_production.xml",
+        "views/project_revision_energy_simulation_demand.xml",
+        "views/project_revision_view.xml",
+        "views/project_edit_form.xml",
+
     ],
     "installable": True,
 }

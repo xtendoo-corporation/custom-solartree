@@ -692,6 +692,8 @@ class CrmLeadRevision(models.Model):
             self._cr.execute("DELETE FROM crm_lead_revision_prices WHERE revision_id = %s", (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_direct_costs WHERE revision_id = %s", (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_inverter WHERE revision_id = %s", (record.id,))
-            self._cr.execute("DELETE FROM crm_lead_revision_energy_simulation WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_energy_simulation_production WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM crm_lead_revision_energy_simulation_demand WHERE revision_id = %s",
+                             (record.id,))
             self._cr.execute("DELETE FROM crm_lead_revision_battery WHERE revision_id = %s", (record.id,))
         return super(CrmLeadRevision, self).unlink()

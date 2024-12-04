@@ -1,0 +1,61 @@
+<odoo>
+    <record id="view_crm_lead_revision_energy_simulation_project_demand_tree" model="ir.ui.view">
+        <field name="name">project.revision.energy.simulation.demand.tree</field>
+        <field name="model">project.revision.energy.simulation.demand</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="is_red_dem" invisible="1" column_invisible="1"/>
+                <field name="is_autoconsumo_or_demanda" invisible="1" column_invisible="1"/>
+                <field name="is_demanda" invisible="1" column_invisible="1"/>
+                <field name="revision_id" invisible="1"/>
+                <field name="total" readonly="0"
+                       invisible="is_red_dem"/>
+                <field name="total_calculation" string="Calculados" readonly="0"
+                       invisible="is_autoconsumo_or_demanda"/>
+                <field name="percentage" readonly="1" widget="percentage"
+                       invisible="is_demanda"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_crm_lead_revision_energy_simulation_project_demand_form" model="ir.ui.view">
+        <field name="name">project.revision.energy.simulation.demand.form</field>
+        <field name="model">project.revision.energy.simulation.demand</field>
+        <field name="arch" type="xml">
+            <form string="Energy Simulation Demand">
+                <group>
+                    <field name="revision_id" invisible="1"/>
+                    <field name="total" readonly="0"
+                           modifiers="{'invisible': [('type_energy_simulation_project_demand_id.name', 'in', ['Red (Dem.)'])]}"/>
+                    <field name="total_calculation" string="Calculados" readonly="0"
+                           modifiers="{'invisible': [('type_energy_simulation_project_demand_id.name', 'in', ['Demanda', 'Autoconsumo (Dem.)'])]}"/>
+                    <field name="percentage" readonly="1" widget="percentage"
+                           modifiers="{'invisible': [('type_energy_simulation_project_demand_id.name', 'in', ['Demanda'])]}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_revision_energy_simulation_project_demand_graph" model="ir.ui.view">
+        <field name="name">project.revision.energy.simulation.demand.graph</field>
+        <field name="model">project.revision.energy.simulation.demand</field>
+        <field name="arch" type="xml">
+            <graph string="Energy Simulation Demand" disable_linking="1">
+                <field name="revision_id"/>
+                <field name="total" type="measure"/>
+                <field name="total_calculation" type="measure"/>
+                <field name="percentage" type="measure"/>
+                <field name="type_energy_simulation_project_demand_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_revision_energy_simulation_project_demand_graph" model="ir.actions.act_window">
+        <field name="name">Energy Simulation Demand Graph</field>
+        <field name="res_model">project.revision.energy.simulation.demand</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_crm_lead_revision_energy_simulation_project_demand_graph"/>
+        <field name="context">{'graph_mode': 'pie'}</field>
+        <field name="domain">[('revision_id', '=', active_id)]</field>
+    </record>
+
+</odoo>

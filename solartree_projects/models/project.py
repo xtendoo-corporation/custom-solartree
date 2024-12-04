@@ -8,16 +8,18 @@ class ProjectProject(models.Model):
         compute='_compute_open_revision_count'
     )
 
-    lead_id = fields.Many2one(
-        'crm.lead',
-        string="Opportunity",
-        required=True,
-        ondelete='cascade'
-    )
-
     revision_ids = fields.One2many(
         'project.revision',
         'project_id',
+    )
+
+    partner_id_lead = fields.Many2one(
+        'res.partner',
+        string="Partner",
+    )
+    lead_id = fields.Many2one(
+        'crm.lead',
+        string="Opportunity",
     )
     def _compute_open_revision_count(self):
         for project in self:

@@ -172,12 +172,19 @@ class ProjectRevision(models.Model):
         ondelete='cascade'
     )
 
-    # revision_energy_simulation_ids = fields.One2many(
-    #     "project.revision.energy.simulation",
-    #     "revision_id",
-    #     string="",
-    #     ondelete='cascade'
-    # )
+    revision_energy_simulation_project_production_ids = fields.One2many(
+        "project.revision.energy.simulation.production",
+        "revision_id",
+        string="",
+        ondelete='cascade'
+    )
+
+    revision_energy_simulation_project_demand_ids = fields.One2many(
+        "project.revision.energy.simulation.demand",
+        "revision_id",
+        string="",
+        ondelete='cascade'
+    )
 
     pb_exced_min = fields.Float(
         string="PB Exced Min",
@@ -271,12 +278,17 @@ class ProjectRevision(models.Model):
         }) for line in self.revision_battery_ids]
         print(f"Copied battery records: {default['revision_battery_ids']}")
 
-        default['revision_energy_simulation_ids'] = [(0, 0, {
-            'type_energy_simulation_id': line.type_energy_simulation_id.id,
+        default['revision_energy_simulation_project_production_ids'] = [(0, 0, {
+            'type_energy_simulation_project_production_id': line.type_energy_simulation_project_production_id.id,
             'total': line.total,
             'percentage': line.percentage,
-        }) for line in self.revision_energy_simulation_ids]
-        print(f"Copied energy simulation records: {default['revision_energy_simulation_ids']}")
+        }) for line in self.revision_energy_simulation_project_production_ids]
+
+        default['revision_energy_simulation_project_demand_ids'] = [(0, 0, {
+            'type_energy_simulation_project_demand_id': line.type_energy_simulation_project_demand_id.id,
+            'total': line.total,
+            'percentage': line.percentage,
+        }) for line in self.revision_energy_simulation_project_demand_ids]
 
         return super(ProjectRevision, self).copy(default)
 
@@ -284,7 +296,10 @@ class ProjectRevision(models.Model):
     def unlink(self):
         for record in self:
             # Ejecutar consultas SQL para eliminar datos relacionados
-            self._cr.execute("DELETE FROM crm_lead_revision_inverter WHERE revision_id = %s", (record.id,))
-            self._cr.execute("DELETE FROM crm_lead_revision_battery WHERE revision_id = %s", (record.id,))
-            self._cr.execute("DELETE FROM crm_lead_revision_energy_simulation WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM project_revision_inverter WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM project_revision_battery WHERE revision_id = %s", (record.id,))
+            self._cr.execute("DELETE FROM project_revision_energy_simulation_production WHERE revision_id = %s",
+                             (record.id,))
+            self._cr.execute("DELETE FROM project_revision_energy_simulation_demand WHERE revision_id = %s",
+                             (record.id,))
         return super(ProjectRevision, self).unlink()
