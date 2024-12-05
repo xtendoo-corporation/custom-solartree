@@ -27,6 +27,6 @@ class SaleOrderAnalyticWizard(models.TransientModel):
                 'date_from': self.date_start,
                 'date_to': self.date_end,
                 'planned_amount': line.purchase_price,
-                'general_budget_id': line.product_id.id,
+                'general_budget_id': self.env['account.budget.post'].search([('product_id', '=', line.product_id.id)], limit=1).id,
                 'name': sale_order.name,
             })
