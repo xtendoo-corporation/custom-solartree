@@ -14,12 +14,14 @@ class SaleOrderAnalyticWizard(models.TransientModel):
             return
 
         budget = self.env['crossovered.budget'].create({
-            'name': f'Budget for {sale_order.name}',
+            'name': f'{sale_order.name}',
             'date_from': self.date_start,
             'date_to': self.date_end,
         })
 
         for line in sale_order.order_line:
+            general_budget_id = self.env['account.budget.post'].search(
+                [('name', '=', line.product_id.name)], limit=1).id
             self.env['crossovered.budget.lines'].create({
                 'crossovered_budget_id': budget.id,
                 'analytic_account_id': self.analytic_account_id.id,
@@ -27,6 +29,6 @@ class SaleOrderAnalyticWizard(models.TransientModel):
                 'date_from': self.date_start,
                 'date_to': self.date_end,
                 'planned_amount': line.purchase_price,
-                'general_budget_id': self.env['account.budget.post'].search([('product_id', '=', line.product_id.id)], limit=1).id,
+                'general_budget_id': general_budget_id,
                 'name': sale_order.name,
             })

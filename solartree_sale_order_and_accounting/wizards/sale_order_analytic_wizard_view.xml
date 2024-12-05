@@ -36,14 +36,4 @@
         </field>
     </record>
 
-     <record id="crossovered_budget_view_tree_inherit" model="ir.ui.view">
-        <field name="name">crossovered.budget.lines.tree</field>
-        <field name="model">crossovered.budget.lines</field>
-        <field name="inherit_id" ref="account_budget.view_crossovered_budget_line_tree"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='planned_amount']" position="before">
-                <field name="coste" sum="Coste"/>
-            </xpath>
-        </field>
-    </record>
 </odoo>

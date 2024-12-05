@@ -11,10 +11,13 @@
         'sale',
         'account',
         'sale_margin',
+        'account_accountant',
+        'account_budget',
     ],
     'data': [
         'wizards/sale_order_analytic_wizard_view.xml',
         'security/ir.model.access.csv',
+        'views/crossovered_budget_view.xml',
     ],
     'installable': True,
 
