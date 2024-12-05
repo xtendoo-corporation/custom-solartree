@@ -23,8 +23,7 @@ class SaleOrderAnalyticWizard(models.TransientModel):
             self.env['crossovered.budget.lines'].create({
                 'crossovered_budget_id': budget.id,
                 'analytic_account_id': self.analytic_account_id.id,
-                'product_id': line.product_id.id,
-                'coste': line.purchase_price,
+                'sale_order_line_id': line.id,
                 'date_from': self.date_start,
                 'date_to': self.date_end,
             })
