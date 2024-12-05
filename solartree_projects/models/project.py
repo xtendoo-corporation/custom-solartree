@@ -73,5 +73,7 @@ class ProjectProject(models.Model):
             'name': 'Revisions',
             'res_model': 'project.revision',
             'view_mode': 'tree,form',
+            'domain': [('project_id', '=', self.id)],
+            'context': {'default_project_id': self.id},
             'target': 'current',
         }

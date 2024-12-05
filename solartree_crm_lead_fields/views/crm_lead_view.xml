@@ -49,7 +49,8 @@
                         <!--                        <field name="solartree_lead_modality_id" widget="selection"/>-->
                         <!--                        <field name="solartree_lead_collective"/>-->
                         <!--                        <field name="solartree_lead_storage"/>-->
-                        <field name="solartree_num_proyect" invisible="type != 'opportunity'"/>
+                        <field name="solartree_num_proyect" invisible="type != 'opportunity' or project_id"/>
+                        <field name="project_id" invisible="not project_id" string="Proyecto Asociado" readonly="1"/>
                     </group>
                     <group string="Channels">
                         <!--                        <field name="solartree_lead_scope" widget="selection"/>-->

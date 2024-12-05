@@ -176,7 +176,7 @@
                                     <field name="total_calculation" string="Calculados" readonly="0"
                                            invisible="is_produccion_or_autoconsumo"/>
                                     <field name="percentage" readonly="1" widget="percentage"
-                                           invisible="is_produccion"/>
+                                           invisible="is_produccion" options="{'precision': 1}"/>
                                 </tree>
                             </field>
                              <field name="revision_energy_simulation_demand_ids" string="">
@@ -239,9 +239,12 @@
                         </span>
                     </div>
                 </button>
-                <button class="oe_stat_button" type="object" name="action_create_project_from_revision" icon="fa-folder-open"
+
+            </xpath>
+            <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="after">
+               <button class="oe_stat_button" type="object" name="action_create_project_from_revision"
                         string="Crear Proyecto"
-                        invisible="type == 'lead'"/>
+                        invisible="type == 'lead' or project_id"/>
             </xpath>
         </field>
     </record>

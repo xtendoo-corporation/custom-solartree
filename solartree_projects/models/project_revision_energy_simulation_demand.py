@@ -68,10 +68,23 @@ class ProjectRevisionEnergySimulationDemand(models.Model):
                     demanda = self._get_demanda(record.revision_id.revision_energy_simulation_project_demand_ids)
                     record.total_calculation = demanda - autoconsumo_dem
 
+    kwh_per_year = fields.Integer(
+        string="kWh/año",
+        compute='_compute_kwh_per_year',
+        store=True,
+    )
+
+    @api.depends('total', 'total_calculation')
+    def _compute_kwh_per_year(self):
+        for record in self:
+            record.kwh_per_year = record.total + record.total_calculation
+
+
     percentage = fields.Float(
         string="Percentage",
         compute='_compute_percentage',
         store=True,
+        digits=(16, 1),
     )
 
     @api.depends('revision_id.revision_energy_simulation_project_demand_ids',

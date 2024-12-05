@@ -41,9 +41,10 @@
         <field name="arch" type="xml">
             <graph string="Energy Simulation Demand" disable_linking="1">
                 <field name="revision_id"/>
-                <field name="total" type="measure"/>
-                <field name="total_calculation" type="measure"/>
                 <field name="percentage" type="measure"/>
+                <field name="kwh_per_year" type="measure"/>
+                <field name="total" invisible="1"/>
+                <field name="total_calculation" invisible="1"/>
                 <field name="type_energy_simulation_demand_id" type="row"/>
             </graph>
         </field>

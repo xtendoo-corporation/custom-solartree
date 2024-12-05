@@ -5,7 +5,11 @@ from odoo.exceptions import ValidationError, UserError
 class CrmLead(models.Model):
     _inherit = ["crm.lead"]
 
-
+    project_id = fields.Many2one(
+        comodel_name='project.project',
+        string='Project',
+        help='Related project for this lead'
+    )
     solartree_code = fields.Char(
         string="Lead Code",
         required=True,
@@ -407,6 +411,7 @@ class CrmLead(models.Model):
                 'lead_id': lead.id,
             })
 
+            self.project_id = project.id
             # Create the project revision
             project_revision = self.env['project.revision'].create({
                 'name': lead.selected_revision_id.name,
@@ -476,6 +481,10 @@ class CrmLead(models.Model):
                     'total': energy.total,
                     'percentage': energy.percentage,
                 }) for energy in lead.selected_revision_id.revision_energy_simulation_demand_ids],
+            })
+
+            project.write({
+                'selected_revision_id': project_revision.id,
             })
 
             return {
