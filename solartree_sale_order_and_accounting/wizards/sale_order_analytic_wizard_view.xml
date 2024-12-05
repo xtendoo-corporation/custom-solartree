@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_sale_order_analytic_wizard" model="ir.ui.view">
+        <field name="name">sale.order.analytic.wizard.form</field>
+        <field name="model">sale.order.analytic.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sale Order Analytic Wizard">
+                <group>
+                    <field name="analytic_account_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                </group>
+                <footer>
+                    <button string="Apply" type="object" name="action_apply" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_analytic_wizard" model="ir.actions.act_window">
+        <field name="name">Sale Order Analytic Wizard</field>
+        <field name="res_model">sale.order.analytic.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button name="%(action_sale_order_analytic_wizard)d" type="action" string="Set Analytic Account"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
