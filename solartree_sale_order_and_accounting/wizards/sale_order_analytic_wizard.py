@@ -27,4 +27,6 @@ class SaleOrderAnalyticWizard(models.TransientModel):
                 'date_from': self.date_start,
                 'date_to': self.date_end,
                 'planned_amount': line.purchase_price,
+                'general_budget_id': line.product_id.id,
+                'name': sale_order.name,
             })
