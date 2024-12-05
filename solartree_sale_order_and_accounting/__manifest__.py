@@ -10,6 +10,7 @@
     'depends': [
         'sale',
         'account',
+        'sale_margin',
     ],
     'data': [
         'wizards/sale_order_analytic_wizard_view.xml',
