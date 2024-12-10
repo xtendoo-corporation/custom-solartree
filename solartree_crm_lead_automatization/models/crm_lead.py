@@ -82,7 +82,7 @@ class CrmLead(models.Model):
                 raise AccessError(error_msg)
 
             # Comprobar si la etapa requiere aprobación de margen
-            if self.stage_id.margin_approval_required:
+            if new_stage.margin_approval_required:
                 if not self.approval_margin:
                     if self.compare_expenses_and_percentage():
                         raise AccessError(

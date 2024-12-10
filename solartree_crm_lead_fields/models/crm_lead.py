@@ -383,6 +383,11 @@ class CrmLead(models.Model):
         comodel_name="crm.lead.type",
         string="Tipo de Oferta",
     )
+    solartree_lead_scope_email = fields.Many2one(
+        comodel_name="crm.lead.scope",
+        string="Oferta Alcance",
+    )
+
 
     map_url_email = fields.Char(string="Map URL", compute="_compute_map_url")
 

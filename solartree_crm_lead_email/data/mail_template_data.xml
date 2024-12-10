@@ -45,8 +45,8 @@
                             </t>
                         </li>
                         <li>
-                            <strong>Clase de proyecto:</strong>
-                            <span t-out="object.solartree_lead_type_id_email.name or ''">Clase de Proyecto</span>
+                            <strong>Alcance de Oferta:</strong>
+                            <span t-out="object.solartree_lead_scope_email.name or ''">Clase de Proyecto</span>
                         </li>
                         <li>
                             <strong>Ubicación instalación:</strong>
@@ -54,7 +54,7 @@
                         </li>
                         <li>
                             <strong>Tipo de estudio:</strong>
-                            <span></span>
+                            <span t-out="object.solartree_lead_type_id_email.name or ''">Tipo de Estudio</span>
                         </li>
                         <li>
                             <strong>Entregables adicionales:</strong>
@@ -96,9 +96,11 @@
                         <span t-out="object.name or ''">Identificación Oferta</span>,
                         <strong>revisión:</strong>
                         <span t-out="object.selected_revision_id.name or ''">Revisión</span>
-                        de <span
-                        t-out="object.selected_revision_id.offer_kwp or ''">Oferta kWp
-                    </span> kWp.
+                        de
+                        <span t-out="('%.2f' % (object.selected_revision_id.offer_kwp or 0.0))">Oferta kWp</span>
+                        kWp
+                        <strong>Potencia Nominal:</strong>
+                        <span t-out="('%.2f' % (object.selected_revision_id.offer_kwn or 0.0))">Oferta kWn</span>
                     </p>
                     <p>Saludos,</p>
                 </div>
@@ -192,8 +194,8 @@
                         </li>
                         <li>
                             <strong>Potencia:</strong>
-                            <span t-out="object.offer_kwp or ''">Oferta kWp</span>
-                            kWp
+                            <span t-out="('%.2f' % (object.selected_revision_id.offer_kwp or 0.0))">Oferta kWp</span>
+                            kWp.
                         </li>
                         <li>
                             <strong>Potencia Nominal:</strong>
@@ -238,7 +240,8 @@
                     <p>
                         La oportunidad
                         <span t-out="object.name or ''">ID de la Oferta</span>
-                        ha entrado en la cola de trabajo. <span t-out="object.selected_revision_id.offer_tot.name or ''">Tecnico de OT
+                        ha entrado en la cola de trabajo. <span
+                        t-out="object.selected_revision_id.offer_tot.name or ''">Tecnico de OT
                     </span> va a ser quien se encargue de registrarlo
                         en la base de datos y de estudiar la oferta.
                     </p>
