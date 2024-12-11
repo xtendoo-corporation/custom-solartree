@@ -98,9 +98,9 @@
                         <span t-out="object.selected_revision_id.name or ''">Revisión</span>
                         de
                         <span t-out="('%.2f' % (object.selected_revision_id.offer_kwp or 0.0))">Oferta kWp</span>
-                        kWp
-                        <strong>Potencia Nominal:</strong>
+                        kWp -
                         <span t-out="('%.2f' % (object.selected_revision_id.offer_kwn or 0.0))">Oferta kWn</span>
+                        kWn
                     </p>
                     <p>Saludos,</p>
                 </div>
@@ -241,7 +241,7 @@
                         La oportunidad
                         <span t-out="object.name or ''">ID de la Oferta</span>
                         ha entrado en la cola de trabajo. <span
-                        t-out="object.selected_revision_id.offer_tot.name or ''">Tecnico de OT
+                        t-out="object.selected_revision_id.offer_tot.name or 'SIN TECNICO PARA LA REVISION SELECCIONADA'">Tecnico de OT
                     </span> va a ser quien se encargue de registrarlo
                         en la base de datos y de estudiar la oferta.
                     </p>

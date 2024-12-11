@@ -353,13 +353,13 @@ class CrmLead(models.Model):
             "target": "new",
         }
 
-    @api.constrains('type', 'solartree_lead_channel', 'name')
+    @api.constrains('partner_id', 'name', 'user_id')
     def _check_required_fields_for_opportunity(self):
         for record in self:
             if record.type == 'opportunity':
-                if not record.solartree_lead_channel or not record.name:
+                if not record.partner_id or not record.name or not record.user_id:
                     raise ValidationError(
-                        _("The fields 'Lead Channel', 'Lead Identification' must be filled when the type is 'opportunity'."))
+                        _("Para crear una oportunidad, se requiere que los campos 'Comercial', 'Nombre de la Oferta' y 'Cliente' estén completos."))
 
     def unlink(self):
         for lead in self:
