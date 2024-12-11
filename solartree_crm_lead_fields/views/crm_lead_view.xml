@@ -15,12 +15,12 @@
                 <field name="partner_address_city" invisible="not partner_address_id"/>
                 <field name="partner_address_state_id" invisible="not partner_address_id"/>
                 <button
-                        class="btn btn-primary"
-                        name="open_map"
-                        type="object"
-                        string="Enlace a la Geolocalización"
-                        icon="fa-map-marker"
-                        invisible="not partner_address_id"/>
+                    class="btn btn-primary"
+                    name="open_map"
+                    type="object"
+                    string="Enlace a la Geolocalización"
+                    icon="fa-map-marker"
+                    invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//field[@name='partner_name']" position="before">
@@ -29,12 +29,12 @@
                 <field name="partner_address_city" invisible="not partner_address_id"/>
                 <field name="partner_address_state_id" invisible="not partner_address_id"/>
                 <button
-                        class="btn btn-primary"
-                        name="open_map"
-                        type="object"
-                        string="Enlace a la Geolocalización"
-                        icon="fa-map-marker"
-                        invisible="not partner_address_id"/>
+                    class="btn btn-primary"
+                    name="open_map"
+                    type="object"
+                    string="Enlace a la Geolocalización"
+                    icon="fa-map-marker"
+                    invisible="not partner_address_id"/>
                 <separator/>
             </xpath>
             <xpath expr="//notebook" position="before">
@@ -42,7 +42,8 @@
                     <group string="Solar Tree Information">
                         <field name="approval_margin"
                                groups="solartree_crm_lead_automatization.group_solartree_director"/>
-                        <field name="solartree_code" required="0" invisible="type != 'opportunity'"/>
+                        <field name="is_technical_office_director" invisible="1"/>
+                        <field name="solartree_code" readonly="not is_technical_office_director"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_lead_type_id_email" invisible="type == 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
@@ -119,7 +120,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                        name="filter_domain"
+                    name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -133,7 +134,7 @@
         <field name="arch" type="xml">
             <field name="name" position="attributes">
                 <attribute
-                        name="filter_domain"
+                    name="filter_domain"
                 >['|', ('name', 'ilike', self), ('solartree_code', 'ilike', self)]
                 </attribute>
             </field>
@@ -165,13 +166,13 @@
                 </div>
                 <div>
                     <field name="offer_kwp"/>
-                    <span> kWp</span>
+                    <span>kWp</span>
                     <br/>
                     <field name="installation_sale_price"/>
-                    <span> €</span>
+                    <span>€</span>
                     <br/>
                     <field name="installation_sale_price_wp"/>
-                    <span> €/Wp</span>
+                    <span>€/Wp</span>
                     <br/>
                     <field name="solartree_lead_type_id"/>
                     <br/>

@@ -11,6 +11,7 @@
                 <field name="user_offer_tot_required"/>
                 <field name="user_id_required"/>
                 <field name="margin_approval_required"/>
+                <field name="assignation_solartree_code"/>
             </field>
         </field>
     </record>
@@ -26,6 +27,7 @@
                 <field name="user_offer_tot_required"/>
                 <field name="user_id_required"/>
                 <field name="margin_approval_required"/>
+                <field name="assignation_solartree_code"/>
             </field>
         </field>
     </record>
@@ -42,6 +44,7 @@
                 <field name="user_offer_tot_required"/>
                 <field name="user_id_required"/>
                 <field name="margin_approval_required"/>
+                <field name="assignation_solartree_code"/>
             </field>
         </field>
     </record>

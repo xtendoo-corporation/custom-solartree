@@ -23,3 +23,8 @@ class Stage(models.Model):
         string='Autorización de margen requerida',
         default=False
     )
+
+    assignation_solartree_code = fields.Boolean(
+        string='Asignación de código Solartree',
+        default=False
+    )

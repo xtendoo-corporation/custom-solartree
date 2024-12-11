@@ -12,9 +12,11 @@ class CrmLead(models.Model):
     )
     solartree_code = fields.Char(
         string="Lead Code",
-        required=True,
         copy=False
     )
+
+
+
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
         string="Lead Modality",
@@ -276,20 +278,20 @@ class CrmLead(models.Model):
         ("crm_lead_unique_solartree_code", "UNIQUE (solartree_code)", _("The lead code must be unique!")),
     ]
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        sequence = self.env.ref("solartree_crm_lead_fields.sequence_lead", raise_if_not_found=False)
-        current_year_suffix = datetime.now().year % 100
-
-        for vals in vals_list:
-            if not vals.get("solartree_code") or vals["solartree_code"] == "/":
-                if sequence:
-                    sequence_number = sequence.next_by_id()
-                    vals["solartree_code"] = f"OF-{current_year_suffix:02d}-{sequence_number}"
-                else:
-                    vals["solartree_code"] = "OF-XX-XXXX"
-
-        return super().create(vals_list)
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     sequence = self.env.ref("solartree_crm_lead_fields.sequence_lead", raise_if_not_found=False)
+    #     current_year_suffix = datetime.now().year % 100
+    #
+    #     for vals in vals_list:
+    #         if not vals.get("solartree_code") or vals["solartree_code"] == "/":
+    #             if sequence:
+    #                 sequence_number = sequence.next_by_id()
+    #                 vals["solartree_code"] = f"OF-{current_year_suffix:02d}-{sequence_number}"
+    #             else:
+    #                 vals["solartree_code"] = "OF-XX-XXXX"
+    #
+    #     return super().create(vals_list)
 
 
     def _address_as_string(self):

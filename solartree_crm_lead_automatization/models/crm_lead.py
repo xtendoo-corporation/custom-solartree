@@ -1,11 +1,23 @@
 from odoo import _, models, fields, api
 from odoo.exceptions import AccessError
+from datetime import datetime
 
 
 class CrmLead(models.Model):
     _inherit = "crm.lead"
 
     approval_margin = fields.Boolean(string="Autorizar bajada de margenes")
+
+    is_technical_office_director = fields.Boolean(
+        compute="_compute_is_technical_office_director",
+        string="Is Technical Office Director",
+        store=False
+    )
+
+    def _compute_is_technical_office_director(self):
+        for record in self:
+            record.is_technical_office_director = self.env.user.has_group(
+                "solartree_crm_lead_automatization.group_crm_technical_office_director")
 
     def compare_expenses_and_percentage(self):
         for offer_record in self.selected_revision_id.offer_class_id:
@@ -28,6 +40,16 @@ class CrmLead(models.Model):
                         continue
                     return False
         return True
+
+    def compute_solartree_code(self):
+        """Genera un código único para el campo solartree_code."""
+        sequence = self.env.ref("solartree_crm_lead_fields.sequence_lead", raise_if_not_found=False)
+        current_year_suffix = datetime.now().year % 100
+        if sequence:
+            sequence_number = sequence.next_by_id()
+            return f"OF-{current_year_suffix:02d}-{sequence_number}"
+        else:
+            return "OF-XX-XXXX"
 
     def _obtain_allowed_users(self, stage):
         """Devuelve los IDs de los usuarios permitidos para la etapa proporcionada."""
@@ -90,5 +112,11 @@ class CrmLead(models.Model):
                     if self.compare_profit_and_percentage():
                         raise AccessError(
                             _("No tienes permiso para cambiar a la etapa '%s': Beneficio Industrial no cumple con los márgenes aprobados." % new_stage.name))
+
+            # Comprobar si la etapa requiere asignación de código de SolarTree
+            if new_stage.assignation_solartree_code:
+                for lead in self:
+                    if not lead.solartree_code:
+                        vals['solartree_code'] = self.compute_solartree_code()
 
         return super(CrmLead, self).write(vals)
