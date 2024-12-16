@@ -17,7 +17,10 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@class='o_kanban_primary_left']" position="replace">
+              <xpath expr="//div[@class='o_kanban_primary_left']" position="replace">
+            </xpath>
+            <xpath expr="//div[@class='o_project_kanban_main d-flex align-items-baseline gap-1']" position="replace">
+                 <div class="o_kanban_card_content mw-100">
                 <div class="o_kanban_primary_left">
                 <div class="o_primary me-5">
                     <span class="o_text_overflow" t-att-title="record.display_name.value">
@@ -27,15 +30,17 @@
                         <span class="fa fa-user me-2" aria-label="Partner" title="Partner"/>
                         <field name="partner_id_lead" readonly="1"/>
                     </div>
-                    <span class="fa fa-bolt me-2" aria-label="Lightning Bolt" title="Lightning Bolt"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}" placeholder="Tags"/>
                         <field name="offer_kwp" readonly="1"/>
+                        <span> kWp</span>
                     <br/>
-                    <span class="fa fa-bolt me-2" aria-label="Lightning Bolt" title="Lightning Bolt"/>
                         <field name="offer_kwn" readonly="1"/>
+                        <span> kWn</span>
                     <br/>
                         <field name="offer_class" readonly="1"/>
                     </div>
                 </div>
+                 </div>
             </xpath>
         </field>
     </record>

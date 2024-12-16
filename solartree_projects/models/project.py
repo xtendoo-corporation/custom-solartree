@@ -34,12 +34,12 @@ class ProjectProject(models.Model):
     )
     offer_kwn = fields.Float(
         related='selected_revision_id.offer_kwn',
-        string='Offer kWp',
+        string='Offer kWn',
         readonly=False
     )
     offer_class = fields.Char(
         related='selected_revision_id.offer_class_id.name',
-        string='Offer kWp',
+        string='Offer Class',
         store=True,
         readonly=False
     )

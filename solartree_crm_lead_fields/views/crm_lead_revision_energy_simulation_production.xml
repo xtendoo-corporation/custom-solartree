@@ -13,7 +13,7 @@
                 <field name="total_calculation" string="Calculados" readonly="0"
                        invisible="is_produccion_or_autoconsumo"/>
                 <field name="percentage" readonly="1" widget="percentage"
-                       invisible="is_produccion" options="{'precision': 1}"/>
+                       invisible="is_produccion"/>
             </tree>
         </field>
     </record>
@@ -29,7 +29,7 @@
                     <field name="total_calculation" string="Calculados" readonly="0"
                            modifiers="{'invisible': [('type_energy_simulation_production_id.name', 'in', ['Producción', 'Autoconsumo (Prod.)'])]}"/>
                     <field name="percentage" readonly="1" widget="percentage"
-                           modifiers="{'invisible': [('type_energy_simulation_production_id.name', 'in', ['Producción'])]}" options="{'precision': 1}"/>
+                           modifiers="{'invisible': [('type_energy_simulation_production_id.name', 'in', ['Producción'])]}"/>
                 </group>
             </form>
         </field>
@@ -42,7 +42,7 @@
             <graph string="Energy Simulation Production" disable_linking="1">
                 <field name="revision_id"/>
                 <field name="type_energy_simulation_production_id" type="row"/>
-                <field name="percentage" type="measure" options="{'precision': 1}"/>
+                <field name="percentage" type="measure"/>
                 <field name="kwh_per_year" type="measure"/>
                 <field name="total" invisible="1"/>
                 <field name="total_calculation" invisible="1"/>

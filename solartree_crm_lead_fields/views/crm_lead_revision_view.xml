@@ -144,9 +144,9 @@
                             <field name="revision_direct_costs_ids" string="">
                                 <tree editable="bottom">
                                     <field name="type_direct_costs_id" options="{'no_create': True,}" string=""/>
-                                    <field name="price_cost" widget="monetary" readonly="0"/>
+                                    <field name="price_cost" digits="[16, 2]" readonly="0"/>
                                     <field name="price_cost_wp" digits="[16, 4]"/>
-                                    <field name="price_sale" widget="monetary" readonly="0"/>
+                                    <field name="price_sale" digits="[16, 2]" readonly="0"/>
                                     <field name="price_sale_wp" digits="[16, 4]"/>
                                 </tree>
                             </field>
@@ -176,7 +176,7 @@
                                     <field name="total_calculation" string="Calculados" readonly="0"
                                            invisible="is_produccion_or_autoconsumo"/>
                                     <field name="percentage" readonly="1" widget="percentage"
-                                           invisible="is_produccion" options="{'precision': 1}"/>
+                                           invisible="is_produccion"/>
                                 </tree>
                             </field>
                              <field name="revision_energy_simulation_demand_ids" string="">

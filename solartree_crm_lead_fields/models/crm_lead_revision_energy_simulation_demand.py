@@ -77,14 +77,14 @@ class CrmLeadRevisionEnergySimulationDemand(models.Model):
     @api.depends('total', 'total_calculation')
     def _compute_kwh_per_year(self):
         for record in self:
-            record.kwh_per_year = record.total + record.total_calculation
+            if record.percentage:
+                record.kwh_per_year = record.total + record.total_calculation
 
 
     percentage = fields.Float(
         string="Percentage",
         compute='_compute_percentage',
         store=True,
-        digits=(16, 1),
     )
 
     @api.depends('revision_id.revision_energy_simulation_demand_ids',

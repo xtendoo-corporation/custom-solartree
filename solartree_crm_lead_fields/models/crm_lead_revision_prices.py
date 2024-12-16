@@ -71,7 +71,6 @@ class CrmLeadRevisionPrices(models.Model):
     price_wp = fields.Monetary(
         string="Price / WP",
         currency_field="company_currency",
-        digits=(16, 4),
         compute="_compute_price_wp",
         store=True
     )

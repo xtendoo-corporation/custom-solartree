@@ -159,7 +159,7 @@ class ProjectRevision(models.Model):
     offer_class_id = fields.Many2one(
         'offer.class',
         string='Offer Class relation',
-        compute='_compute_offer_class',
+        compute='_compute_offer_class_id',
     )
 
     @api.depends('offer_kwn')
@@ -170,11 +170,21 @@ class ProjectRevision(models.Model):
                 ('max_value', '>=', record.offer_kwn)
             ], limit=1)
             if offer_class:
-                record.offer_class_id = offer_class
                 record.offer_class = offer_class.name
             else:
-                record.offer_class_id = False
                 record.offer_class = ''
+
+    @api.depends('offer_kwn')
+    def _compute_offer_class_id(self):
+        for record in self:
+            offer_class = self.env['offer.class'].search([
+                ('min_value', '<=', record.offer_kwn),
+                ('max_value', '>=', record.offer_kwn)
+            ], limit=1)
+            if offer_class:
+                record.offer_class_id = offer_class
+            else:
+                record.offer_class_id = False
 
     offer_evacuation = fields.Many2one(
         comodel_name="crm.lead.evacuation",
@@ -185,28 +195,24 @@ class ProjectRevision(models.Model):
         "project.revision.inverter",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_battery_ids = fields.One2many(
         "project.revision.battery",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_energy_simulation_project_production_ids = fields.One2many(
         "project.revision.energy.simulation.production",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_energy_simulation_project_demand_ids = fields.One2many(
         "project.revision.energy.simulation.demand",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     pb_exced_min = fields.Float(

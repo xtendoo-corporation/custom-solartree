@@ -15,7 +15,19 @@ class CrmLead(models.Model):
         copy=False
     )
 
+    solartree_code_and_revision_selected = fields.Char(
+        string="Lead Code and Revision Selected",
+        compute="_compute_solartree_code_and_revision_selected",
+        store=True,
+    )
 
+    @api.depends('solartree_code', 'selected_revision_id')
+    def _compute_solartree_code_and_revision_selected(self):
+        for record in self:
+            if record.selected_revision_id:
+                record.solartree_code_and_revision_selected = f"{record.solartree_code}_{record.selected_revision_id.name}"
+            else:
+                record.solartree_code_and_revision_selected = record.solartree_code
 
     solartree_lead_modality_id = fields.Many2one(
         comodel_name="crm.lead.modality",
@@ -413,7 +425,7 @@ class CrmLead(models.Model):
                 raise UserError("Project already exists.")
             # Create the project
             project = self.env['project.project'].create({
-                'name': lead.solartree_num_proyect,
+                'name': f"P_{lead.solartree_num_proyect} : {lead.name}",
                 'partner_id_lead': lead.partner_id.id,
                 'lead_id': lead.id,
             })

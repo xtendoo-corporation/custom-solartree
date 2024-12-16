@@ -260,14 +260,12 @@ class CrmLeadRevision(models.Model):
         "crm.lead.revision.prices",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_direct_costs_ids = fields.One2many(
         "crm.lead.revision.direct.costs",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     def action_view_direct_costs_graph(self):
@@ -285,28 +283,24 @@ class CrmLeadRevision(models.Model):
         "crm.lead.revision.inverter",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_battery_ids = fields.One2many(
         "crm.lead.revision.battery",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_energy_simulation_production_ids = fields.One2many(
         "crm.lead.revision.energy.simulation.production",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     revision_energy_simulation_demand_ids = fields.One2many(
         "crm.lead.revision.energy.simulation.demand",
         "revision_id",
         string="",
-        ondelete='cascade'
     )
 
     total_revision_percentage = fields.Monetary(
@@ -358,12 +352,6 @@ class CrmLeadRevision(models.Model):
     )
     offer_battery_manufacturer = fields.Char(
         string="Battery Manufacturer",
-    )
-    revision_inverter_ids = fields.One2many(
-        "crm.lead.revision.inverter",
-        "revision_id",
-        string="",
-        ondelete='cascade'
     )
     offer_structure_manufacturer = fields.Char(
         string="Structure Manufacturer",

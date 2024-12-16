@@ -48,7 +48,6 @@ class CrmLeadRevisionDirectCosts(models.Model):
     price_cost = fields.Monetary(
         string="Cost",
         currency_field="company_currency",
-        digits=(16, 2),
         store=True
     )
 
@@ -70,7 +69,6 @@ class CrmLeadRevisionDirectCosts(models.Model):
     price_sale = fields.Monetary(
         string="Sale",
         currency_field="company_currency",
-        digits=(16, 2),
         store=True
     )
 
