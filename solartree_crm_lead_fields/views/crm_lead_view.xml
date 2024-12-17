@@ -5,6 +5,8 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <!--atributos oculto team_id-->
+             <xpath expr="//button[@name='%(crm_project_create.crm_create_project_action)d']" position="replace">
+             </xpath>
             <xpath expr="//field[@name='team_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>

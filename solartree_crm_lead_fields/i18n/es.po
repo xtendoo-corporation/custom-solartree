@@ -167,7 +167,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_energy_simulation_production_tree
 #: model_terms:ir.ui.view,arch_db:solartree_crm_lead_fields.view_crm_lead_revision_form
 msgid "Calculados"
-msgstr ""
+msgstr "kWh/año"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_intern_channel
@@ -1515,13 +1515,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_energy_simulation_demand__total
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_energy_simulation_production__total
 msgid "Total"
-msgstr ""
+msgstr "kWh/año"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_energy_simulation_demand__total_calculation
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead_revision_energy_simulation_production__total_calculation
 msgid "Total Calculation"
-msgstr ""
+msgstr "kWh/año"
 
 #. module: solartree_crm_lead_fields
 #: model:ir.model.fields,field_description:solartree_crm_lead_fields.field_crm_lead__solartree_offer_ht

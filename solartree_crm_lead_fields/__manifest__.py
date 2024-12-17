@@ -5,7 +5,7 @@
     "author": "Xtendoo",
     "license": "AGPL-3",
     "depends": [
-        "crm", "mail", "project",
+        "crm", "mail", "project","crm_project_create",
     ],
     "data": [
         "data/lead_sequence.xml",

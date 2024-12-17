@@ -421,96 +421,24 @@ class CrmLead(models.Model):
         for lead in self:
             if not lead.selected_revision_id:
                 raise UserError("No revision selected.")
+            if not lead.solartree_num_proyect:
+                raise UserError("The field 'Nº Proyect' must have a value.")
             if self.env['project.project'].search([('name', '=', lead.solartree_num_proyect)]):
                 raise UserError("Project already exists.")
-            # Create the project
-            project = self.env['project.project'].create({
-                'name': f"P_{lead.solartree_num_proyect} : {lead.name}",
-                'partner_id_lead': lead.partner_id.id,
-                'lead_id': lead.id,
-            })
 
-            self.project_id = project.id
-            # Create the project revision
-            project_revision = self.env['project.revision'].create({
-                'name': lead.selected_revision_id.name,
-                'project_id': project.id,
-                'solartree_lead_type_id': lead.selected_revision_id.solartree_lead_type_id.id,
-                'solartree_lead_scope': lead.selected_revision_id.solartree_lead_scope.id,
-                'solartree_lead_modality_id': lead.selected_revision_id.solartree_lead_modality_id.id,
-                'solartree_lead_collective': lead.selected_revision_id.solartree_lead_collective,
-                'solartree_lead_storage': lead.selected_revision_id.solartree_lead_storage,
-                'solartree_lead_structure_type': lead.selected_revision_id.solartree_lead_structure_type.id,
-                'solartree_lead_structure_model': lead.selected_revision_id.solartree_lead_structure_model.id,
-                'offer_kwp': lead.selected_revision_id.offer_kwp,
-                'offer_kwn': lead.selected_revision_id.offer_kwn,
-                'offer_storage_kwh': lead.selected_revision_id.offer_storage_kwh,
-                'offer_storage_kwn': lead.selected_revision_id.offer_storage_kwn,
-                'offer_ve_kwn': lead.selected_revision_id.offer_ve_kwn,
-                'offer_tot': lead.selected_revision_id.offer_tot.id,
-                'offer_date_deliver': lead.selected_revision_id.offer_date_deliver,
-                'offer_HT': lead.selected_revision_id.offer_HT,
-                'offer_pb_actual': lead.selected_revision_id.offer_pb_actual,
-                'offer_tir_actual': lead.selected_revision_id.offer_tir_actual,
-                'offer_pb_omip': lead.selected_revision_id.offer_pb_omip,
-                'offer_tir_omip': lead.selected_revision_id.offer_tir_omip,
-                'offer_pb_proyection': lead.selected_revision_id.offer_pb_proyection,
-                'offer_tir_proyection': lead.selected_revision_id.offer_tir_proyection,
-                'avg_price': lead.selected_revision_id.avg_price,
-                'surplus_price': lead.selected_revision_id.surplus_price,
-                'pb_exced_min': lead.selected_revision_id.pb_exced_min,
-                'tir_exced_min': lead.selected_revision_id.tir_exced_min,
-                'pb_battery': lead.selected_revision_id.pb_battery,
-                'tir_battery': lead.selected_revision_id.tir_battery,
-                'offer_fabricant_modules': lead.selected_revision_id.offer_fabricant_modules,
-                'offer_modules_model': lead.selected_revision_id.offer_modules_model,
-                'offer_modules_unit_power': lead.selected_revision_id.offer_modules_unit_power,
-                'offer_modules_quantity': lead.selected_revision_id.offer_modules_quantity,
-                'offer_inverter_manufacturer': lead.selected_revision_id.offer_inverter_manufacturer,
-                'offer_battery_manufacturer': lead.selected_revision_id.offer_battery_manufacturer,
-                'offer_structure_manufacturer': lead.selected_revision_id.offer_structure_manufacturer,
-                'offer_structure_description': lead.selected_revision_id.offer_structure_description,
-                'offer_class_id': lead.selected_revision_id.offer_class_id.id,
-                'company_currency': lead.selected_revision_id.company_currency.id,
-                'offer_evacuation': lead.selected_revision_id.offer_evacuation.id,
-            })
+            new_project_name = f"P_{lead.solartree_num_proyect} : {lead.name}"
+            print("*" * 120)
+            print(new_project_name)
 
-            # Add new related records
-            project_revision.write({
-                'revision_inverter_ids': [(0, 0, {
-                    'type_inverter_id': inverter.type_inverter_id.id,
-                    'offer_inverter_model': inverter.offer_inverter_model,
-                    'offer_inverter_unit_power': inverter.offer_inverter_unit_power,
-                    'offer_inverter_quantity': inverter.offer_inverter_quantity,
-                }) for inverter in lead.selected_revision_id.revision_inverter_ids],
-                'revision_battery_ids': [(0, 0, {
-                    'type_battery_id': battery.type_battery_id.id,
-                    'offer_battery_model': battery.offer_battery_model,
-                    'offer_battery_capacity': battery.offer_battery_capacity,
-                    'offer_battery_power': battery.offer_battery_power,
-                    'offer_battery_quantity': battery.offer_battery_quantity,
-                }) for battery in lead.selected_revision_id.revision_battery_ids],
-                'revision_energy_simulation_project_production_ids': [(0, 0, {
-                    'type_energy_simulation_project_production_id': energy.type_energy_simulation_production_id.id,
-                    'total': energy.total,
-                    'percentage': energy.percentage,
-                }) for energy in lead.selected_revision_id.revision_energy_simulation_production_ids],
-                'revision_energy_simulation_project_demand_ids': [(0, 0, {
-                    'type_energy_simulation_project_demand_id': energy.type_energy_simulation_demand_id.id,
-                    'total': energy.total,
-                    'percentage': energy.percentage,
-                }) for energy in lead.selected_revision_id.revision_energy_simulation_demand_ids],
-            })
-
-            project.write({
-                'selected_revision_id': project_revision.id,
-            })
-
+            # Abrir el wizard crm.create.project con los valores necesarios
             return {
                 'type': 'ir.actions.act_window',
-                'name': 'Project',
-                'res_model': 'project.project',
+                'name': 'Create Project',
+                'res_model': 'crm.create.project',
                 'view_mode': 'form',
-                'res_id': project.id,
-                'target': 'current',
+                'target': 'new',
+                'context': {
+                    'default_project_name': new_project_name,
+                    'default_lead_id': lead.id,
+                }
             }

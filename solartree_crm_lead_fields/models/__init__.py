@@ -18,3 +18,4 @@ from . import crm_lead_revision_battery
 from . import offer_class
 from . import crm_lead_revision_energy_simulation_production
 from . import crm_lead_revision_energy_simulation_demand
+from . import crm_create_project
