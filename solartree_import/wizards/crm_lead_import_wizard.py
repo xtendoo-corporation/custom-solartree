@@ -4,6 +4,7 @@ import re
 import base64
 import xlrd
 
+
 class ImportCrmLead(models.TransientModel):
     _name = 'import.crm.lead.wizard'
     _description = 'Wizard para importar leads desde un archivo XLS'
@@ -53,13 +54,11 @@ class ImportCrmLead(models.TransientModel):
                     revision_record = self.env['crm.lead.revision'].with_context(
                         default_lead_id=crm_lead_record.id).create(revision_record_data)
 
-                    # Procesar los costos y márgenes relacionados con esta revisión
+                    # Crear los registros de precios
                     self.create_fee_and_margins(row_values, header_indexes, revision, revision_record)
                     self.create_energy_simulation_production(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_cost(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_sale(row_values, header_indexes, revision, revision_record)
-
-                    # self.create_direct_costs(row_values, header_indexes, revision, revision_record)
 
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
@@ -69,6 +68,7 @@ class ImportCrmLead(models.TransientModel):
         crm_lead_data = {
             'type': 'opportunity',
             'user_id': self.get_user_by_dni(row_values[header_indexes['Comercial']]).id,
+            'partner_id': self.get_partner_by_dni(row_values[header_indexes['Cliente']]).id,
             'solartree_code': row_values[header_indexes['Código Oferta']],
             'name': row_values[header_indexes['Nombre de la oferta']],
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
@@ -179,7 +179,8 @@ class ImportCrmLead(models.TransientModel):
 
         for production_name, production_column in energy_simulation_production_types:
             # Buscar el registro de tipo de precio
-            type_production = self.env['crm.lead.revision.global.type'].search([('name', '=', production_name)], limit=1)
+            type_production = self.env['crm.lead.revision.global.type'].search([('name', '=', production_name)],
+                                                                               limit=1)
 
             # Si no existe, crear el tipo de precio con el comportamiento especificado
             if not type_production:
@@ -213,7 +214,6 @@ class ImportCrmLead(models.TransientModel):
             ('Autoconsumo (Dem.)', 'Autoconsumo (Dem.)'),
             ('Red (Dem.)', 'Red (Dem.)'),
         ]
-
 
     # Metodo para construir los datos de inversor
     @api.model
@@ -253,15 +253,24 @@ class ImportCrmLead(models.TransientModel):
                     'behavior': 'direct_costs',
                 })
 
-            # Crear el registro de precios con el porcentaje para cada revisión
-            cost_data = {
-                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                'type_price_id': type_cost.id,
-                'percentage': row_values[header_indexes[f'{cost_column}{revision}']]
-            }
+            existing_cost = self.env['crm.lead.revision.direct.costs'].search([
+                ('revision_id', '=', revision_record.id),
+                ('type_direct_costs_id', '=', type_cost.id)
+            ], limit=1)
 
-            # Crear el registro de precios en la base de datos
-            self.env['crm.lead.revision.prices'].create(cost_data)
+            if existing_cost:
+                existing_cost.write({
+                    'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
+                })
+            else:
+                # Crear el registro de precios con el porcentaje para cada revisión
+                cost_data = {
+                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                    'type_direct_costs_id': type_cost.id,
+                    'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
+                }
+                # Crear el registro de precios en la base de datos
+                self.env['crm.lead.revision.direct.costs'].create(cost_data)
 
     @api.model
     def create_direct_costs_price_sale(self, row_values, header_indexes, revision, revision_record):
@@ -292,15 +301,24 @@ class ImportCrmLead(models.TransientModel):
                     'behavior': 'direct_costs',
                 })
 
-            # Crear el registro de precios con el porcentaje para cada revisión
-            cost_data = {
-                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                'type_price_id': type_cost.id,
-                'percentage': row_values[header_indexes[f'{cost_column}{revision}']]
-            }
+            existing_cost = self.env['crm.lead.revision.direct.costs'].search([
+                ('revision_id', '=', revision_record.id),
+                ('type_direct_costs_id', '=', type_cost.id)
+            ], limit=1)
 
-            # Crear el registro de precios en la base de datos
-            self.env['crm.lead.revision.prices'].create(cost_data)
+            if existing_cost:
+                existing_cost.write({
+                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+                })
+            else:
+                # Crear el registro de precios con el porcentaje para cada revisión
+                cost_data = {
+                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                    'type_direct_costs_id': type_cost.id,
+                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+                }
+                # Crear el registro de precios en la base de datos
+                self.env['crm.lead.revision.direct.costs'].create(cost_data)
 
     @api.model
     def create_total_price(self, row_values, header_indexes, revision, common_data, book):
