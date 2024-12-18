@@ -4,7 +4,6 @@ import re
 import base64
 import xlrd
 
-
 class ImportCrmLead(models.TransientModel):
     _name = 'import.crm.lead.wizard'
     _description = 'Wizard para importar leads desde un archivo XLS'
@@ -57,6 +56,9 @@ class ImportCrmLead(models.TransientModel):
                     # Procesar los costos y márgenes relacionados con esta revisión
                     self.create_fee_and_margins(row_values, header_indexes, revision, revision_record)
                     self.create_energy_simulation_production(row_values, header_indexes, revision, revision_record)
+                    self.create_direct_costs_price_cost(row_values, header_indexes, revision, revision_record)
+                    self.create_direct_costs_price_sale(row_values, header_indexes, revision, revision_record)
+
                     # self.create_direct_costs(row_values, header_indexes, revision, revision_record)
 
         # Limpiar la sesión de base de datos
@@ -167,11 +169,12 @@ class ImportCrmLead(models.TransientModel):
                 }
                 self.env['crm.lead.revision.prices'].create(fee_data)
 
+    @api.model
     def create_energy_simulation_production(self, row_values, header_indexes, revision, revision_record):
         energy_simulation_production_types = [
             ('Producción', '-Producción'),
             ('Autoconsumo (Prod.)', '-Autoconsumo (Prod.)'),
-            ('Excedentes (Prod.)', '-Excedentes (Prod.)'),
+            # ('Excedentes (Prod.)', '-Excedentes (Prod.)'),
         ]
 
         for production_name, production_column in energy_simulation_production_types:
@@ -185,15 +188,24 @@ class ImportCrmLead(models.TransientModel):
                     'behavior': 'production',
                 })
 
-            # Crear el registro de precios con el porcentaje para cada revisión
-            production_data = {
-                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                'type_price_id': type_production.id,
-                'total': row_values[header_indexes[f'{revision}{production_column}']]
-            }
+            existing_production = self.env['crm.lead.revision.energy.simulation.production'].search([
+                ('revision_id', '=', revision_record.id),
+                ('type_energy_simulation_production_id', '=', type_production.id)
+            ], limit=1)
 
-            # Crear el registro de precios en la base de datos
-            self.env['crm.lead.revision.prices'].create(production_data)
+            if existing_production:
+                existing_production.write({
+                    'total': row_values[header_indexes[f'{revision}{production_column}']]
+                })
+            else:
+                # Crear el registro de precios con el porcentaje para cada revisión
+                production_data = {
+                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                    'type_energy_simulation_production_id': type_production.id,
+                    'total': row_values[header_indexes[f'{revision}{production_column}']]
+                }
+                # Crear el registro de precios en la base de datos
+                self.env['crm.lead.revision.energy.simulation.production'].create(production_data)
 
     def create_energy_simulation_demand(self, row_values, header_indexes, revision, revision_record):
         energy_simulation_demand_types = [
@@ -213,12 +225,59 @@ class ImportCrmLead(models.TransientModel):
         pass
 
     @api.model
-    def create_direct_costs(self, row_values, header_indexes, revision, revision_record):
+    def create_direct_costs_price_cost(self, row_values, header_indexes, revision, revision_record):
         # Definir los tipos de precio a procesar
         cost_types = [
-            ('Batería', 'Oferta_Almacenamiento_Precio-'),
-            ('VE', 'Oferta_VE_Precio-'),
+            ('Modulos', '-revision_direct_costs_ids_Modulos_Coste'),
+            # ('Inversor', 'Inversor'),
+            # ('Batería', 'Batería'),
+            # ('Estructura', 'Estructura'),
+            # ('Evacuación', 'Evacuación'),
+            # ('H&amp;S', 'H&amp;S'),
+            # ('BOP', 'BOP'),
+            # ('Ingeniería', 'Ingeniería'),
+            # ('Vehículo Eléctrico (VE)', 'Vehículo Eléctrico (VE)'),
+            # ('Staff y Servicios de Obra', 'Staff y Servicios de Obra'),
+            # ('Operación y Mantenimiento', 'Operación y Mantenimiento'),
+        ]
 
+        # Iterar sobre los tipos de precio
+        for cost_name, cost_column in cost_types:
+            # Buscar el registro de tipo de precio
+            type_cost = self.env['crm.lead.revision.global.type'].search([('name', '=', cost_name)], limit=1)
+
+            # Si no existe, crear el tipo de precio con el comportamiento especificado
+            if not type_cost:
+                type_cost = self.env['crm.lead.revision.global.type'].create({
+                    'name': cost_name,
+                    'behavior': 'direct_costs',
+                })
+
+            # Crear el registro de precios con el porcentaje para cada revisión
+            cost_data = {
+                'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                'type_price_id': type_cost.id,
+                'percentage': row_values[header_indexes[f'{cost_column}{revision}']]
+            }
+
+            # Crear el registro de precios en la base de datos
+            self.env['crm.lead.revision.prices'].create(cost_data)
+
+    @api.model
+    def create_direct_costs_price_sale(self, row_values, header_indexes, revision, revision_record):
+        # Definir los tipos de precio a procesar
+        cost_types = [
+            ('Modulos', '-revision_direct_costs_ids_Modulos_Venta'),
+            # ('Inversor', 'Inversor'),
+            # ('Batería', 'Batería'),
+            # ('Estructura', 'Estructura'),
+            # ('Evacuación', 'Evacuación'),
+            # ('H&amp;S', 'H&amp;S'),
+            # ('BOP', 'BOP'),
+            # ('Ingeniería', 'Ingeniería'),
+            # ('Vehículo Eléctrico (VE)', 'Vehículo Eléctrico (VE)'),
+            # ('Staff y Servicios de Obra', 'Staff y Servicios de Obra'),
+            # ('Operación y Mantenimiento', 'Operación y Mantenimiento'),
         ]
 
         # Iterar sobre los tipos de precio
