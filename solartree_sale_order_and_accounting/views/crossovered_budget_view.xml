@@ -5,6 +5,7 @@
         <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='planned_amount']" position="before">
+                <field name="coste_custom"/>
                 <field name="coste"/>
             </xpath>
         </field>
@@ -16,6 +17,7 @@
         <field name="inherit_id" ref="account_budget.view_crossovered_budget_line_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='planned_amount']" position="before">
+                <field name="coste_custom"/>
                 <field name="coste" sum="Coste"/>
             </xpath>
         </field>

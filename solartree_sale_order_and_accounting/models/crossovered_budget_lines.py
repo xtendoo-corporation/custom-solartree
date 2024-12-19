@@ -9,6 +9,11 @@ class CrossoveredBudgetLines(models.Model):
     )
     coste = fields.Float(
         related='sale_order_line_id.purchase_price',
+        string='Coste de oferta',
+        store=True
+    )
+
+    coste_custom = fields.Float(
         string='Coste',
         store=True
     )
