@@ -73,6 +73,7 @@ class ImportCrmLead(models.TransientModel):
             'name': row_values[header_indexes['Nombre de la oferta']],
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
                                                                 row_values[header_indexes['Oferta Canal']]).id,
+            'solartree_intern_channel': self.get_user_by_dni(row_values[header_indexes['Canal interno']]).id,
             'solartree_cups': row_values[header_indexes['CUPS']],
             'solartree_date_required_delivery': self.get_date_formatted(
                 row_values[header_indexes['Fecha de entrega requerida']],
@@ -88,6 +89,20 @@ class ImportCrmLead(models.TransientModel):
                                                                    book),
             'solartree_date_sign_contract': self.get_date_formatted(row_values[header_indexes['Fecha Firma Contrato']],
                                                                     book),
+            'design_notes': row_values[header_indexes['Observaciones Diseño']],
+            'customer_consumption_mwh': row_values[header_indexes['Consumo del cliente (kWh/año)']],
+            'max_power_bie': row_values[header_indexes['Potencia máxima BIE (kW)']],
+            'extension_rights': row_values[header_indexes['Derechos de extensión (kW)']],
+            'access_rights': row_values[header_indexes['Derechos de acceso (kW)']],
+            'lead_fee': self.get_or_create_record('crm.lead.fee',
+                                                          row_values[header_indexes['Tarifa eléctrica']]).id,
+            'lead_tension_level': self.get_or_create_record('crm.lead.tension.level',
+                                                  row_values[header_indexes['Nivel de tensión']]).id,
+            'solartree_additional_deliverables': row_values[header_indexes['Entregables adicionales']],
+            'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
+            'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
+
+
             'solartree_num_proyect': row_values[header_indexes['Nº Proyecto']],
         }
         return crm_lead_data
@@ -114,11 +129,34 @@ class ImportCrmLead(models.TransientModel):
             'solartree_lead_structure_model': self.get_or_create_record('crm.lead.structure.model',
                                                                         row_values[header_indexes[
                                                                             f'{prefix}-Oferta Estructura Modelo']]).id,
+            'avg_price': row_values[header_indexes[f'{prefix}-Precio medio (€/kWh)']],
+            'surplus_price': row_values[header_indexes[f'{prefix}-Precio excedente (€/kWh)']],
+
             'offer_kwp': row_values[header_indexes[f'{prefix}-Oferta kWp']],
             'offer_kwn': row_values[header_indexes[f'{prefix}-Oferta kWn']],
+
             'offer_fabricant_modules': row_values[header_indexes[f'{prefix}-Módulos Fabricante']],
             'offer_modules_model': row_values[header_indexes[f'{prefix}-Modelo Módulos']],
+            'offer_modules_unit_power': row_values[header_indexes[f'{prefix}-Potencia unitaria (Wp)']],
+            'offer_modules_quantity': row_values[header_indexes[f'{prefix}-Cantidad Módulos']],
+            'offer_structure_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante Estructura']],
+            'offer_structure_description': row_values[header_indexes[f'{prefix}-Descripción Estructura']],
+            'offer_ve_kwn': row_values[header_indexes[f'{prefix}-Oferta VE kWn']],
+            'offer_tot': self.get_user_by_dni(row_values[header_indexes[f'{prefix}-Técnico OT']]).id,
+            'offer_HT': row_values[header_indexes[f'{prefix}-HT Oferta']],
+            'offer_evacuation': self.get_or_create_record('crm.lead.evacuation', row_values[header_indexes[
+                f'{prefix}-Tipo de evacuación']]).id,
+
             'offer_pb_actual': row_values[header_indexes[f'{prefix}-PB actuales']],
+            'offer_pb_omip': row_values[header_indexes[f'{prefix}-PB OMIP']],
+            'offer_pb_proyection': row_values[header_indexes[f'{prefix}-PB proyección']],
+            'pb_exced_min': row_values[header_indexes[f'{prefix}-PB Exced Min']],
+            # 'offer_asdfg': row_values[header_indexes[f'{prefix}-PB Batería']],
+            'offer_tir_actual': row_values[header_indexes[f'{prefix}-TIR actuales %']],
+            'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']],
+            'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']],
+            'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
+
         }
         return revision_data
 
@@ -319,10 +357,6 @@ class ImportCrmLead(models.TransientModel):
                 }
                 # Crear el registro de precios en la base de datos
                 self.env['crm.lead.revision.direct.costs'].create(cost_data)
-
-    @api.model
-    def create_total_price(self, row_values, header_indexes, revision, common_data, book):
-        pass
 
     # Metodo para obtener la fecha en formato 'YYYY-MM-DD'
     def get_date_formatted(self, date_value, book):
