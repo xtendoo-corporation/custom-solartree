@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-05 08:21+0000\n"
-"PO-Revision-Date: 2024-12-05 08:21+0000\n"
+"POT-Creation-Date: 2024-12-19 11:14+0000\n"
+"PO-Revision-Date: 2024-12-19 11:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,22 +16,37 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: solartree_projects
-#: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
-msgid ""
-"<br/>\n"
-"                    <span class=\"fa fa-bolt me-2\" aria-label=\"Lightning Bolt\" title=\"Lightning Bolt\"/>"
-msgstr ""
-
-#. module: solartree_projects
-#: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
-msgid ""
-"<span class=\"fa fa-bolt me-2\" aria-label=\"Lightning Bolt\" "
-"title=\"Lightning Bolt\"/>"
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_project_view_gantt_inherit
+msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 msgstr ""
 
 #. module: solartree_projects
 #: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
 msgid "<span class=\"fa fa-user me-2\" aria-label=\"Partner\" title=\"Partner\"/>"
+msgstr ""
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
+msgid ""
+"<span> kWn</span>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
+msgid ""
+"<span> kWp</span>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_project_view_gantt_inherit
+msgid "<strong>Customer — </strong>"
+msgstr ""
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_project_view_gantt_inherit
+msgid "<strong>Project Manager — </strong>"
 msgstr ""
 
 #. module: solartree_projects
@@ -132,6 +147,11 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: solartree_projects
+#: model:ir.model.fields,field_description:solartree_projects.field_project_task__date_end
+msgid "Date End"
+msgstr "Fecha fin"
+
+#. module: solartree_projects
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__display_name
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision_battery__display_name
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision_energy_simulation_demand__display_name
@@ -219,6 +239,11 @@ msgstr "Si está marcado, los nuevos mensajes requieren su atención."
 #: model:ir.model.fields,help:solartree_projects.field_project_revision__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: solartree_projects
+#: model:ir.model.fields,field_description:solartree_projects.field_project_project__installation_date_end
+msgid "Installation date end"
+msgstr "Fecha fin"
 
 #. module: solartree_projects
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_inverter_manufacturer
@@ -404,9 +429,10 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con error de entrega"
 
 #. module: solartree_projects
+#: model:ir.model.fields,field_description:solartree_projects.field_project_project__offer_class
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_class
 msgid "Offer Class"
-msgstr "Clase de oferta"
+msgstr "Oferta kWp"
 
 #. module: solartree_projects
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_class_id
@@ -434,13 +460,12 @@ msgid "Offer deliver date"
 msgstr "Fecha Entrega Oferta"
 
 #. module: solartree_projects
+#: model:ir.model.fields,field_description:solartree_projects.field_project_project__offer_kwn
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_kwn
 msgid "Offer kWn"
-msgstr "Oferta kWn"
+msgstr "Oferta kWp"
 
 #. module: solartree_projects
-#: model:ir.model.fields,field_description:solartree_projects.field_project_project__offer_class
-#: model:ir.model.fields,field_description:solartree_projects.field_project_project__offer_kwn
 #: model:ir.model.fields,field_description:solartree_projects.field_project_project__offer_kwp
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_kwp
 msgid "Offer kWp"
@@ -501,6 +526,17 @@ msgstr "Cliente"
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision_energy_simulation_production__percentage
 msgid "Percentage"
 msgstr "Porcentaje"
+
+#. module: solartree_projects
+#: model:ir.model.fields,field_description:solartree_projects.field_project_project__start_date_planned
+#: model:ir.model.fields,field_description:solartree_projects.field_project_task__start_date_planned
+msgid "Planned Start Date"
+msgstr "Inicio de la fecha planificada"
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_project_view_gantt_inherit
+msgid "Planning"
+msgstr "Planificación"
 
 #. module: solartree_projects
 #: model_terms:ir.ui.view,arch_db:solartree_projects.view_project_revision_form
@@ -692,7 +728,7 @@ msgstr "Fabricante estructuras"
 #. module: solartree_projects
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__surplus_price
 msgid "Surplus Price"
-    msgstr "Precio excedente"
+msgstr "Precio excedente"
 
 #. module: solartree_projects
 #: model_terms:ir.ui.view,arch_db:solartree_projects.view_project_revision_form
@@ -728,6 +764,16 @@ msgstr "TIR proyección %"
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision__offer_tot
 msgid "TOT revisions field"
 msgstr "Técnico OT"
+
+#. module: solartree_projects
+#: model_terms:ir.ui.view,arch_db:solartree_projects.project_view_kanban_inherit
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: solartree_projects
+#: model:ir.model,name:solartree_projects.model_project_task
+msgid "Task"
+msgstr "Tarea"
 
 #. module: solartree_projects
 #: model:ir.model.fields,field_description:solartree_projects.field_project_revision_energy_simulation_demand__total
