@@ -1,3 +1,5 @@
+from operator import index
+
 from odoo import models, fields, api
 
 
@@ -151,9 +153,8 @@ class ProjectRevision(models.Model):
     )
     offer_class = fields.Char(
         string='Offer Class',
-        compute='_compute_offer_class',
-        store=True,
         readonly=True,
+        store=True,
     )
 
     offer_class_id = fields.Many2one(
@@ -162,19 +163,7 @@ class ProjectRevision(models.Model):
         compute='_compute_offer_class_id',
     )
 
-    @api.depends('offer_kwn')
-    def _compute_offer_class(self):
-        for record in self:
-            offer_class = self.env['offer.class'].search([
-                ('min_value', '<=', record.offer_kwn),
-                ('max_value', '>=', record.offer_kwn)
-            ], limit=1)
-            if offer_class:
-                record.offer_class = offer_class.name
-            else:
-                record.offer_class = ''
-
-    @api.depends('offer_kwn')
+    @api.onchange('offer_kwn')
     def _compute_offer_class_id(self):
         for record in self:
             offer_class = self.env['offer.class'].search([
@@ -183,8 +172,11 @@ class ProjectRevision(models.Model):
             ], limit=1)
             if offer_class:
                 record.offer_class_id = offer_class
+                record.offer_class = record.offer_class_id.name
+                record.project_id.offer_class = record.offer_class
             else:
                 record.offer_class_id = False
+                record.offer_class = ""
 
     offer_evacuation = fields.Many2one(
         comodel_name="crm.lead.evacuation",

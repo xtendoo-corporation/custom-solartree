@@ -38,11 +38,44 @@ class ProjectProject(models.Model):
         readonly=False
     )
     offer_class = fields.Char(
-        related='selected_revision_id.offer_class_id.name',
         string='Offer Class',
         store=True,
-        readonly=False
+        readonly=False,
     )
+
+    start_date_planned = fields.Date(
+        string='Planned Start Date',
+        compute='_compute_start_date_planned',
+        store=True
+    )
+
+    @api.depends('task_ids', 'task_ids.start_date_planned')
+    def _compute_start_date_planned(self):
+        for project in self:
+            installation_tasks = project.task_ids.filtered(lambda t: t.tag_ids.name == 'INSTALACION')
+            print("*" * 80)
+            print(installation_tasks)
+            if installation_tasks:
+                project.start_date_planned = installation_tasks[0].start_date_planned
+                print(project.start_date_planned)
+            else:
+                project.start_date_planned = False
+                print(project.start_date_planned)
+
+    installation_date_end = fields.Date(
+        string='Installation date end',
+        compute='_compute_installation_date_end',
+        store=True
+    )
+
+    @api.depends('task_ids', 'task_ids.date_end')
+    def _compute_installation_date_end(self):
+        for project in self:
+            installation_tasks = project.task_ids.filtered(lambda t: 'INSTALACION' in t.tag_ids.mapped('name'))
+            if installation_tasks:
+                project.installation_date_end = installation_tasks[0].date_end
+            else:
+                project.installation_date_end = False
 
     @api.depends('revision_ids.offer_selected')
     def _compute_selected_revision_id(self):
