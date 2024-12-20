@@ -27,6 +27,12 @@
             <field name="category_id" ref="module_category_solartree"/>
         </record>
 
+        <!-- Grupos para Director de Operaciones -->
+        <record id="group_crm_operations_director" model="res.groups">
+            <field name="name">Director de Operaciones</field>
+            <field name="category_id" ref="module_category_solartree"/>
+        </record>
+
         <!-- Grupos para Solartree -->
         <record id="group_solartree_director" model="res.groups">
             <field name="name">Director de Solartree</field>

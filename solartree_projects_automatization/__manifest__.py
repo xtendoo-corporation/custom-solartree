@@ -5,7 +5,7 @@
     "author": "Xtendoo",
     "license": "AGPL-3",
     "depends": [
-    "project", "solartree_crm_lead_fields",
+        "project", "solartree_crm_lead_automatization",
     ],
     "installable": True,
 }
