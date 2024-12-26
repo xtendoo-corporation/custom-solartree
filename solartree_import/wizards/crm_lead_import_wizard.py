@@ -34,6 +34,7 @@ class ImportCrmLead(models.TransientModel):
             # Crear el lead principal
             crm_lead_data = self.create_crm_lead(row_values, header_indexes, book)
             crm_lead_record = self.env['crm.lead'].create(crm_lead_data)
+            self.change_stage(crm_lead_record, row_values[header_indexes['Etapa']])
 
             # Procesar revisiones
             for revision in revision_columns:
@@ -59,6 +60,9 @@ class ImportCrmLead(models.TransientModel):
                     self.create_energy_simulation_production(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_cost(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_sale(row_values, header_indexes, revision, revision_record)
+                    self.create_inversor(row_values, header_indexes, revision, revision_record)
+                    self.create_energy_simulation_demand(row_values, header_indexes, revision, revision_record)
+
 
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
@@ -101,9 +105,8 @@ class ImportCrmLead(models.TransientModel):
             'solartree_additional_deliverables': row_values[header_indexes['Entregables adicionales']],
             'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
             'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
-
-
-            'solartree_num_proyect': row_values[header_indexes['Nº Proyecto']],
+            'solartree_num_proyect': int(row_values[header_indexes['Nº Proyecto']]),
+            'solartree_date_request': self.get_date_formatted(row_values[header_indexes['Fecha de Solicitud de Oferta']], book),
         }
         return crm_lead_data
 
@@ -156,15 +159,15 @@ class ImportCrmLead(models.TransientModel):
             'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']],
             'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']],
             'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
-
+            'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
         }
         return revision_data
 
     @api.model
     def create_fee_and_margins(self, row_values, header_indexes, revision, revision_record):
         fee_types = [
-            ('Fee Interno', '-Fee Externo'),
-            ('Fee Externo', '-Fee Interno'),
+            ('Fee Interno', '-Fee Interno'),
+            ('Fee Externo', '-Fee Externo'),
             ('Beneficio Industrial', '-Beneficio Industrial'),
             ('Gastos de estructura', '-Gastos de estructura')
         ]
@@ -187,11 +190,7 @@ class ImportCrmLead(models.TransientModel):
             ], limit=1)
 
             # Obtener el valor de la celda
-            fee_value = row_values[header_indexes[f'{revision}{fee_column}']]
-
-            # Verificar si el valor es mayor que 1 (es decir, un porcentaje mal interpretado) y ajustarlo
-            if fee_value > 1:
-                fee_value = fee_value / 100  # Ajustar si el valor es mayor a 1 (para porcentajes)
+            fee_value = row_values[header_indexes[f'{revision}{fee_column}']] / 100
 
             # Si existe, actualizarlo
             if existing_fee:
@@ -246,20 +245,67 @@ class ImportCrmLead(models.TransientModel):
                 # Crear el registro de precios en la base de datos
                 self.env['crm.lead.revision.energy.simulation.production'].create(production_data)
 
+    # WIP
+    @api.model
     def create_energy_simulation_demand(self, row_values, header_indexes, revision, revision_record):
         energy_simulation_demand_types = [
-            ('Demanda', 'Demanda'),
-            ('Autoconsumo (Dem.)', 'Autoconsumo (Dem.)'),
-            ('Red (Dem.)', 'Red (Dem.)'),
+            ('Demanda', 'Consumo del cliente (kWh/año)'),
+            ('Autoconsumo (Dem.)', f'{revision}-Autoconsumo (Prod.)'),
+            # ('Red (Dem.)', f'{revision}-Red (Dem.)'),
         ]
+
+        for demand_name, demand_column in energy_simulation_demand_types:
+            # Buscar el registro de tipo de precio
+            type_demand = self.env['crm.lead.revision.global.type'].search([('name', '=', demand_name)], limit=1)
+
+            # Si no existe, crear el tipo de precio con el comportamiento especificado
+            if not type_demand:
+                type_demand = self.env['crm.lead.revision.global.type'].create({
+                    'name': demand_name,
+                    'behavior': 'demand',
+                })
+
+            existing_demand = self.env['crm.lead.revision.energy.simulation.demand'].search([
+                ('revision_id', '=', revision_record.id),
+                ('type_energy_simulation_demand_id', '=', type_demand.id)
+            ], limit=1)
+
+            if existing_demand:
+                existing_demand.write({
+                    'total': row_values[header_indexes[demand_column]]
+                })
+            else:
+                # Crear el registro de precios con el porcentaje para cada revisión
+                demand_data = {
+                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                    'type_energy_simulation_demand_id': type_demand.id,
+                    'total': row_values[header_indexes[demand_column]]
+                }
+                # Crear el registro de precios en la base de datos
+                self.env['crm.lead.revision.energy.simulation.demand'].create(demand_data)
 
     # Metodo para construir los datos de inversor
     @api.model
-    def create_inversor(self, row_values, header_indexes, revision, common_data, book):
-        pass
+    def create_inversor(self, row_values, header_indexes, revision, revision_record):
+        inverter_index = 0
+        while f'{revision}-revision_inverter_model_{inverter_index}' in header_indexes:
+            model = row_values[header_indexes[f'{revision}-revision_inverter_model_{inverter_index}']]
+            power = row_values[header_indexes[f'{revision}-revision_inverter_power_{inverter_index}']]
+            quantity = row_values[header_indexes[f'{revision}-revision_inverter_quantity_{inverter_index}']]
+
+            if model or power or quantity:
+                inverter_data = {
+                    'revision_id': revision_record.id,
+                    'offer_inverter_model': model,
+                    'offer_inverter_unit_power': power,
+                    'offer_inverter_quantity': quantity,
+                }
+                self.env['crm.lead.revision.inverter'].create(inverter_data)
+
+            inverter_index += 1
 
     @api.model
-    def create_battery(self, row_values, header_indexes, revision, common_data, book):
+    def create_battery(self, row_values, header_indexes, revision, revision_record):
         pass
 
     @api.model
@@ -267,16 +313,16 @@ class ImportCrmLead(models.TransientModel):
         # Definir los tipos de precio a procesar
         cost_types = [
             ('Modulos', '-revision_direct_costs_ids_Modulos_Coste'),
-            # ('Inversor', 'Inversor'),
-            # ('Batería', 'Batería'),
-            # ('Estructura', 'Estructura'),
-            # ('Evacuación', 'Evacuación'),
-            # ('H&amp;S', 'H&amp;S'),
-            # ('BOP', 'BOP'),
-            # ('Ingeniería', 'Ingeniería'),
-            # ('Vehículo Eléctrico (VE)', 'Vehículo Eléctrico (VE)'),
-            # ('Staff y Servicios de Obra', 'Staff y Servicios de Obra'),
-            # ('Operación y Mantenimiento', 'Operación y Mantenimiento'),
+            ('Inversor', '-revision_direct_costs_ids_Inversor_Coste'),
+            ('Batería', '-revision_direct_costs_ids_Batería_Coste'),
+            ('Estructura', '-revision_direct_costs_ids_Estructura_Coste'),
+            ('Evacuación', '-revision_direct_costs_ids_Evacuación_Coste'),
+            ('H&S', '-revision_direct_costs_ids_H&S_Coste'),
+            ('BOP', '-revision_direct_costs_ids_BOP_Coste'),
+            ('Ingeniería', '-revision_direct_costs_ids_Ingeniería_Coste'),
+            ('Vehículo Eléctrico (VE)', '-revision_direct_costs_ids_Vehículo Eléctrico (VE)_Coste'),
+            ('Staff y Servicios de Obra', '-revision_direct_costs_ids_Staff y Servicios de Obra_Coste'),
+            ('Operación y Mantenimiento', '-revision_direct_costs_ids_Operación y Mantenimiento_Coste'),
         ]
 
         # Iterar sobre los tipos de precio
@@ -315,16 +361,16 @@ class ImportCrmLead(models.TransientModel):
         # Definir los tipos de precio a procesar
         cost_types = [
             ('Modulos', '-revision_direct_costs_ids_Modulos_Venta'),
-            # ('Inversor', 'Inversor'),
-            # ('Batería', 'Batería'),
-            # ('Estructura', 'Estructura'),
-            # ('Evacuación', 'Evacuación'),
-            # ('H&amp;S', 'H&amp;S'),
-            # ('BOP', 'BOP'),
-            # ('Ingeniería', 'Ingeniería'),
-            # ('Vehículo Eléctrico (VE)', 'Vehículo Eléctrico (VE)'),
-            # ('Staff y Servicios de Obra', 'Staff y Servicios de Obra'),
-            # ('Operación y Mantenimiento', 'Operación y Mantenimiento'),
+            ('Inversor', '-revision_direct_costs_ids_Inversor_Venta'),
+            ('Batería', '-revision_direct_costs_ids_Batería_Venta'),
+            ('Estructura', '-revision_direct_costs_ids_Estructura_Venta'),
+            ('Evacuación', '-revision_direct_costs_ids_Evacuación_Venta'),
+            ('H&S', '-revision_direct_costs_ids_H&S_Venta'),
+            ('BOP', '-revision_direct_costs_ids_BOP_Venta'),
+            ('Ingeniería', '-revision_direct_costs_ids_Ingeniería_Venta'),
+            ('Vehículo Eléctrico (VE)', '-revision_direct_costs_ids_Vehículo Eléctrico (VE)_Venta'),
+            ('Staff y Servicios de Obra', '-revision_direct_costs_ids_Staff y Servicios de Obra_Venta'),
+            ('Operación y Mantenimiento', '-revision_direct_costs_ids_Operación y Mantenimiento_Venta'),
         ]
 
         # Iterar sobre los tipos de precio
@@ -380,7 +426,7 @@ class ImportCrmLead(models.TransientModel):
 
     # Metodo que asigna un boolean segun el valor de la celda SÍ/NO
     def get_boolean_value(self, value):
-        if value == 'SÍ':
+        if value == 'SI':
             return True
         else:
             return False
@@ -393,3 +439,10 @@ class ImportCrmLead(models.TransientModel):
     def get_partner_by_dni(self, dni):
         partner = self.env['res.partner'].search([('vat', '=', dni)], limit=1)
         return partner
+
+    def change_stage(self, crm_lead_record, stage_name):
+        print(f"Cambiando etapa a {stage_name}")
+        stage = self.env['crm.stage'].search([('name', '=', stage_name)], limit=1)
+        print(f"Etapa encontrada: {stage}")
+        crm_lead_record.stage_id = stage.id
+        return crm_lead_record
