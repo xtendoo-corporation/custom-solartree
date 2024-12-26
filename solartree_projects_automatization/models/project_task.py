@@ -12,12 +12,12 @@ class ProjectTaskInherited(models.Model):
             record.director_of_operations = ','.join(emails)
 
     def write(self, vals):
-        res = super(ProjectTaskInherited, self).write(vals)
-        if 'state' in vals:
-            if self.state == '1_done':
-                if self.milestone_id:
-                    self.send_notification()
-        return res
+        for record in self:
+            if 'state' in vals:
+                if record.state == '1_done':
+                    if record.milestone_id:
+                        record.send_notification()
+        return super(ProjectTaskInherited, self).write(vals)
 
     @api.onchange('start_date_planned')
     def _onchange_start_date_planned(self):
