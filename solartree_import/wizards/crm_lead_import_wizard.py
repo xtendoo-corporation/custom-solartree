@@ -55,13 +55,16 @@ class ImportCrmLead(models.TransientModel):
                     revision_record = self.env['crm.lead.revision'].with_context(
                         default_lead_id=crm_lead_record.id).create(revision_record_data)
 
-                    # Crear los registros de precios
+                    # Crear el resto de los registros relacionados con la revisión
                     self.create_fee_and_margins(row_values, header_indexes, revision, revision_record)
                     self.create_energy_simulation_production(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_cost(row_values, header_indexes, revision, revision_record)
                     self.create_direct_costs_price_sale(row_values, header_indexes, revision, revision_record)
                     self.create_inversor(row_values, header_indexes, revision, revision_record)
                     self.create_energy_simulation_demand(row_values, header_indexes, revision, revision_record)
+                    self.create_battery(row_values, header_indexes, revision, revision_record)
+
+            self.get_selected_revision(crm_lead_record, row_values[header_indexes['Revisión Seleccionada']])
 
 
         # Limpiar la sesión de base de datos
@@ -160,6 +163,7 @@ class ImportCrmLead(models.TransientModel):
             'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']],
             'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
             'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
+            'offer_battery_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de baterías']],
         }
         return revision_data
 
@@ -306,7 +310,24 @@ class ImportCrmLead(models.TransientModel):
 
     @api.model
     def create_battery(self, row_values, header_indexes, revision, revision_record):
-        pass
+        battery_index = 0
+        while f'{revision}-revision_battery_model_{battery_index}' in header_indexes:
+            model = row_values[header_indexes[f'{revision}-revision_battery_model_{battery_index}']]
+            capacity = row_values[header_indexes[f'{revision}-revision_battery_capacity_{battery_index}']]
+            power = row_values[header_indexes[f'{revision}-revision_battery_power_{battery_index}']]
+            quantity = row_values[header_indexes[f'{revision}-revision_battery_quantity_{battery_index}']]
+
+            if model or capacity or power or quantity:
+                battery_data = {
+                    'revision_id': revision_record.id,
+                    'offer_battery_model': model,
+                    'offer_battery_capacity': capacity,
+                    'offer_battery_power': power,
+                    'offer_battery_quantity': quantity,
+                }
+                self.env['crm.lead.revision.battery'].create(battery_data)
+
+            battery_index += 1
 
     @api.model
     def create_direct_costs_price_cost(self, row_values, header_indexes, revision, revision_record):
@@ -446,3 +467,11 @@ class ImportCrmLead(models.TransientModel):
         print(f"Etapa encontrada: {stage}")
         crm_lead_record.stage_id = stage.id
         return crm_lead_record
+
+    def get_selected_revision(self, crm_lead_record, selected_revision):
+        # Revisión Seleccionada
+        selected_revision_id = self.env['crm.lead.revision'].search([('name', '=', selected_revision)], limit=1)
+        crm_lead_record.selected_revision_id = selected_revision_id.id
+        return selected_revision_id
+
+
