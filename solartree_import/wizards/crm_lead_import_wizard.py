@@ -4,8 +4,6 @@ import re
 import base64
 import xlrd
 
-from odoo.auto.addons.queue_job.jobrunner import prefork__init__
-
 
 class ImportCrmLead(models.TransientModel):
     _name = 'import.crm.lead.wizard'
