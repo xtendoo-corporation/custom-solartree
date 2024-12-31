@@ -4,6 +4,8 @@ import re
 import base64
 import xlrd
 
+from odoo.auto.addons.queue_job.jobrunner import prefork__init__
+
 
 class ImportCrmLead(models.TransientModel):
     _name = 'import.crm.lead.wizard'
@@ -33,6 +35,10 @@ class ImportCrmLead(models.TransientModel):
 
             # Crear el lead principal
             crm_lead_data = self.create_crm_lead(row_values, header_indexes, book)
+
+            print("*"*100)
+            print(f"Creando lead con datos: {crm_lead_data}")
+
             crm_lead_record = self.env['crm.lead'].create(crm_lead_data)
             self.change_stage(crm_lead_record, row_values[header_indexes['Etapa']])
 
