@@ -431,13 +431,15 @@ class ImportCrmLead(models.TransientModel):
 
     # Metodo para obtener la fecha en formato 'YYYY-MM-DD'
     def get_date_formatted(self, date_value, book):
+        if isinstance(date_value, str):  # Verifica si es un string
+            if date_value == '':
+                return None
+            else:
+                return date_value
         if isinstance(date_value, float):  # Verifica si es un float (el formato típico de fecha en Excel)
             # Convierte el número en una fecha usando xlrd.xldate_as_datetime
             date_as_datetime = xlrd.xldate_as_datetime(date_value, book.datemode)
             return date_as_datetime.strftime('%Y-%m-%d')
-        else:
-            # Si ya es un string, úsalo directamente
-            return date_value
 
     # Metodo para obtener o crear un registro en un modelo
     @api.model
@@ -451,10 +453,7 @@ class ImportCrmLead(models.TransientModel):
 
     # Metodo que asigna un boolean segun el valor de la celda SÍ/NO
     def get_boolean_value(self, value):
-        if value == 'SI':
-            return True
-        else:
-            return False
+        return value == 'SI'
 
     # Metodo obtener un usuario de odoo a partir de su dni
     def get_user_by_dni(self, dni):
