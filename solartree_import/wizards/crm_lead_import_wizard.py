@@ -198,7 +198,10 @@ class ImportCrmLead(models.TransientModel):
             ], limit=1)
 
             # Obtener el valor de la celda
-            fee_value = row_values[header_indexes[f'{revision}{fee_column}']] / 100
+            if isinstance(row_values[header_indexes[f'{revision}{fee_column}']], (int, float)):
+                fee_value = row_values[header_indexes[f'{revision}{fee_column}']] / 100
+            else:
+                fee_value = 0
 
             # Si existe, actualizarlo
             if existing_fee:
