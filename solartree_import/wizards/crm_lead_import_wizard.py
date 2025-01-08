@@ -34,6 +34,9 @@ class ImportCrmLead(models.TransientModel):
             # Crear el lead principal
             crm_lead_data = self.create_crm_lead(row_values, header_indexes, book)
 
+            if not crm_lead_data:
+                break
+
             print("*"*100)
             print(f"Creando lead con datos: {crm_lead_data}")
 
@@ -76,43 +79,56 @@ class ImportCrmLead(models.TransientModel):
 
     @api.model
     def create_crm_lead(self, row_values, header_indexes, book):
+        try:
+            value = row_values[header_indexes['Nº Proyecto']]
+            if value:
+                solartree_num_proyect = int(value)
+            else:
+                solartree_num_proyect = None
+        except (ValueError, KeyError):
+            solartree_num_proyect = None
+
+        solartree_code = row_values[header_indexes['Código Oferta']]
+        if not solartree_code:
+            return None
+
         crm_lead_data = {
             'type': 'opportunity',
+            'solartree_code': solartree_code,
             'user_id': self.get_user_by_dni(row_values[header_indexes['Comercial']]).id,
             'partner_id': self.get_partner_by_dni(row_values[header_indexes['Cliente']]).id,
-            'solartree_code': row_values[header_indexes['Código Oferta']],
             'name': row_values[header_indexes['Nombre de la oferta']],
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
                                                                 row_values[header_indexes['Oferta Canal']]).id,
-            'solartree_intern_channel': self.get_user_by_dni(row_values[header_indexes['Canal interno']]).id,
+            # 'solartree_intern_channel': self.get_user_by_dni(row_values[header_indexes['Canal interno']]).id,
             'solartree_cups': row_values[header_indexes['CUPS']],
-            'solartree_date_required_delivery': self.get_date_formatted(
-                row_values[header_indexes['Fecha de entrega requerida']],
-                book),
+            # 'solartree_date_required_delivery': self.get_date_formatted(
+            #     row_values[header_indexes['Fecha de entrega requerida']],
+            #     book),
             'solartree_date_proposed_signature': self.get_date_formatted(
                 row_values[header_indexes['Fecha Firma propuesta']],
                 book),
             'solartree_date_kom': self.get_date_formatted(row_values[header_indexes['Fecha KOM']], book),
             'solartree_date_visit': self.get_date_formatted(row_values[header_indexes['Fecha Visita']], book),
-            'solartree_date_visit_tecnic': self.get_date_formatted(
-                row_values[header_indexes['Fecha informe Visita Técnica']], book),
+            # 'solartree_date_visit_tecnic': self.get_date_formatted(
+            #     row_values[header_indexes['Fecha informe Visita Técnica']], book),
             'solartree_date_deliverables': self.get_date_formatted(row_values[header_indexes['Fecha Entregables']],
                                                                    book),
             'solartree_date_sign_contract': self.get_date_formatted(row_values[header_indexes['Fecha Firma Contrato']],
                                                                     book),
-            'design_notes': row_values[header_indexes['Observaciones Diseño']],
-            'customer_consumption_mwh': row_values[header_indexes['Consumo del cliente (kWh/año)']],
-            'max_power_bie': row_values[header_indexes['Potencia máxima BIE (kW)']],
-            'extension_rights': row_values[header_indexes['Derechos de extensión (kW)']],
-            'access_rights': row_values[header_indexes['Derechos de acceso (kW)']],
-            'lead_fee': self.get_or_create_record('crm.lead.fee',
-                                                          row_values[header_indexes['Tarifa eléctrica']]).id,
-            'lead_tension_level': self.get_or_create_record('crm.lead.tension.level',
-                                                  row_values[header_indexes['Nivel de tensión']]).id,
-            'solartree_additional_deliverables': row_values[header_indexes['Entregables adicionales']],
-            'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
-            'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
-            'solartree_num_proyect': int(row_values[header_indexes['Nº Proyecto']]),
+            # 'design_notes': row_values[header_indexes['Observaciones Diseño']],
+            # 'customer_consumption_mwh': row_values[header_indexes['Consumo del cliente (kWh/año)']],
+            # 'max_power_bie': row_values[header_indexes['Potencia máxima BIE (kW)']],
+            # 'extension_rights': row_values[header_indexes['Derechos de extensión (kW)']],
+            # 'access_rights': row_values[header_indexes['Derechos de acceso (kW)']],
+            # 'lead_fee': self.get_or_create_record('crm.lead.fee',
+            #                                               row_values[header_indexes['Tarifa eléctrica']]).id,
+            # 'lead_tension_level': self.get_or_create_record('crm.lead.tension.level',
+            #                                       row_values[header_indexes['Nivel de tensión']]).id,
+            # 'solartree_additional_deliverables': row_values[header_indexes['Entregables adicionales']],
+            # 'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
+            # 'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
+            'solartree_num_proyect': solartree_num_proyect,
             'solartree_date_request': self.get_date_formatted(row_values[header_indexes['Fecha de Solicitud de Oferta']], book),
         }
         return crm_lead_data
@@ -139,35 +155,35 @@ class ImportCrmLead(models.TransientModel):
             'solartree_lead_structure_model': self.get_or_create_record('crm.lead.structure.model',
                                                                         row_values[header_indexes[
                                                                             f'{prefix}-Oferta Estructura Modelo']]).id,
-            'avg_price': row_values[header_indexes[f'{prefix}-Precio medio (€/kWh)']],
-            'surplus_price': row_values[header_indexes[f'{prefix}-Precio excedente (€/kWh)']],
+            # 'avg_price': row_values[header_indexes[f'{prefix}-Precio medio (€/kWh)']],
+            # 'surplus_price': row_values[header_indexes[f'{prefix}-Precio excedente (€/kWh)']],
 
             'offer_kwp': row_values[header_indexes[f'{prefix}-Oferta kWp']],
             'offer_kwn': row_values[header_indexes[f'{prefix}-Oferta kWn']],
 
-            'offer_fabricant_modules': row_values[header_indexes[f'{prefix}-Módulos Fabricante']],
-            'offer_modules_model': row_values[header_indexes[f'{prefix}-Modelo Módulos']],
-            'offer_modules_unit_power': row_values[header_indexes[f'{prefix}-Potencia unitaria (Wp)']],
-            'offer_modules_quantity': row_values[header_indexes[f'{prefix}-Cantidad Módulos']],
-            'offer_structure_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante Estructura']],
-            'offer_structure_description': row_values[header_indexes[f'{prefix}-Descripción Estructura']],
+            # 'offer_fabricant_modules': row_values[header_indexes[f'{prefix}-Módulos Fabricante']],
+            # 'offer_modules_model': row_values[header_indexes[f'{prefix}-Modelo Módulos']],
+            # 'offer_modules_unit_power': row_values[header_indexes[f'{prefix}-Potencia unitaria (Wp)']],
+            # 'offer_modules_quantity': row_values[header_indexes[f'{prefix}-Cantidad Módulos']],
+            # 'offer_structure_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante Estructura']],
+            # 'offer_structure_description': row_values[header_indexes[f'{prefix}-Descripción Estructura']],
             'offer_ve_kwn': row_values[header_indexes[f'{prefix}-Oferta VE kWn']],
             'offer_tot': self.get_user_by_dni(row_values[header_indexes[f'{prefix}-Técnico OT']]).id,
             'offer_HT': row_values[header_indexes[f'{prefix}-HT Oferta']],
-            'offer_evacuation': self.get_or_create_record('crm.lead.evacuation', row_values[header_indexes[
-                f'{prefix}-Tipo de evacuación']]).id,
+            # 'offer_evacuation': self.get_or_create_record('crm.lead.evacuation', row_values[header_indexes[
+            #     f'{prefix}-Tipo de evacuación']]).id,
 
             'offer_pb_actual': row_values[header_indexes[f'{prefix}-PB actuales']],
             'offer_pb_omip': row_values[header_indexes[f'{prefix}-PB OMIP']],
             'offer_pb_proyection': row_values[header_indexes[f'{prefix}-PB proyección']],
-            'pb_exced_min': row_values[header_indexes[f'{prefix}-PB Exced Min']],
+            # 'pb_exced_min': row_values[header_indexes[f'{prefix}-PB Exced Min']],
             # 'offer_asdfg': row_values[header_indexes[f'{prefix}-PB Batería']],
             'offer_tir_actual': row_values[header_indexes[f'{prefix}-TIR actuales %']],
             'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']],
             'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']],
-            'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
-            'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
-            'offer_battery_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de baterías']],
+            # 'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
+            # 'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
+            # 'offer_battery_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de baterías']],
         }
         return revision_data
 
@@ -221,7 +237,7 @@ class ImportCrmLead(models.TransientModel):
     def create_energy_simulation_production(self, row_values, header_indexes, revision, revision_record):
         energy_simulation_production_types = [
             ('Producción', '-Producción'),
-            ('Autoconsumo (Prod.)', '-Autoconsumo (Prod.)'),
+            # ('Autoconsumo (Prod.)', '-Autoconsumo (Prod.)'),
             # ('Excedentes (Prod.)', '-Excedentes (Prod.)'),
         ]
 
@@ -261,7 +277,7 @@ class ImportCrmLead(models.TransientModel):
     def create_energy_simulation_demand(self, row_values, header_indexes, revision, revision_record):
         energy_simulation_demand_types = [
             ('Demanda', 'Consumo del cliente (kWh/año)'),
-            ('Autoconsumo (Dem.)', f'{revision}-Autoconsumo (Prod.)'),
+            # ('Autoconsumo (Dem.)', f'{revision}-Autoconsumo (Prod.)'),
             # ('Red (Dem.)', f'{revision}-Red (Dem.)'),
         ]
 
@@ -281,19 +297,19 @@ class ImportCrmLead(models.TransientModel):
                 ('type_energy_simulation_demand_id', '=', type_demand.id)
             ], limit=1)
 
-            if existing_demand:
-                existing_demand.write({
-                    'total': row_values[header_indexes[demand_column]]
-                })
-            else:
-                # Crear el registro de precios con el porcentaje para cada revisión
-                demand_data = {
-                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                    'type_energy_simulation_demand_id': type_demand.id,
-                    'total': row_values[header_indexes[demand_column]]
-                }
-                # Crear el registro de precios en la base de datos
-                self.env['crm.lead.revision.energy.simulation.demand'].create(demand_data)
+            # if existing_demand:
+            #     existing_demand.write({
+            #         'total': row_values[header_indexes[demand_column]]
+            #     })
+            # else:
+            #     # Crear el registro de precios con el porcentaje para cada revisión
+            #     demand_data = {
+            #         'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+            #         'type_energy_simulation_demand_id': type_demand.id,
+            #         'total': row_values[header_indexes[demand_column]]
+            #     }
+            #     # Crear el registro de precios en la base de datos
+            #     self.env['crm.lead.revision.energy.simulation.demand'].create(demand_data)
 
     # Metodo para construir los datos de inversor
     @api.model
@@ -370,19 +386,19 @@ class ImportCrmLead(models.TransientModel):
                 ('type_direct_costs_id', '=', type_cost.id)
             ], limit=1)
 
-            if existing_cost:
-                existing_cost.write({
-                    'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
-                })
-            else:
-                # Crear el registro de precios con el porcentaje para cada revisión
-                cost_data = {
-                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                    'type_direct_costs_id': type_cost.id,
-                    'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
-                }
-                # Crear el registro de precios en la base de datos
-                self.env['crm.lead.revision.direct.costs'].create(cost_data)
+            # if existing_cost:
+            #     existing_cost.write({
+            #         'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
+            #     })
+            # else:
+            #     # Crear el registro de precios con el porcentaje para cada revisión
+            #     cost_data = {
+            #         'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+            #         'type_direct_costs_id': type_cost.id,
+            #         'price_cost': row_values[header_indexes[f'{revision}{cost_column}']]
+            #     }
+            #     # Crear el registro de precios en la base de datos
+            #     self.env['crm.lead.revision.direct.costs'].create(cost_data)
 
     @api.model
     def create_direct_costs_price_sale(self, row_values, header_indexes, revision, revision_record):
@@ -418,24 +434,24 @@ class ImportCrmLead(models.TransientModel):
                 ('type_direct_costs_id', '=', type_cost.id)
             ], limit=1)
 
-            if existing_cost:
-                existing_cost.write({
-                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
-                })
-            else:
-                # Crear el registro de precios con el porcentaje para cada revisión
-                cost_data = {
-                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-                    'type_direct_costs_id': type_cost.id,
-                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
-                }
-                # Crear el registro de precios en la base de datos
-                self.env['crm.lead.revision.direct.costs'].create(cost_data)
+            # if existing_cost:
+            #     existing_cost.write({
+            #         'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+            #     })
+            # else:
+            #     # Crear el registro de precios con el porcentaje para cada revisión
+            #     cost_data = {
+            #         'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+            #         'type_direct_costs_id': type_cost.id,
+            #         'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+            #     }
+            #     # Crear el registro de precios en la base de datos
+            #     self.env['crm.lead.revision.direct.costs'].create(cost_data)
 
     # Metodo para obtener la fecha en formato 'YYYY-MM-DD'
     def get_date_formatted(self, date_value, book):
         if isinstance(date_value, str):  # Verifica si es un string
-            if date_value == '':
+            if date_value == '' or date_value == 'PDT':
                 return None
             else:
                 return date_value

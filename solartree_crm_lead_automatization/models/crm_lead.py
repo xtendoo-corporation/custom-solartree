@@ -74,12 +74,12 @@ class CrmLead(models.Model):
                     _("El usuario actual no es 'Tecnico OT' de la revisión."))
 
         # Comprobar si el usuario actual cumple con user_id_required
-        if stage.user_id_required:
-            for record in self:
-                if record.user_id.id == current_user.id:
-                    allowed_users.add(current_user.id)
-            if current_user.id not in allowed_users:
-                error_messages.append(_("El usuario actual no es comercial de esta oferta."))
+        # if stage.user_id_required:
+        #     for record in self:
+        #         if record.user_id.id == current_user.id:
+        #             allowed_users.add(current_user.id)
+        #     if current_user.id not in allowed_users:
+        #         error_messages.append(_("El usuario actual no es comercial de esta oferta."))
 
         return allowed_users, error_messages
 
@@ -96,22 +96,22 @@ class CrmLead(models.Model):
 
             # Obtener los usuarios permitidos y los mensajes de error
             allowed_users, error_messages = self._obtain_allowed_users(new_stage)
-            if self.env.user.id not in allowed_users:
-                # Si el usuario actual no está permitido, lanzar un error con los detalles
-                error_msg = _(
-                    "No tienes permiso para cambiar a la etapa '%s'. Los siguientes errores ocurrieron: " % new_stage.name)
-                error_msg += "\n".join(error_messages)
-                raise AccessError(error_msg)
+            # if self.env.user.id not in allowed_users:
+            #     # Si el usuario actual no está permitido, lanzar un error con los detalles
+            #     error_msg = _(
+            #         "No tienes permiso para cambiar a la etapa '%s'. Los siguientes errores ocurrieron: " % new_stage.name)
+            #     error_msg += "\n".join(error_messages)
+            #     raise AccessError(error_msg)
 
             # Comprobar si la etapa requiere aprobación de margen
-            if new_stage.margin_approval_required:
-                if not self.approval_margin:
-                    if self.compare_expenses_and_percentage():
-                        raise AccessError(
-                            _("No tienes permiso para cambiar a la etapa '%s': Gastos de estructura no cumplen con los márgenes aprobados." % new_stage.name))
-                    if self.compare_profit_and_percentage():
-                        raise AccessError(
-                            _("No tienes permiso para cambiar a la etapa '%s': Beneficio Industrial no cumple con los márgenes aprobados." % new_stage.name))
+            # if new_stage.margin_approval_required:
+            #     if not self.approval_margin:
+            #         if self.compare_expenses_and_percentage():
+            #             raise AccessError(
+            #                 _("No tienes permiso para cambiar a la etapa '%s': Gastos de estructura no cumplen con los márgenes aprobados." % new_stage.name))
+            #         if self.compare_profit_and_percentage():
+            #             raise AccessError(
+            #                 _("No tienes permiso para cambiar a la etapa '%s': Beneficio Industrial no cumple con los márgenes aprobados." % new_stage.name))
 
             # Comprobar si la etapa requiere asignación de código de SolarTree
             if new_stage.assignation_solartree_code:
