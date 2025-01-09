@@ -37,7 +37,7 @@ class ImportCrmLead(models.TransientModel):
             if not crm_lead_data:
                 break
 
-            print("*"*100)
+            print("*" * 100)
             print(f"Creando lead con datos: {crm_lead_data}")
 
             crm_lead_record = self.env['crm.lead'].create(crm_lead_data)
@@ -51,7 +51,10 @@ class ImportCrmLead(models.TransientModel):
                 for header in headers:
                     if header.startswith(revision + '-'):
                         column_name = header[len(revision) + 1:]  # Eliminar el prefijo de revisión
+                        # print("*" * 100)
+                        # print(f"Column name: {column_name}")
                         value = row_values[header_indexes[header]]
+                        # print(f"Value: {value}")
                         if value:
                             revision_data[column_name] = value
 
@@ -70,9 +73,15 @@ class ImportCrmLead(models.TransientModel):
                     self.create_inversor(row_values, header_indexes, revision, revision_record)
                     self.create_energy_simulation_demand(row_values, header_indexes, revision, revision_record)
                     self.create_battery(row_values, header_indexes, revision, revision_record)
-
+                    prefix = revision.split('-')[0]
+                    revision_record.write({
+                        'installation_cost_price': row_values[header_indexes[f'{prefix}-Coste de Instalación (€)']],
+                        'installation_sale_price': row_values[header_indexes[f'Oferta_Precio-{prefix}']]
+                    })
+                else:
+                    print(
+                        f"No se encontraron datos válidos para la revisión {revision}. Datos encontrados: {revision_data}")
             self.get_selected_revision(crm_lead_record, row_values[header_indexes['Revisión Seleccionada']])
-
 
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
@@ -129,7 +138,8 @@ class ImportCrmLead(models.TransientModel):
             # 'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
             # 'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
             'solartree_num_proyect': solartree_num_proyect,
-            'solartree_date_request': self.get_date_formatted(row_values[header_indexes['Fecha de Solicitud de Oferta']], book),
+            'solartree_date_request': self.get_date_formatted(
+                row_values[header_indexes['Fecha de Solicitud de Oferta']], book),
         }
         return crm_lead_data
 
@@ -178,12 +188,16 @@ class ImportCrmLead(models.TransientModel):
             'offer_pb_proyection': row_values[header_indexes[f'{prefix}-PB proyección']],
             # 'pb_exced_min': row_values[header_indexes[f'{prefix}-PB Exced Min']],
             # 'offer_asdfg': row_values[header_indexes[f'{prefix}-PB Batería']],
-            'offer_tir_actual': row_values[header_indexes[f'{prefix}-TIR actuales %']],
-            'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']],
-            'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']],
+            'offer_tir_actual': row_values[header_indexes[f'{prefix}-TIR actuales %']] * 100,
+            'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']] * 100,
+            'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']] * 100,
             # 'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
             # 'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
             # 'offer_battery_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de baterías']],
+            'offer_date_deliver': self.get_date_formatted(row_values[header_indexes[f'{prefix}-Fecha Entrega Oferta']],
+                                    book),
+            # 'installation_cost_price': row_values[header_indexes[f'{prefix}-Coste de Instalación (€)']],
+            # 'installation_sale_price': row_values[header_indexes[f'Oferta_Precio-{prefix}']],
         }
         return revision_data
 
@@ -215,7 +229,9 @@ class ImportCrmLead(models.TransientModel):
 
             # Obtener el valor de la celda
             if isinstance(row_values[header_indexes[f'{revision}{fee_column}']], (int, float)):
-                fee_value = row_values[header_indexes[f'{revision}{fee_column}']] / 100
+                fee_value = row_values[header_indexes[f'{revision}{fee_column}']]
+                print("&" * 100)
+                print(f"Fee value: {fee_value}")
             else:
                 fee_value = 0
 
@@ -465,9 +481,9 @@ class ImportCrmLead(models.TransientModel):
     def get_or_create_record(self, model_name, name):
         # Buscar el registro en el modelo especificado
         record = self.env[model_name].search([('name', '=', name)], limit=1)
-        if not record:
-            # Si no existe, crear un nuevo registro
-            record = self.env[model_name].create({'name': name})
+        # if not record:
+        #     # Si no existe, crear un nuevo registro
+        #     record = self.env[model_name].create({'name': name})
         return record
 
     # Metodo que asigna un boolean segun el valor de la celda SÍ/NO
@@ -495,5 +511,3 @@ class ImportCrmLead(models.TransientModel):
         selected_revision_id = self.env['crm.lead.revision'].search([('name', '=', selected_revision)], limit=1)
         crm_lead_record.selected_revision_id = selected_revision_id.id
         return selected_revision_id
-
-
