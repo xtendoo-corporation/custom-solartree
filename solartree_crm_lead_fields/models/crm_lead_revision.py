@@ -372,6 +372,7 @@ class CrmLeadRevision(models.Model):
             direct_costs_total = sum(
                 cost.price_cost for cost in record.revision_direct_costs_ids
                 if cost.type_direct_costs_id
+                if cost.type_direct_costs_id
             )
             fee_prices_total = sum(
                 price.price for price in record.revision_price_ids

@@ -37,8 +37,8 @@ class ImportCrmLead(models.TransientModel):
             if not crm_lead_data:
                 break
 
-            print("*" * 100)
-            print(f"Creando lead con datos: {crm_lead_data}")
+            # print("*" * 100)
+            # print(f"Creando lead con datos: {crm_lead_data}")
 
             crm_lead_record = self.env['crm.lead'].create(crm_lead_data)
             self.change_stage(crm_lead_record, row_values[header_indexes['Etapa']])
@@ -60,7 +60,7 @@ class ImportCrmLead(models.TransientModel):
 
                 # Verificar si hay datos válidos para esta revisión antes de crearla
                 if revision_data:
-                    print(f"Creando revisión para {revision} con datos: {revision_data}")
+                    # print(f"Creando revisión para {revision} con datos: {revision_data}")
                     revision_record_data = self.create_revision(row_values, header_indexes, revision, book)
                     revision_record = self.env['crm.lead.revision'].with_context(
                         default_lead_id=crm_lead_record.id).create(revision_record_data)
@@ -81,7 +81,17 @@ class ImportCrmLead(models.TransientModel):
                 else:
                     print(
                         f"No se encontraron datos válidos para la revisión {revision}. Datos encontrados: {revision_data}")
-            self.get_selected_revision(crm_lead_record, row_values[header_indexes['Revisión Seleccionada']])
+            selected_revision_name = row_values[header_indexes['Revisión Seleccionada']]
+            selected_revision_id = self.get_selected_revision(crm_lead_record, selected_revision_name)
+            if selected_revision_id:
+                crm_lead_record.selected_revision_id = selected_revision_id.id
+                print(f"Lead: {crm_lead_record.name}")
+                print(f"Revisión seleccionada en el lead: {crm_lead_record.selected_revision_id.name}")
+                #Quizas probar con revision_record.write({'offer_selected': True})
+                crm_lead_record.selected_revision_id.offer_selected = True
+                print(f"Revisión seleccionada offer_selected: {crm_lead_record.selected_revision_id.offer_selected}")
+            else:
+                print(f"No se encontró la revisión seleccionada: {selected_revision_name}")
 
         # Limpiar la sesión de base de datos
         self.env.cr.flush()
@@ -109,34 +119,16 @@ class ImportCrmLead(models.TransientModel):
             'name': row_values[header_indexes['Nombre de la oferta']],
             'solartree_lead_channel': self.get_or_create_record('crm.lead.channel',
                                                                 row_values[header_indexes['Oferta Canal']]).id,
-            # 'solartree_intern_channel': self.get_user_by_dni(row_values[header_indexes['Canal interno']]).id,
             'solartree_cups': row_values[header_indexes['CUPS']],
-            # 'solartree_date_required_delivery': self.get_date_formatted(
-            #     row_values[header_indexes['Fecha de entrega requerida']],
-            #     book),
             'solartree_date_proposed_signature': self.get_date_formatted(
                 row_values[header_indexes['Fecha Firma propuesta']],
                 book),
             'solartree_date_kom': self.get_date_formatted(row_values[header_indexes['Fecha KOM']], book),
             'solartree_date_visit': self.get_date_formatted(row_values[header_indexes['Fecha Visita']], book),
-            # 'solartree_date_visit_tecnic': self.get_date_formatted(
-            #     row_values[header_indexes['Fecha informe Visita Técnica']], book),
             'solartree_date_deliverables': self.get_date_formatted(row_values[header_indexes['Fecha Entregables']],
                                                                    book),
             'solartree_date_sign_contract': self.get_date_formatted(row_values[header_indexes['Fecha Firma Contrato']],
                                                                     book),
-            # 'design_notes': row_values[header_indexes['Observaciones Diseño']],
-            # 'customer_consumption_mwh': row_values[header_indexes['Consumo del cliente (kWh/año)']],
-            # 'max_power_bie': row_values[header_indexes['Potencia máxima BIE (kW)']],
-            # 'extension_rights': row_values[header_indexes['Derechos de extensión (kW)']],
-            # 'access_rights': row_values[header_indexes['Derechos de acceso (kW)']],
-            # 'lead_fee': self.get_or_create_record('crm.lead.fee',
-            #                                               row_values[header_indexes['Tarifa eléctrica']]).id,
-            # 'lead_tension_level': self.get_or_create_record('crm.lead.tension.level',
-            #                                       row_values[header_indexes['Nivel de tensión']]).id,
-            # 'solartree_additional_deliverables': row_values[header_indexes['Entregables adicionales']],
-            # 'solartree_connection_point_location': row_values[header_indexes['Ubicación del punto de conexión']],
-            # 'solartree_specific_comments': row_values[header_indexes['Comentarios Específicos']],
             'solartree_num_proyect': solartree_num_proyect,
             'solartree_date_request': self.get_date_formatted(
                 row_values[header_indexes['Fecha de Solicitud de Oferta']], book),
@@ -165,39 +157,19 @@ class ImportCrmLead(models.TransientModel):
             'solartree_lead_structure_model': self.get_or_create_record('crm.lead.structure.model',
                                                                         row_values[header_indexes[
                                                                             f'{prefix}-Oferta Estructura Modelo']]).id,
-            # 'avg_price': row_values[header_indexes[f'{prefix}-Precio medio (€/kWh)']],
-            # 'surplus_price': row_values[header_indexes[f'{prefix}-Precio excedente (€/kWh)']],
-
             'offer_kwp': row_values[header_indexes[f'{prefix}-Oferta kWp']],
             'offer_kwn': row_values[header_indexes[f'{prefix}-Oferta kWn']],
-
-            # 'offer_fabricant_modules': row_values[header_indexes[f'{prefix}-Módulos Fabricante']],
-            # 'offer_modules_model': row_values[header_indexes[f'{prefix}-Modelo Módulos']],
-            # 'offer_modules_unit_power': row_values[header_indexes[f'{prefix}-Potencia unitaria (Wp)']],
-            # 'offer_modules_quantity': row_values[header_indexes[f'{prefix}-Cantidad Módulos']],
-            # 'offer_structure_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante Estructura']],
-            # 'offer_structure_description': row_values[header_indexes[f'{prefix}-Descripción Estructura']],
             'offer_ve_kwn': row_values[header_indexes[f'{prefix}-Oferta VE kWn']],
             'offer_tot': self.get_user_by_dni(row_values[header_indexes[f'{prefix}-Técnico OT']]).id,
             'offer_HT': row_values[header_indexes[f'{prefix}-HT Oferta']],
-            # 'offer_evacuation': self.get_or_create_record('crm.lead.evacuation', row_values[header_indexes[
-            #     f'{prefix}-Tipo de evacuación']]).id,
-
             'offer_pb_actual': row_values[header_indexes[f'{prefix}-PB actuales']],
             'offer_pb_omip': row_values[header_indexes[f'{prefix}-PB OMIP']],
             'offer_pb_proyection': row_values[header_indexes[f'{prefix}-PB proyección']],
-            # 'pb_exced_min': row_values[header_indexes[f'{prefix}-PB Exced Min']],
-            # 'offer_asdfg': row_values[header_indexes[f'{prefix}-PB Batería']],
             'offer_tir_actual': row_values[header_indexes[f'{prefix}-TIR actuales %']] * 100,
             'offer_tir_omip': row_values[header_indexes[f'{prefix}-TIR OMIP %']] * 100,
             'offer_tir_proyection': row_values[header_indexes[f'{prefix}-TIR proyección %']] * 100,
-            # 'tir_exced_min': row_values[header_indexes[f'{prefix}-TIR Exced Min %']],
-            # 'offer_inverter_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de inversores']],
-            # 'offer_battery_manufacturer': row_values[header_indexes[f'{prefix}-Fabricante de baterías']],
             'offer_date_deliver': self.get_date_formatted(row_values[header_indexes[f'{prefix}-Fecha Entrega Oferta']],
                                     book),
-            # 'installation_cost_price': row_values[header_indexes[f'{prefix}-Coste de Instalación (€)']],
-            # 'installation_sale_price': row_values[header_indexes[f'Oferta_Precio-{prefix}']],
         }
         return revision_data
 
@@ -230,8 +202,6 @@ class ImportCrmLead(models.TransientModel):
             # Obtener el valor de la celda
             if isinstance(row_values[header_indexes[f'{revision}{fee_column}']], (int, float)):
                 fee_value = row_values[header_indexes[f'{revision}{fee_column}']]
-                print("&" * 100)
-                print(f"Fee value: {fee_value}")
             else:
                 fee_value = 0
 
@@ -500,14 +470,15 @@ class ImportCrmLead(models.TransientModel):
         return partner
 
     def change_stage(self, crm_lead_record, stage_name):
-        print(f"Cambiando etapa a {stage_name}")
         stage = self.env['crm.stage'].search([('name', '=', stage_name)], limit=1)
-        print(f"Etapa encontrada: {stage}")
         crm_lead_record.stage_id = stage.id
         return crm_lead_record
 
     def get_selected_revision(self, crm_lead_record, selected_revision):
         # Revisión Seleccionada
         selected_revision_id = self.env['crm.lead.revision'].search([('name', '=', selected_revision)], limit=1)
-        crm_lead_record.selected_revision_id = selected_revision_id.id
+        print(f"Revisión seleccionada en la búsqueda: {selected_revision_id}")
+        if selected_revision_id:
+            selected_revision_id.write({'offer_selected': True})
+            print(f"Revisión seleccionada offer_selected: {selected_revision_id.offer_selected}")
         return selected_revision_id
