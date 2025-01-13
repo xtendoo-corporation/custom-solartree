@@ -8,6 +8,9 @@
                 <field name="coste_custom"/>
                 <field name="coste"/>
             </xpath>
+            <xpath expr="//field[@name='general_budget_id']" position="after">
+                <field name="descripcion"/>
+            </xpath>
         </field>
     </record>
 
@@ -19,6 +22,9 @@
             <xpath expr="//field[@name='planned_amount']" position="before">
                 <field name="coste_custom"/>
                 <field name="coste" sum="Coste"/>
+            </xpath>
+            <xpath expr="//field[@name='general_budget_id']" position="after">
+                <field name="descripcion"/>
             </xpath>
         </field>
     </record>

@@ -18,3 +18,9 @@ class CrossoveredBudgetLines(models.Model):
         store=True
     )
 
+    descripcion = fields.Text(
+        related='sale_order_line_id.name',
+        string='Descripción',
+        store=True
+    )
+
