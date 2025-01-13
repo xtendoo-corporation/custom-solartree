@@ -239,13 +239,15 @@ class CrmLead(models.Model):
             if record.selected_revision_id:
                 record.solartree_date_required_delivery = record.selected_revision_id.offer_date_deliver
 
+
     @api.depends('revision_ids.offer_selected')
     def _compute_selected_revision_id(self):
-        print("?" * 80)
-        print("_compute_selected_revision_id")
         for record in self:
             selected_revision = record.revision_ids.filtered(lambda r: r.offer_selected)
             record.selected_revision_id = selected_revision[:1]
+            print("?" * 80)
+            print("Compute Selected Revision ID")
+            print(record.selected_revision_id.name)
 
     @api.onchange('revision_ids')
     def _onchange_revision_ids(self):

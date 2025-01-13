@@ -483,6 +483,9 @@ class CrmLeadRevision(models.Model):
     def _compute_offer_selected(self):
         for record in self:
             record.offer_selected = record.id == record.lead_id.selected_revision_id.id
+            print("*" * 80)
+            print("Compute Offer Selected", record.id)
+            print("Offer Selected", record.offer_selected)
 
     @api.model
     def write(self, vals):
