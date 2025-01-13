@@ -397,17 +397,8 @@ class ImportCrmLead(models.TransientModel):
     def create_direct_costs_price_sale(self, row_values, header_indexes, revision, revision_record):
         # Definir los tipos de precio a procesar
         cost_types = [
-            ('Modulos', '-revision_direct_costs_ids_Modulos_Venta'),
-            ('Inversor', '-revision_direct_costs_ids_Inversor_Venta'),
             ('Batería', '-revision_direct_costs_ids_Batería_Venta'),
-            ('Estructura', '-revision_direct_costs_ids_Estructura_Venta'),
-            ('Evacuación', '-revision_direct_costs_ids_Evacuación_Venta'),
-            ('H&S', '-revision_direct_costs_ids_H&S_Venta'),
-            ('BOP', '-revision_direct_costs_ids_BOP_Venta'),
-            ('Ingeniería', '-revision_direct_costs_ids_Ingeniería_Venta'),
             ('Vehículo Eléctrico (VE)', '-revision_direct_costs_ids_Vehículo Eléctrico (VE)_Venta'),
-            ('Staff y Servicios de Obra', '-revision_direct_costs_ids_Staff y Servicios de Obra_Venta'),
-            ('Operación y Mantenimiento', '-revision_direct_costs_ids_Operación y Mantenimiento_Venta'),
         ]
 
         # Iterar sobre los tipos de precio
@@ -427,19 +418,19 @@ class ImportCrmLead(models.TransientModel):
                 ('type_direct_costs_id', '=', type_cost.id)
             ], limit=1)
 
-            # if existing_cost:
-            #     existing_cost.write({
-            #         'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
-            #     })
-            # else:
-            #     # Crear el registro de precios con el porcentaje para cada revisión
-            #     cost_data = {
-            #         'revision_id': revision_record.id,  # Usar el ID de la revisión creada
-            #         'type_direct_costs_id': type_cost.id,
-            #         'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
-            #     }
-            #     # Crear el registro de precios en la base de datos
-            #     self.env['crm.lead.revision.direct.costs'].create(cost_data)
+            if existing_cost:
+                existing_cost.write({
+                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+                })
+            else:
+                # Crear el registro de precios con el porcentaje para cada revisión
+                cost_data = {
+                    'revision_id': revision_record.id,  # Usar el ID de la revisión creada
+                    'type_direct_costs_id': type_cost.id,
+                    'price_sale': row_values[header_indexes[f'{revision}{cost_column}']]
+                }
+                # Crear el registro de precios en la base de datos
+                self.env['crm.lead.revision.direct.costs'].create(cost_data)
 
     # Metodo para obtener la fecha en formato 'YYYY-MM-DD'
     def get_date_formatted(self, date_value, book):
