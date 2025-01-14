@@ -55,7 +55,7 @@ class ImportCrmLead(models.TransientModel):
                         # print(f"Column name: {column_name}")
                         value = row_values[header_indexes[header]]
                         # print(f"Value: {value}")
-                        if value:
+                        if value or value == 0:
                             revision_data[column_name] = value
 
                 # Verificar si hay datos válidos para esta revisión antes de crearla
