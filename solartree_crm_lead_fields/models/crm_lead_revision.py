@@ -411,6 +411,8 @@ class CrmLeadRevision(models.Model):
                 if cost.type_direct_costs_id
             )
 
+
+
     tax_id = fields.Many2one(
         'account.tax',
         string='Tax',

@@ -186,6 +186,18 @@ class CrmLead(models.Model):
         compute='_compute_expected_revenue',
         store=True
     )
+    total_kwp_accumulated = fields.Float(
+        string="Total kWp Accumulated",
+        digits=(16, 2),
+        tracking=True,
+        compute='_total_kwp_accumulated',
+        store=True
+    )
+
+    def _total_kwp_accumulated(self):
+        for lead in self:
+            lead.total_kwp_accumulated = lead.selected_revision_id.offer_kwp if lead.selected_revision_id else 0.0
+
     extension_rights = fields.Float(
         string="Extension Rights (kW)",
         digits=(16, 2),

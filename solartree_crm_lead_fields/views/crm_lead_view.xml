@@ -191,6 +191,15 @@
             <xpath expr="//div[@class='o_kanban_record_bottom']/div[@class='oe_kanban_bottom_left']" position="replace">
                 <div class="oe_kanban_bottom_left"/>
             </xpath>
+
+
+<!--            NUEVO PARA AÑADIR EL TOTAL KWP AL SUM DE LA COLUMNA-->
+            <xpath expr="//kanban/progressbar" position="before">
+                <field name="total_kwp_accumulated" options="{'suffix': ' kWp'}"/>
+                 <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'
+                             sum_field="total_kwp_accumulated"
+                             help="This bar shows the total kWp accumulated."/>
+            </xpath>
         </field>
     </record>
 </odoo>
