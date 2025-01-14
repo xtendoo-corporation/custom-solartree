@@ -83,19 +83,13 @@ class ImportCrmLead(models.TransientModel):
                         f"No se encontraron datos válidos para la revisión {revision}. Datos encontrados: {revision_data}")
 
             selected_revision_name = row_values[header_indexes['Revisión Seleccionada']]
-            print("Prueba 1: ", selected_revision_name)
             selected_revision_id = self.get_selected_revision(crm_lead_record, selected_revision_name)
-            print("Prueba 2: ", selected_revision_id)
-            print("Prueba 3: ", selected_revision_id.id)
             if selected_revision_id:
                 crm_lead_record.write({'selected_revision_id': selected_revision_id.id})
                 selected_revision_id.write({'offer_selected': True})
                 self.env.cr.flush()
                 selected_revision_id._onchange_offer_selected()  # Explicitly call the onchange method
                 crm_lead_record._onchange_selected_revision_id()
-                print("@" * 100)
-                print(f"Revisión seleccionada: {selected_revision_id.name}")
-                print(f"Revisión seleccionada offer_selected: {selected_revision_id.offer_selected}")
             else:
                 print(f"No se encontró la revisión seleccionada: {selected_revision_name}")
 

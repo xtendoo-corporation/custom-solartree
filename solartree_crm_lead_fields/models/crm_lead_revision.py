@@ -364,6 +364,7 @@ class CrmLeadRevision(models.Model):
         digits=(16, 2),
         compute="_compute_total_direct_costs",
         readonly=False,
+        store=True,
     )
 
     @api.depends('revision_direct_costs_ids.price_cost', 'revision_price_ids.price')
@@ -386,6 +387,7 @@ class CrmLeadRevision(models.Model):
         digits=(16, 4),
         compute="_compute_total_direct_costs_wp",
         readonly=False,
+        store=True,
     )
 
     @api.depends('revision_direct_costs_ids.price_cost_wp')
@@ -401,6 +403,7 @@ class CrmLeadRevision(models.Model):
         digits=(16, 2),
         compute="_compute_total_sale_price",
         readonly=False,
+        store=True,
     )
 
     @api.depends('revision_direct_costs_ids.price_sale')
@@ -440,6 +443,7 @@ class CrmLeadRevision(models.Model):
         digits=(16, 4),
         compute="_compute_total_sale_price_wp",
         readonly=False,
+        store=True,
     )
 
     @api.depends('revision_direct_costs_ids.price_sale_wp')
