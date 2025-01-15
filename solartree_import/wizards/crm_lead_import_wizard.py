@@ -47,6 +47,8 @@ class ImportCrmLead(models.TransientModel):
             for revision in revision_columns:
                 revision_data = {}  # Inicializar datos para la revisión actual
 
+                selected_revision_name = row_values[header_indexes['Revisión Seleccionada']]
+
                 # Recopilar campos de la revisión actual basados en su prefijo
                 for header in headers:
                     if header.startswith(revision + '-'):
@@ -55,11 +57,12 @@ class ImportCrmLead(models.TransientModel):
                         # print(f"Column name: {column_name}")
                         value = row_values[header_indexes[header]]
                         # print(f"Value: {value}")
-                        if value or value == 0:
+                        if value or header.startswith(selected_revision_name + '-') or any(
+                            header.startswith(f'R{i}-') for i in range(int(selected_revision_name[1:]))):
                             revision_data[column_name] = value
 
                 # Verificar si hay datos válidos para esta revisión antes de crearla
-                if revision_data:
+                if revision_data or revision == selected_revision_name:
                     # print(f"Creando revisión para {revision} con datos: {revision_data}")
                     revision_record_data = self.create_revision(row_values, header_indexes, revision, book)
                     revision_record = self.env['crm.lead.revision'].with_context(
@@ -76,7 +79,9 @@ class ImportCrmLead(models.TransientModel):
                     prefix = revision.split('-')[0]
                     revision_record.write({
                         'installation_cost_price': row_values[header_indexes[f'{prefix}-Coste de Instalación (€)']],
-                        'installation_sale_price': row_values[header_indexes[f'Oferta_Precio-{prefix}']]
+                        'installation_sale_price': row_values[header_indexes[f'Oferta_Precio-{prefix}']],
+                        'installation_cost_price_wp': row_values[header_indexes[f'{prefix}-installation_cost_price_wp']],
+                        'installation_sale_price_wp': row_values[header_indexes[f'{prefix}-installation_sale_price_wp']],
                     })
                 else:
                     print(

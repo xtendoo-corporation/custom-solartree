@@ -194,6 +194,7 @@ class CrmLead(models.Model):
         store=True
     )
 
+    @api.depends('selected_revision_id.offer_kwp')
     def _total_kwp_accumulated(self):
         for lead in self:
             lead.total_kwp_accumulated = lead.selected_revision_id.offer_kwp if lead.selected_revision_id else 0.0
