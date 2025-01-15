@@ -52,7 +52,7 @@ class ProjectProject(models.Model):
     @api.depends('task_ids', 'task_ids.start_date_planned')
     def _compute_start_date_planned(self):
         for project in self:
-            installation_tasks = project.task_ids.filtered(lambda t: t.tag_ids.name == 'INSTALACIÓN')
+            installation_tasks = project.task_ids.filtered(lambda t: t.tag_ids[:1].name == 'INSTALACIÓN')
             print("*" * 80)
             print(installation_tasks)
             if installation_tasks:
