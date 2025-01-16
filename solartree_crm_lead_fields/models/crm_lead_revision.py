@@ -115,6 +115,9 @@ class CrmLeadRevision(models.Model):
     offer_tot = fields.Many2one(
         comodel_name="res.users",
         string="TOT revisions field",
+        domain=lambda self: [
+            ('groups_id', 'in', self.env.ref('solartree_crm_lead_automatization.group_crm_technical_office_user').id)
+        ],
     )
     offer_HT = fields.Float(
         string='Offer HT'

@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_import_crm_lead_partial" model="ir.ui.view">
+        <field name="name">import.crm.lead.partial.wizard.form</field>
+        <field name="model">import.crm.lead.partial.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importación parcial">
+                <group>
+                    <field name="file" filename="file_name"/>
+                </group>
+                <footer>
+                    <button name="action_import_crm_lead_partial_wizard" string="Importar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

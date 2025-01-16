@@ -14,6 +14,7 @@
         "security/ir.model.access.csv",
         "views/menu.xml",
         "wizards/crm_lead_import_wizard_view.xml",
+        "wizards/crm_lead_import_partial_wizard_view.xml",
     ],
     "installable": True,
 }

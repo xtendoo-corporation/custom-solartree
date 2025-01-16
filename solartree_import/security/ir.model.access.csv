@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 solartree_import.access_import_crm_lead_wizard,access_import_crm_lead_wizard,solartree_import.model_import_crm_lead_wizard,base.group_user,1,1,1,1
+solartree_import.access_import_crm_lead_partial_wizard,access_import_crm_lead_partial_wizard,solartree_import.model_import_crm_lead_partial_wizard,base.group_user,1,1,1,1

@@ -79,7 +79,7 @@
                             <field name="offer_storage_kwh"/>
                             <field name="offer_storage_kwn"/>
                             <field name="offer_ve_kwn"/>
-                            <field name="offer_tot" widget="selection"/>
+                            <field name="offer_tot" widget="selection" />
                             <field name="offer_HT"/>
                             <field name="offer_date_deliver"/>
                             <field name="offer_evacuation" widget="selection"/>
