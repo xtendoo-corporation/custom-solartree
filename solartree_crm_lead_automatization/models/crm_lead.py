@@ -64,6 +64,11 @@ class CrmLead(models.Model):
             if current_user.id not in users.ids:
                 error_messages.append(_("El usuario actual no tiene privilegios del grupo: '%s'" % group.name))
 
+        # Añadir el usuario que sea el user_id de la oferta
+        for record in self:
+            if record.user_id.id:
+                allowed_users.add(record.user_id.id)
+
         # Comprobar si el usuario actual cumple con user_offer_tot_required
         if stage.user_offer_tot_required:
             for record in self:
