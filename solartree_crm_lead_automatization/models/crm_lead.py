@@ -25,7 +25,7 @@ class CrmLead(models.Model):
             for price_record in self.selected_revision_id.revision_price_ids:
                 if price_record.type_price_id.name == "Gastos de estructura":
                     percentage = price_record.percentage
-                    if structure_expenses >= percentage:
+                    if structure_expenses > percentage:
                         continue
                     return False
         return True
@@ -36,7 +36,7 @@ class CrmLead(models.Model):
             for price_record in self.selected_revision_id.revision_price_ids:
                 if price_record.type_price_id.name == "Beneficio Industrial":
                     percentage = price_record.percentage
-                    if industrial_profit >= percentage:
+                    if industrial_profit > percentage:
                         continue
                     return False
         return True
