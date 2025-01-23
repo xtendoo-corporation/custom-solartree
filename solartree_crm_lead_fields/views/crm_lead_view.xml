@@ -63,7 +63,6 @@
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_lead_channel_fee_email" invisible="type == 'opportunity'"/>
                         <field name="solartree_intern_channel" options="{'no_create': True}"/>
-                        <field name="offer_tot"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_intern_channel_fee_email" invisible="type == 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
@@ -73,7 +72,7 @@
                         <field name="solartree_lead_structure_model" widget="selection"
                                invisible="type == 'opportunity'"/>
                     </group>
-                    <group string="Dates and Deliverables">
+                    <group string="Fechas">
                         <field name="solartree_date_request" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_required_delivery"/>
                         <field name="solartree_date_proposed_signature" invisible="type != 'opportunity'"/>
@@ -82,8 +81,6 @@
                         <field name="solartree_date_visit_tecnic" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_deliverables" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_sign_contract" invisible="type != 'opportunity'"/>
-                        <field name="solartree_offer_ht" invisible="type != 'opportunity'"/>
-                        <field name="design_notes" widget="text" invisible="type != 'opportunity'"/>
                     </group>
                     <group string="Power and Consumption" invisible="type != 'opportunity'">
                         <field name="customer_consumption_mwh"/>
@@ -99,6 +96,9 @@
                                options='{"no_create": True}'/>
                     </group>
                     <group string="Office Tecnic">
+                        <field name="offer_tot"/>
+                        <field name="solartree_offer_ht" invisible="type != 'opportunity'"/>
+                        <field name="design_notes" widget="text" invisible="type != 'opportunity'"/>
                         <field name="solartree_additional_deliverables" widget="text"/>
                         <field name="solartree_connection_point_location" widget="text"/>
                         <field name="solartree_specific_comments" widget="text"/>
