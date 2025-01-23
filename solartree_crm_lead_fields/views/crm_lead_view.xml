@@ -63,6 +63,7 @@
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_lead_channel_fee_email" invisible="type == 'opportunity'"/>
                         <field name="solartree_intern_channel" options="{'no_create': True}"/>
+                        <field name="offer_tot"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
                         <field name="solartree_intern_channel_fee_email" invisible="type == 'opportunity'"/>
                         <!--ESTE CAMPO SOLO SE USA PARA EL EMAIL-->
@@ -194,6 +195,13 @@
                 <div class="oe_kanban_bottom_left"/>
             </xpath>
 
+            <xpath expr="//kanban" position="inside">
+                <field name="offer_tot"/>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_kanban_bottom_right']" position="inside">
+                <field name="offer_tot" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+            </xpath>
 
 <!--            NUEVO PARA AÑADIR EL TOTAL KWP AL SUM DE LA COLUMNA-->
             <xpath expr="//kanban/progressbar" position="before">

@@ -241,6 +241,14 @@ class CrmLead(models.Model):
         readonly=True
     )
 
+    offer_tot = fields.Many2one(
+        related='selected_revision_id.offer_tot',
+        comodel_name='res.users',
+        string='Técnico OT asignado',
+        readonly=True,
+        store=True
+    )
+
     @api.depends('selected_revision_id.installation_sale_price')
     def _compute_expected_revenue(self):
         for lead in self:
