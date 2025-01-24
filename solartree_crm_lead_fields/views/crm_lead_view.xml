@@ -246,7 +246,7 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm_sms.crm_case_tree_view_oppor"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='868']" position="replace">
+            <xpath expr="//button[@name='%(crm_sms.crm_lead_act_window_sms_composer_multi)d']" position="replace">
             </xpath>
         </field>
     </record>
