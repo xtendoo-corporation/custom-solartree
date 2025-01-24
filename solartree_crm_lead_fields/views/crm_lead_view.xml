@@ -94,6 +94,9 @@
                     <group string="Revisions" invisible="type != 'opportunity'">
                         <field name="selected_revision_id" domain="[('lead_id', '=', id)]"
                                options='{"no_create": True}'/>
+                        <field name="offer_class"/>
+                        <field name="offer_date_deliver"/>
+                        <field name="revision_count"/>
                     </group>
                     <group string="Office Tecnic">
                         <field name="offer_tot"/>
@@ -212,4 +215,40 @@
             </xpath>
         </field>
     </record>
+
+     <record id="crm_lead_view_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(crm.action_lead_mail_compose)d']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='action_reschedule_meeting']" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='action_snooze']" position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="offer_tot"/>
+                <field name="solartree_code"/>
+                <field name="selected_revision_id"/>
+                <field name="offer_date_deliver"/>
+                <field name="solartree_date_required_delivery"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_sms_view_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.sms.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_sms.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='868']" position="replace">
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

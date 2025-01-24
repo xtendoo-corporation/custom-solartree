@@ -220,13 +220,6 @@ class CrmLead(models.Model):
         readonly=False
     )
 
-    offer_class = fields.Char(
-        string='Offer Class',
-        related='selected_revision_id.offer_class',
-        store=True,
-        readonly=True
-    )
-
     installation_sale_price = fields.Float(
         string='Installation Sale Price',
         related='selected_revision_id.installation_sale_price',
@@ -245,6 +238,21 @@ class CrmLead(models.Model):
         related='selected_revision_id.offer_tot',
         comodel_name='res.users',
         string='Técnico OT asignado',
+        readonly=True,
+        store=True
+    )
+
+    offer_class = fields.Many2one(
+        related='selected_revision_id.offer_class_id',
+        comodel_name='offer.class',
+        string='Clase Oferta',
+        readonly=True,
+        store=True
+    )
+
+    offer_date_deliver = fields.Date(
+        related='selected_revision_id.offer_date_deliver',
+        string='Fecha de entrega',
         readonly=True,
         store=True
     )
