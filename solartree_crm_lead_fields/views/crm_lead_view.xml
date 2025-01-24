@@ -75,6 +75,7 @@
                     <group string="Fechas">
                         <field name="solartree_date_request" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_required_delivery"/>
+                        <field name="offer_date_deliver"/>
                         <field name="solartree_date_proposed_signature" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_kom" invisible="type != 'opportunity'"/>
                         <field name="solartree_date_visit" invisible="type != 'opportunity'"/>
@@ -94,9 +95,8 @@
                     <group string="Revisions" invisible="type != 'opportunity'">
                         <field name="selected_revision_id" domain="[('lead_id', '=', id)]"
                                options='{"no_create": True}'/>
-                        <field name="offer_class"/>
-                        <field name="offer_date_deliver"/>
                         <field name="revision_count"/>
+                        <field name="offer_class"/>
                     </group>
                     <group string="Office Tecnic">
                         <field name="offer_tot"/>
