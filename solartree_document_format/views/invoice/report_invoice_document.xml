@@ -25,8 +25,8 @@
         </xpath>
         <xpath expr="//th[@name='th_taxes']" position="replace">
         </xpath>
-        <xpath expr="//th[@name='th_subtotal']" position="replace">
-        </xpath>
+<!--        <xpath expr="//th[@name='th_subtotal']" position="replace">-->
+<!--        </xpath>-->
 
         <xpath expr="//td[@name='td_quantity']" position="replace">
         </xpath>
@@ -36,7 +36,10 @@
         </xpath>
         <xpath expr="//td[@name='td_taxes']" position="replace">
         </xpath>
-        <xpath expr="//td[@name='td_subtotal']" position="replace">
+<!--        <xpath expr="//td[@name='td_subtotal']" position="replace">-->
+<!--        </xpath>-->
+
+        <xpath expr="//p[@name='payment_communication']" position="replace">
         </xpath>
     </template>
 </odoo>
