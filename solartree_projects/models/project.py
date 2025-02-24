@@ -16,7 +16,15 @@ class ProjectProject(models.Model):
     partner_id_lead = fields.Many2one(
         'res.partner',
         string="Partner",
+        compute='_compute_partner_id_lead',
+        store=True
     )
+
+    @api.depends('lead_id.partner_id')
+    def _compute_partner_id_lead(self):
+        for project in self:
+            project.partner_id_lead = project.lead_id.partner_id
+
     lead_id = fields.Many2one(
         'crm.lead',
         string="Opportunity",
