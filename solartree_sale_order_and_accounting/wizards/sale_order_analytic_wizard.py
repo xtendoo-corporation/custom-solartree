@@ -19,7 +19,7 @@ class SaleOrderAnalyticWizard(models.TransientModel):
             'date_to': self.date_end,
         })
 
-        for line in sale_order.order_line:
+        for line in sale_order.order_line.filtered(lambda l: l.product_id):
             general_budget_id = self.env['account.budget.post'].search(
                 [('name', '=', line.product_id.name)], limit=1).id or self.env['account.budget.post'].create(
                 {'name': line.product_id.name}).id
