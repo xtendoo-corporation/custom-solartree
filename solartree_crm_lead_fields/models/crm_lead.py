@@ -211,7 +211,8 @@ class CrmLead(models.Model):
     offer_kwp = fields.Float(
         related='selected_revision_id.offer_kwp',
         string='Offer kWp',
-        readonly=False
+        readonly=False,
+        store=True,
     )
     solartree_lead_type_id = fields.Many2one(
         related='selected_revision_id.solartree_lead_type_id',
