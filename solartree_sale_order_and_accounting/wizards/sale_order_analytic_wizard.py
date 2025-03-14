@@ -7,16 +7,24 @@ class SaleOrderAnalyticWizard(models.TransientModel):
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', required=True)
     date_start = fields.Date(string='Start Date', required=True)
     date_end = fields.Date(string='End Date', required=True)
+    project_id = fields.Many2one('project.project', string='Project', required=True)
 
     def action_apply(self):
         sale_order = self.env['sale.order'].browse(self.env.context.get('active_id'))
         if not sale_order:
             return
 
-        budget = self.env['crossovered.budget'].create({
+        context = {
+            'project_update': True,
+            'default_project_id': self.project_id.id,
+            'default_company_id': sale_order.company_id.id,
+        }
+
+        budget = self.with_context(context).env['crossovered.budget'].create({
             'name': f'{sale_order.name}',
             'date_from': self.date_start,
             'date_to': self.date_end,
+            'project_id': self.project_id.id,
         })
 
         for line in sale_order.order_line.filtered(lambda l: l.product_id):
